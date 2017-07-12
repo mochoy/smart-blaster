@@ -57,18 +57,18 @@ SmartBlaster& SmartBlaster::initIOPins (uint8_t pins[]) {
 //buttons using the Buttons library
 SmartBlaster& SmartBlaster::initButtons (void) {
 	if (!_isIRGate) {
-		Button _ammoCountingButton(_AMMO_COUNTING_INPUT_PIN, false, false, 20);
+		_ammoCountingButton = Button(_AMMO_COUNTING_INPUT_PIN, false, false, 20.0f);
 	} 
 	// else {
 	// 	_ammoCountingButton = NULL;
 	// }
 
-	Button _magInsertionDetectionButton(_MAG_INSERTION_DETECTION_PIN, false, false, 20);
-	Button _magSizeToggleButton(_MAG_SIZE_TOGGLE_INPUT_PIN, false, false, 20);
+	_magInsertionDetectionButton = Button(_MAG_INSERTION_DETECTION_PIN, false, false, 20.0f);
+	_magSizeToggleButton = Button(_MAG_SIZE_TOGGLE_INPUT_PIN, false, false, 20.0f);
 
 
 	if (_isSelectFire) {
-		Button _selectFireToggleButton(_TOGGLE_SELECT_FIRE_INPUT_PIN, false, false, 20);
+		_selectFireToggleButton = Button(_TOGGLE_SELECT_FIRE_INPUT_PIN, false, false, 20.0f);
 	} 
 	// else {
 	// 	_selectFireToggleButton = NULL;
