@@ -55,7 +55,7 @@ SmartBlaster& SmartBlaster::initIOPins (uint8_t pins[]) {
 }
 
 //buttons using the Buttons library
-SmartBlaster& SmartBlaster::initButtons (void) {
+SmartBlaster& SmartBlaster::initButtons () {
 	if (!_isIRGate) {
 		_ammoCountingButton = Button(_AMMO_COUNTING_INPUT_PIN, false, false, 20.0f);
 	} 
