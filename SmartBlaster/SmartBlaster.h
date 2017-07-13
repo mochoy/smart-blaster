@@ -26,6 +26,42 @@
 //If I want to access the value 1, which is the first value of the array/list, which the computer sees as the 
 //"zeroith" value, I would do array[0]. If I want to access the value 3, the third value of the array, I would do array[2]
 class SmartBlaster {
+    public:
+        SmartBlaster(uint8_t[], uint8_t[], uint8_t[]);
+
+        //init stuff
+        SmartBlaster& initModes(uint8_t[]);
+        SmartBlaster& initIOPins(uint8_t[]);
+        SmartBlaster& initButtons();
+        SmartBlaster& initMagSizes(uint8_t[]);
+
+        //display stuff
+        void displayValues();
+        void initDisplayAmmo();
+        void initDisplayChronoReadings(double);
+        void initDisplayFireMode();
+        void initDisplayVoltage(double);
+
+        //chrono stuff
+        void resetChronoVals();
+        double calculateChronoReadings(double, double);
+        void chrono();
+
+        //mag stuff
+        void changeMags();
+        void toggleMags();
+
+        void ammoCounter();
+        void countAmmo();
+
+        void voltmeter();
+
+        void fireModeMotorControl();
+        void toggleFireModeControl();
+        void fireVelocityControl();
+
+        void smartMyBlaster();
+        
     private:
         //usefule constant values needed to deal with specific functions
         static int IR_MAP_TRIP_VAL;
@@ -93,48 +129,6 @@ class SmartBlaster {
 
         Adafruit_SSD1306 _display;
 
-    //methods
-    public:
-        //constructor
-        SmartBlaster(uint8_t[], uint8_t[], uint8_t[]);
-
-        //init stuff
-        SmartBlaster& initModes(uint8_t[]);
-        SmartBlaster& initIOPins(uint8_t[]);
-        SmartBlaster& initButtons();
-        SmartBlaster& initMagSizes(uint8_t[]);
-
-        //getter and setter for display
-        Adafruit_SSD1306 setDisplay(Adafruit_SSD1306);
-        Adafruit_SSD1306 getDisplay();
-
-        //display stuff
-        void displayValues();
-        void initDisplayAmmo();
-        void initDisplayChronoReadings(double);
-        void initDisplayFireMode();
-        void initDisplayVoltage(double);
-
-
-        //chrono stuff
-        void resetChronoVals();
-        double calculateChronoReadings(double, double);
-        void chrono();
-
-        //mag stuff
-        void changeMags();
-        void toggleMags();
-
-        void ammoCounter();
-        void countAmmo();
-
-        void voltmeter();
-
-        void fireModeMotorControl();
-        void toggleFireModeControl();
-        void fireVelocityControl();
-
-        void smartMyBlaster();
 };
 
 #endif

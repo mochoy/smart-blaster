@@ -7,7 +7,9 @@
 #include <Button.h>
 
 
-SmartBlaster::SmartBlaster (uint8_t modes[], uint8_t IOPins[], uint8_t magSizes[]) {
+SmartBlaster::SmartBlaster (uint8_t modes[], uint8_t IOPins[], uint8_t magSizes[]): 
+_ammoCountingButton(IOPins[0], false, false, 25), _magInsertionDetectionButton(IOPins[1], false, false, 25),
+_magSizeToggleButton(IOPins[2], false, false, 25), _selectFireToggleButton(IOPins[4], false, false, 25), _display(4) {
 	_lastVoltageCheckTime = 0;
 	_delayTime = 500;
 
@@ -24,7 +26,8 @@ SmartBlaster::SmartBlaster (uint8_t modes[], uint8_t IOPins[], uint8_t magSizes[
     R1 = 100000.0;
     R2 = 10000.0;
 
-	initModes(modes).initIOPins(IOPins).initButtons().initMagSizes(magSizes);
+	initModes(modes).initIOPins(IOPins).initMagSizes(magSizes);
+
 }
 
 SmartBlaster& SmartBlaster::initModes (uint8_t modes[]) {
@@ -38,9 +41,10 @@ SmartBlaster& SmartBlaster::initModes (uint8_t modes[]) {
 
 SmartBlaster& SmartBlaster::initIOPins (uint8_t pins[]) {
 	_AMMO_COUNTING_INPUT_PIN = pins[0];
+	
 	_MAG_INSERTION_DETECTION_PIN = pins[1];
 	_MAG_SIZE_TOGGLE_INPUT_PIN = pins[2];
-
+	
 	if (_isVoltmeter) {
 		_VOLTMETER_INPUT_PIN = pins[3];
 	}
@@ -48,34 +52,9 @@ SmartBlaster& SmartBlaster::initIOPins (uint8_t pins[]) {
 	if (_isSelectFire) {
 		_TOGGLE_SELECT_FIRE_INPUT_PIN = pins[4];
 		_SELECT_FIRE_OUTPUT_PIN = pins[5];
-		pinMode(_SELECT_FIRE_OUTPUT_PIN, OUTPUT);
 	}
 
     return *this;	
-}
-
-//buttons using the Buttons library
-SmartBlaster& SmartBlaster::initButtons () {
-	if (!_isIRGate) {
-		_ammoCountingButton = Button(_AMMO_COUNTING_INPUT_PIN, false, false, 20.0f);
-	} 
-	// else {
-	// 	_ammoCountingButton = NULL;
-	// }
-
-	_magInsertionDetectionButton = Button(_MAG_INSERTION_DETECTION_PIN, false, false, 20.0f);
-	_magSizeToggleButton = Button(_MAG_SIZE_TOGGLE_INPUT_PIN, false, false, 20.0f);
-
-
-	if (_isSelectFire) {
-		_selectFireToggleButton = Button(_TOGGLE_SELECT_FIRE_INPUT_PIN, false, false, 20.0f);
-	} 
-	// else {
-	// 	_selectFireToggleButton = NULL;
-	// }
-
-
-	return *this;
 }
 
 SmartBlaster& SmartBlaster::initMagSizes(uint8_t magSizes[]) {
@@ -87,16 +66,6 @@ SmartBlaster& SmartBlaster::initMagSizes(uint8_t magSizes[]) {
     _currentAmmo = _maxAmmo;
 
 	return *this;
-}
-
-Adafruit_SSD1306 SmartBlaster::setDisplay(Adafruit_SSD1306 displayArg) {
-	_display = displayArg;
-
-	return _display;
-}
-
-Adafruit_SSD1306 SmartBlaster::getDisplay() {
-	return _display;
 }
 
 void SmartBlaster::displayValues (void) {
