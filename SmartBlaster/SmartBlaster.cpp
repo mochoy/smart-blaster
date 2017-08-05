@@ -27,7 +27,6 @@ _magSizeToggleButton(IOPins[2], false, false, 25), _selectFireToggleButton(IOPin
     R2 = 10000.0;
 
 	initModes(modes).initIOPins(IOPins).initMagSizes(magSizes);
-
 }
 
 SmartBlaster& SmartBlaster::initModes (uint8_t modes[]) {
@@ -228,14 +227,16 @@ void SmartBlaster::countAmmo (void) {
     //make sure it's in increment mode
     if ( (_magSizeArr[_currentMagSize] == 0) && (_currentAmmo < 99) ) {
         _currentAmmo++;    //increment ammo
+        initDisplayAmmo();    //display the ammo  
     
     //make sure that the ammo is more than 0 so no negative numbers are displayed
     //make sure it's in increment mode
     } else if ( (_currentAmmo > 0) && (_magSizeArr[_currentMagSize] != 0) ){
         _currentAmmo--;    //decrement ammo
+        initDisplayAmmo();    //display the ammo  
+
     }
 
-    initDisplayAmmo();    //display the ammo  
 }
 
 void SmartBlaster::voltmeter (void) {

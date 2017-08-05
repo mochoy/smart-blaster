@@ -64,10 +64,10 @@ class SmartBlaster {
         
     private:
         //usefule constant values needed to deal with specific functions
-        static int IR_MAP_TRIP_VAL;
-        static float DART_LEGNTH_FEET;
-        static float R1;
-        static float R2;
+        int IR_MAP_TRIP_VAL;
+        float DART_LEGNTH_FEET;
+        float R1;
+        float R2;
 
         //stuff to help keep track of magazine stuff
         //

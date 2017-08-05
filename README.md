@@ -122,7 +122,6 @@ Also set up some stuff for the display:
 
 ```c++
 #define OLED_RESET 4
-Adafruit_SSD1306 display(OLED_RESET);
 
 
 #define SCREEN_WIDTH 128
@@ -141,11 +140,11 @@ byte modes[] = {isIRAmmoCounter, isChronograph, isVoltmeter, isSelectFire};
 Setup IO Pins:
 
 ```c++
-byte pins[] = {ammoCountingInputPin, magazineInsertionDetectionPin, magazineSizeTogglePin, voltmeterPin, firingModeTogglePin, firingModeOutputPin};
+int pins[] = {ammoCountingInputPin, magazineInsertionDetectionPin, magazineSizeTogglePin, voltmeterPin, firingModeTogglePin, firingModeOutputPin};
 ```
 
 - All items in array are integer values.
-- If the corresponding mode for the pin was not set up, put `-1` for the pin value.
+- If the corresponding mode for the pin was not set up, put `255` for the pin value.
 - First item will be pin which the ammo counting mechanism (switch or IR gate) is connected to. 
 - Make sure if the ammo counting mechanism is switch, it's connecting to a digital pin. If the ammo counting mechanism is the IR gate, make sure it's connected to an analog pin. 
 - Second item is digital pin which the magazine insertion detection switch is connected to.
@@ -169,13 +168,6 @@ Setup SmartBlaster:
 
 ```c++
 SmartBlaster smartBlaster(modes, pins, magSizes);
-```
-
-Also for the display, in `void setup()`:
-
-```c++
-display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-SmartBlaster.initDisplay(display);
 ```
 
 Now lets Smart the Blaster! In `void loop()`:

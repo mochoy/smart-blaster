@@ -1,25 +1,30 @@
-//display libraries
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
+#include <Button.h>
+#include <SmartBlaster.h>
+
+#define OLED_RESET 4
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 
-#define OLED_RESET 4
-Adafruit_SSD1306 display(OLED_RESET);
+byte modes[] = {false, false, false, false};
+int pins[] = {1, 2, 3, -1, -1, -1};
+byte magSizes[] = {5, 6, 8, 10, 12, 15, 18, 19, 20, 22, 25, 36, 0};
 
-//button library
-#include <Button.h>
-
-//smart blaster library - make your blaster smarter
-#include <SmartBlaster.h>
+SmartBlaster smartBlaster(modes, pins, magSizes);
 
 
 void setup() {
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  // put your setup code here, to run once:
+  pinMode(2, INPUT);
+  pinMode(3, INPUT);
+  pinMode(5, INPUT);
 }
 
 void loop() {
-    
-}
+  // put your main code here, to run repeatedly:
+  smartBlaster.smartMyBlaster();
 
+}
