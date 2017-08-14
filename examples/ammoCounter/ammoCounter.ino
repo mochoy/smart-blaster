@@ -10,7 +10,7 @@
 #define SCREEN_HEIGHT 64
 
 byte modes[] = {false, false, false, false};
-int pins[] = {1, 2, 3, -1, -1, -1};
+byte pins[] = {1, 2, 3, 255, 255, 255};
 byte magSizes[] = {5, 6, 8, 10, 12, 15, 18, 19, 20, 22, 25, 36, 0};
 
 SmartBlaster smartBlaster(modes, pins, magSizes);
