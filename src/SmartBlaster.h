@@ -21,6 +21,10 @@ class SmartBlaster {
     String _fireModeToPrint;
 
     //keep track of ammo
+    uint8_t _magSizeArr[];
+    uint8_t _currentMagSize;
+    uint8_t _maxAmmo;
+    uint8_t _currentAmmo;
 
     //display methods
     SmartBlaster _initDisplay(Adafruit_SSD1306 displayArg);     //initialize display right when it's created
