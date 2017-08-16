@@ -19,6 +19,10 @@ SmartBlaster::SmartBlaster () {
     _fireModeToPrint = "SS";
 }
 
+SmartBlaster SmartBlaster::init(Adafruit_SSD1306 displayArg) {
+    _initDisplay(displayArg);
+}
+
 SmartBlaster SmartBlaster::smartMyBlaster(Adafruit_SSD1306 displayArg) {
     _printVals(displayArg);
 }

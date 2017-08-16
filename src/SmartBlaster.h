@@ -22,9 +22,8 @@ class SmartBlaster {
     SmartBlaster _printVals(Adafruit_SSD1306 displayArg);
     
   public:
-        //constructor
     SmartBlaster();
-
+    SmartBlaster init (Adafruit_SSD1306 displayArg);
     SmartBlaster smartMyBlaster(Adafruit_SSD1306 displayArg);
 
 };
