@@ -12,7 +12,7 @@ SmartBlaster::SmartBlaster () {
     _isChrono = true;
     _isVoltmeter = true;
     _isSelectFire = true;
-    
+
     _ammoToPrint = "16";
     _chronoToPrint = "109.3";
     _voltageToPrint = "8.2";
@@ -23,8 +23,9 @@ SmartBlaster SmartBlaster::init(Adafruit_SSD1306 displayArg) {
     _initDisplay(displayArg);
 }
 
-SmartBlaster SmartBlaster::smartMyBlaster(Adafruit_SSD1306 displayArg) {
-    _printVals(displayArg);
+SmartBlaster SmartBlaster::smartMyBlaster(Adafruit_SSD1306 displayArg, Button triggerBtnArg, Button magInsDetArg, Button magSzTogBtnArg) {
+        _reload(magInsDetArg);
+        _printVals(displayArg);
 }
 
 
@@ -45,7 +46,7 @@ SmartBlaster SmartBlaster::_printVals(Adafruit_SSD1306 displayArg) {
 
     //display chrono values
     if (_isChrono) {
-        displayArg.setCursor(0, 50);  
+        displayArg.setCursor(0, 50);
         displayArg.print(_chronoToPrint);
     }
 
@@ -57,11 +58,20 @@ SmartBlaster SmartBlaster::_printVals(Adafruit_SSD1306 displayArg) {
 
     //display fire mode
     if (_isSelectFire) {
-        displayArg.setCursor(100, 50);  
+        displayArg.setCursor(100, 50);
         displayArg.print(_fireModeToPrint);
-    }   
-  
+    }
+
     displayArg.display(); //display the text
 }
 
+//method to deal with reloading
+SmartBlaster SmartBlaster::_reload (Button magInsDetArg) {
+        magInsDetArg.read();    //read button, using Button library
+
+        //if button pressed, reload
+        if (magInsDetArg.wasPressed()) {
+
+        }
+}
 
