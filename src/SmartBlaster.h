@@ -17,15 +17,15 @@ class SmartBlaster {
     String _chronoToPrint;
     String _voltageToPrint;
     String _fireModeToPrint;
+
+    SmartBlaster _initDisplay(Adafruit_SSD1306 displayArg);
+    SmartBlaster _printVals(Adafruit_SSD1306 displayArg);
     
   public:
         //constructor
     SmartBlaster();
 
-    
-
-    SmartBlaster _initDisplay(Adafruit_SSD1306 displayArg);
-    SmartBlaster _printVals(Adafruit_SSD1306 displayArg);
+    SmartBlaster smartMyBlaster(Adafruit_SSD1306 displayArg);
 
 };
 
