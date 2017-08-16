@@ -21,20 +21,24 @@ class SmartBlaster {
     String _fireModeToPrint;
 
     //keep track of ammo
-    uint8_t _magSizeArr[];
+    uint8_t _magSizes[];
+    uint8_t numOfMagSizes;
     uint8_t _currentMagSize;
     uint8_t _maxAmmo;
     uint8_t _currentAmmo;
 
+    //init methods
+    SmartBlaster initMagSizes(uint8_t magSizes[]);
+
     //display methods
-    SmartBlaster _initDisplay(Adafruit_SSD1306 displayArg);     //initialize display right when it's created
-    SmartBlaster _printVals(Adafruit_SSD1306 displayArg);   //print all values at the same time, including ammo, chrono vals, etc.
+    SmartBlaster initDisplay(Adafruit_SSD1306 displayArg);     //initialize display right when it's created
+    SmartBlaster printVals(Adafruit_SSD1306 displayArg);   //print all values at the same time, including ammo, chrono vals, etc.
 
     //smart blaster funcitonality methods
-    SmartBlaster _reload (Button magInsDetArg);  //reload
+    SmartBlaster reload (Button magInsDetArg);  //reload
 
   public:
-    SmartBlaster();
+    SmartBlaster(uint8_t magSizes[]);
     SmartBlaster init (Adafruit_SSD1306 displayArg);
     SmartBlaster smartMyBlaster(Adafruit_SSD1306 displayArg, Button triggerBtnArg, Button magInsDetArg, Button magSzTogBtnArg);
 
