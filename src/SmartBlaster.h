@@ -22,27 +22,34 @@ class SmartBlaster {
 
     //keep track of ammo
     uint8_t _magSizes[];
-    uint8_t numOfMagSizes;
+    uint8_t _numOfMagSizes;
     uint8_t _currentMagSize;
     uint8_t _maxAmmo;
     uint8_t _currentAmmo;
+
+    Adafruit_SSD1306 _display;
+
+    Button *_triggerBtnArg;
+    Button *_magInsDetBtn;
+    Button *_magSzTogBtn;
 
     //init methods
     SmartBlaster initMagSizes(uint8_t magSizes[]);
 
     //display methods
-    SmartBlaster initDisplay(Adafruit_SSD1306 displayArg);     //initialize display right when it's created
-    SmartBlaster printVals(Adafruit_SSD1306 displayArg);   //print all values at the same time, including ammo, chrono vals, etc.
+    SmartBlaster initDisplay();     //initialize display right when it's created
+    SmartBlaster initAmmoForDisplay(Adafruit_SSD1306 displayArg);
+    SmartBlaster printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
     //smart blaster funcitonality methods
-    SmartBlaster reload (Button magInsDetArg);  //reload
+    SmartBlaster reload (Button magInsDetBtn, Adafruit_SSD1306 displayArg);  //reload
+    SmartBlaster toggleMagSizes (Button magSzTogBtn, Adafruit_SSD1306 displayArg);
 
   public:
     SmartBlaster(uint8_t magSizes[]);
-    SmartBlaster init (Adafruit_SSD1306 displayArg);
-    SmartBlaster smartMyBlaster(Adafruit_SSD1306 displayArg, Button triggerBtnArg, Button magInsDetArg, Button magSzTogBtnArg);
+    SmartBlaster init ();
+    SmartBlaster smartMyBlaster(Button triggerBtnArg, Button magInsDetArg, Button magSzTogBtnArg);
 
 };
 
 #endif
-
