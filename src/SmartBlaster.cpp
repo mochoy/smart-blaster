@@ -7,8 +7,17 @@
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
+#define OLED_RESET 4
 
-SmartBlaster::SmartBlaster (uint8_t magSizes[]) : _display(4) {
+#define PULLUP false
+#define INVERT false
+#define DEBOUNCE 20
+
+SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
+  _display(OLED_RESET),
+  _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
+  _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
+  _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
     _isChrono = true;
     _isVoltmeter = true;
     _isSelectFire = true;

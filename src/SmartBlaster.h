@@ -29,9 +29,9 @@ class SmartBlaster {
 
     Adafruit_SSD1306 _display;
 
-    Button *_triggerBtnArg;
-    Button *_magInsDetBtn;
-    Button *_magSzTogBtn;
+    Button _triggerBtnArg;
+    Button _magInsDetBtn;
+    Button _magSzTogBtn;
 
     //init methods
     SmartBlaster initMagSizes(uint8_t magSizes[]);
