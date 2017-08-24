@@ -34,17 +34,12 @@ SmartBlaster SmartBlaster::init() {
     initDisplay();
     printVals();
 
-    digitalWrite(12, HIGH);
-
     return *this;
 }
 
-SmartBlaster SmartBlaster::smartMyBlaster(
-    Button triggerBtnArg,
-    Button magInsDetBtn,
-    Button magSzTogBtn) {
+SmartBlaster SmartBlaster::smartMyBlaster() {
 
-    reload(magInsDetBtn, _display).toggleMagSizes(magSzTogBtn, _display);
+    reload().toggleMagSizes();
 
     return *this;
 }
@@ -73,7 +68,7 @@ SmartBlaster SmartBlaster::initDisplay () {
 
 
 //helper function to display ammo. Initializes value to be passed displayed on display
-SmartBlaster SmartBlaster::initAmmoForDisplay (Adafruit_SSD1306 displayArg) {
+SmartBlaster SmartBlaster::initAmmoForDisplay () {
         String textToDisplay = "00";
 
         if (_currentAmmo < 10) {
@@ -123,30 +118,31 @@ SmartBlaster SmartBlaster::printVals() {
 }
 
 //method to deal with reloading
-SmartBlaster SmartBlaster::reload (Button magInsDetBtn, Adafruit_SSD1306 displayArg) {
-    magInsDetBtn.read();    //read button, using Button library
+SmartBlaster SmartBlaster::reload () {
+    _magInsDetBtn.read();    //read button, using Button library
 
     //if button pressed, reload
-    if (magInsDetBtn.wasPressed()) {
+    if (_magInsDetBtn.wasPressed()) {
             _currentAmmo = _maxAmmo;
-            initAmmoForDisplay(displayArg);      //display new ammo
+            initAmmoForDisplay();      //display new ammo
     }
 
     return *this;
 }
 
 //toggle between magazine sizes
-SmartBlaster SmartBlaster::toggleMagSizes (Button magSzTogBtn, Adafruit_SSD1306 displayArg) {
-    magSzTogBtn.read(); //read button, using Button library
+SmartBlaster SmartBlaster::toggleMagSizes () {
+    _magSzTogBtn.read(); //read button, using Button library
 
     //if button was pressed, toggle size
-    if (magSzTogBtn.wasPressed()) {
-    //make sure mag sizes dont overflow
-    //if it does, it goes back to the first mag size
-    //if it doesn't, then goes to next mag size
-    //if it doesn't, then goes to next mag size
-    _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
-    _maxAmmo = _magSizes[_currentMagSize];
+    if (_magSzTogBtn.wasPressed()) {
+      //make sure mag sizes dont overflow
+      //if it does, it goes back to the first mag size
+      //if it doesn't, then goes to next mag size
+      //if it doesn't, then goes to next mag size
+      _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
+      _maxAmmo = _magSizes[_currentMagSize];
+      initAmmoForDisplay();
 
     }
 
