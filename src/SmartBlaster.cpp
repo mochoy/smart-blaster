@@ -22,23 +22,25 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
     _isVoltmeter = true;
     _isSelectFire = true;
 
-    _ammoToPrint = "16";
+    initMagSizes(magSizes);
+
+    _ammoToPrint = "7";
     _chronoToPrint = "109.3";
     _voltageToPrint = "8.2";
     _fireModeToPrint = "SS";
-
-    initMagSizes(magSizes);
 }
 
 SmartBlaster SmartBlaster::init() {
+    // Serial.println("initing!");
+
     initDisplay();
+    initAmmoForDisplay();
     printVals();
 
     return *this;
 }
 
 SmartBlaster SmartBlaster::smartMyBlaster() {
-
     reload().toggleMagSizes();
 
     return *this;
@@ -47,21 +49,24 @@ SmartBlaster SmartBlaster::smartMyBlaster() {
 
 
 SmartBlaster SmartBlaster::initMagSizes (uint8_t magSizes[]) {
-        _numOfMagSizes = (sizeof(magSizes)/sizeof(magSizes[0]));
-        for (int i = 0; i < _numOfMagSizes; i++) {
-            _magSizes[i] = magSizes[i];
-        }
+      // _numOfMagSizes = (sizeof(magSizes)/sizeof(magSizes[0]) - 1);
+      _numOfMagSizes = 8;
+      for (int i = 0; i < _numOfMagSizes; i++) {
+          _magSizes[i] = magSizes[i];
+      }
 
-        _currentMagSize = 0;
-        _maxAmmo = _magSizes[_currentMagSize];
-        _currentAmmo = _maxAmmo;
+      _currentMagSize = 0;
+      _maxAmmo = _magSizes[_currentMagSize];
+      _currentAmmo = _maxAmmo;
 
-        return *this;
+      return *this;
 }
 
 SmartBlaster SmartBlaster::initDisplay () {
     _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     _display.clearDisplay();
+
+    // Serial.println("display cleared!");
 
     return *this;
 }
@@ -69,15 +74,13 @@ SmartBlaster SmartBlaster::initDisplay () {
 
 //helper function to display ammo. Initializes value to be passed displayed on display
 SmartBlaster SmartBlaster::initAmmoForDisplay () {
-        String textToDisplay = "00";
+        _ammoToPrint = "00";    //default value
 
         if (_currentAmmo < 10) {
-                textToDisplay = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
+            _ammoToPrint = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
         } else {
-                textToDisplay = (String)_currentAmmo;       //convert int to string
+            _ammoToPrint = (String)_currentAmmo;       //convert int to string
         }
-
-        _ammoToPrint = textToDisplay;       //so the display knows what to display
 
         printVals();
 
@@ -123,8 +126,9 @@ SmartBlaster SmartBlaster::reload () {
 
     //if button pressed, reload
     if (_magInsDetBtn.wasPressed()) {
-            _currentAmmo = _maxAmmo;
-            initAmmoForDisplay();      //display new ammo
+        Serial.println("Reloading!");
+        _currentAmmo = _maxAmmo;
+        initAmmoForDisplay();      //display new ammo
     }
 
     return *this;
@@ -142,6 +146,7 @@ SmartBlaster SmartBlaster::toggleMagSizes () {
       //if it doesn't, then goes to next mag size
       _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
       _maxAmmo = _magSizes[_currentMagSize];
+      _currentAmmo = _maxAmmo;
       initAmmoForDisplay();
 
     }
