@@ -18,9 +18,10 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
   _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
   _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
-    _isChrono = true;
-    _isVoltmeter = true;
-    _isSelectFire = true;
+
+    _isChrono = false;
+    _isVoltmeter = false;
+    _isSelectFire = false;
 
     initMagSizes(magSizes);
 
@@ -31,11 +32,13 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
 }
 
 SmartBlaster SmartBlaster::init() {
-    // Serial.println("initing!");
+    Serial.println("initing!");
+
+    Serial.println(_currentAmmo);
 
     initDisplay();
-    initAmmoForDisplay();
-    printVals();
+    initAmmoForDisplay(false);
+    // printVals();
 
     return *this;
 }
@@ -66,25 +69,29 @@ SmartBlaster SmartBlaster::initDisplay () {
     _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     _display.clearDisplay();
 
-    // Serial.println("display cleared!");
-
     return *this;
 }
 
 
 //helper function to display ammo. Initializes value to be passed displayed on display
-SmartBlaster SmartBlaster::initAmmoForDisplay () {
-        _ammoToPrint = "00";    //default value
+SmartBlaster SmartBlaster::initAmmoForDisplay (bool toPrint) {
+    // Serial.println("initing ammo!");   //for debugging
 
-        if (_currentAmmo < 10) {
-            _ammoToPrint = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
-        } else {
-            _ammoToPrint = (String)_currentAmmo;       //convert int to string
-        }
+    _ammoToPrint = "00";    //default value
 
-        printVals();
+    if (_currentAmmo < 10) {
+        _ammoToPrint = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
+    } else {
+        _ammoToPrint = (String)_currentAmmo;       //convert int to string
+    }
 
-        return *this;
+    Serial.println(_ammoToPrint);
+
+    if (toPrint) {
+      printVals();
+    }
+
+    return *this;
 }
 
 SmartBlaster SmartBlaster::printVals() {
@@ -98,22 +105,22 @@ SmartBlaster SmartBlaster::printVals() {
     _display.setTextSize(1);
 
     //display chrono values
-    if (_isChrono) {
-        _display.setCursor(0, 50);
-        _display.print(_chronoToPrint);
-    }
-
-    //display voltage values
-    if (_isVoltmeter) {
-        _display.setCursor(60, 50);
-        _display.print(_voltageToPrint);
-    }
-
-    //display fire mode
-    if (_isSelectFire) {
-        _display.setCursor(100, 50);
-        _display.print(_fireModeToPrint);
-    }
+    // if (_isChrono) {
+    //     _display.setCursor(0, 50);
+    //     _display.print(_chronoToPrint);
+    // }
+    //
+    // //display voltage values
+    // if (_isVoltmeter) {
+    //     _display.setCursor(60, 50);
+    //     _display.print(_voltageToPrint);
+    // }
+    //
+    // //display fire mode
+    // if (_isSelectFire) {
+    //     _display.setCursor(100, 50);
+    //     _display.print(_fireModeToPrint);
+    // }
 
     _display.display(); //display the text
 
@@ -128,7 +135,7 @@ SmartBlaster SmartBlaster::reload () {
     if (_magInsDetBtn.wasPressed()) {
         Serial.println("Reloading!");
         _currentAmmo = _maxAmmo;
-        initAmmoForDisplay();      //display new ammo
+        initAmmoForDisplay(true);      //display new ammo
     }
 
     return *this;
@@ -147,7 +154,7 @@ SmartBlaster SmartBlaster::toggleMagSizes () {
       _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
       _maxAmmo = _magSizes[_currentMagSize];
       _currentAmmo = _maxAmmo;
-      initAmmoForDisplay();
+      initAmmoForDisplay(true);
 
     }
 

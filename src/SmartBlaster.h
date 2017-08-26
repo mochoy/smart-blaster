@@ -38,7 +38,7 @@ class SmartBlaster {
 
     //display methods
     SmartBlaster initDisplay();     //initialize display right when it's created
-    SmartBlaster initAmmoForDisplay();
+    SmartBlaster initAmmoForDisplay(bool toPrint);
     SmartBlaster printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
     //smart blaster funcitonality methods
