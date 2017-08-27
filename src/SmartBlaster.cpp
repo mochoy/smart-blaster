@@ -25,18 +25,25 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
 
     initMagSizes(magSizes);
 
-    _ammoToPrint = "7";
-    _chronoToPrint = "109.3";
-    _voltageToPrint = "8.2";
-    _fireModeToPrint = "SS";
+    // _ammoToPrint = "7";
+    // _chronoToPrint = "109.3";
+    // _voltageToPrint = "8.2";
+    // _fireModeToPrint = "SS";
 }
 
 SmartBlaster SmartBlaster::init() {
-    Serial.println("initing!");
 
-    Serial.println(_currentAmmo);
+    Serial.println(_maxAmmo);
+    _maxAmmo = _magSizes[_currentMagSize];
+    Serial.println(_maxAmmo);
 
+    Serial.println(_magSizes[1]);
+    Serial.println(_magSizes[2]);
+    Serial.println(_magSizes[3]);
+    Serial.println(_magSizes[4]);
     initDisplay();
+
+    _display.clearDisplay();
     initAmmoForDisplay(false);
     // printVals();
 
