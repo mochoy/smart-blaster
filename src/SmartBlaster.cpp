@@ -4,12 +4,9 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Button.h>
-// #include <Vector.h>
+
 #include <StandardCplusplus.h>
-#include <serstream>
-#include <string>
 #include <vector>
-#include <iterator>
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -19,7 +16,7 @@
 #define INVERT false
 #define DEBOUNCE 20
 
-SmartBlaster::SmartBlaster (int magSizes[]) :
+SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
   _display(OLED_RESET),
   _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
   _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
@@ -29,7 +26,7 @@ SmartBlaster::SmartBlaster (int magSizes[]) :
     _isVoltmeter = false;
     _isSelectFire = false;
 
-    initMagSizes(magSizes);
+    initMagSizes(magSizes, numOfMagSizes);
 
     // _ammoToPrint = "7";
     // _chronoToPrint = "109.3";
@@ -38,17 +35,6 @@ SmartBlaster::SmartBlaster (int magSizes[]) :
 }
 
 SmartBlaster SmartBlaster::init() {
-
-    // Serial.println(_maxAmmo);
-    // // _maxAmmo = _magSizes[_currentMagSize];
-    // Serial.println(_maxAmmo);
-    //
-    // Serial.println(_magSizes[1]);
-    // Serial.println(_magSizes[2]);
-    // Serial.println(_magSizes[3]);
-    // Serial.println(_magSizes[4]);
-    // initDisplay();
-
     _display.clearDisplay();
     initAmmoForDisplay(false);
     // printVals();
@@ -64,11 +50,10 @@ SmartBlaster SmartBlaster::smartMyBlaster() {
 
 
 
-SmartBlaster SmartBlaster::initMagSizes (int magSizes[]) {
-      // _numOfMagSizes = (sizeof(magSizes)/sizeof(magSizes[0]) - 1);
-      _numOfMagSizes = 8;
+SmartBlaster SmartBlaster::initMagSizes (int magSizes[], int numOfMagSizes) {
+      _numOfMagSizes = numOfMagSizes;
       for (int i = 0; i < _numOfMagSizes; i++) {
-          _magSizes[i] = magSizes[i];
+          _magSizes.push_back(magSizes[i]);
       }
 
       _currentMagSize = 0;

@@ -6,12 +6,9 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Button.h>
-// #include <Vector.h>
+
 #include <StandardCplusplus.h>
-#include <serstream>
-#include <string>
 #include <vector>
-#include <iterator>
 
 
 class SmartBlaster {
@@ -42,7 +39,7 @@ class SmartBlaster {
     Button _magSzTogBtn;
 
     //init methods
-    SmartBlaster initMagSizes(int magSizes[]);
+    SmartBlaster initMagSizes(int magSizes[], int numOfMagSizes);
 
     //display methods
     SmartBlaster initDisplay();     //initialize display right when it's created
@@ -54,7 +51,7 @@ class SmartBlaster {
     SmartBlaster toggleMagSizes ();
 
   public:
-    SmartBlaster(int magSizes[]);
+    SmartBlaster(int magSizes[], int numOfMagSizes);
     SmartBlaster init ();
     SmartBlaster smartMyBlaster();
 
