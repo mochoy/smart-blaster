@@ -6,6 +6,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Button.h>
+#include <Vector.h>
 
 class SmartBlaster {
   private:
@@ -21,11 +22,12 @@ class SmartBlaster {
     String _fireModeToPrint;
 
     //keep track of ammo
+    // Vector<int> _magSizes;
     uint8_t _magSizes[];
     uint8_t _numOfMagSizes;
     uint8_t _currentMagSize;
-    uint8_t _maxAmmo;
-    uint8_t _currentAmmo;
+    int _maxAmmo;
+    int _currentAmmo;
 
     Adafruit_SSD1306 _display;
 
@@ -34,7 +36,7 @@ class SmartBlaster {
     Button _magSzTogBtn;
 
     //init methods
-    SmartBlaster initMagSizes(uint8_t magSizes[]);
+    SmartBlaster initMagSizes(int magSizes[]);
 
     //display methods
     SmartBlaster initDisplay();     //initialize display right when it's created
@@ -46,7 +48,7 @@ class SmartBlaster {
     SmartBlaster toggleMagSizes ();
 
   public:
-    SmartBlaster(uint8_t magSizes[]);
+    SmartBlaster(int magSizes[]);
     SmartBlaster init ();
     SmartBlaster smartMyBlaster();
 

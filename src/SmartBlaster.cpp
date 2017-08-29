@@ -13,7 +13,7 @@
 #define INVERT false
 #define DEBOUNCE 20
 
-SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
+SmartBlaster::SmartBlaster (int magSizes[]) :
   _display(OLED_RESET),
   _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
   _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
@@ -33,15 +33,15 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
 
 SmartBlaster SmartBlaster::init() {
 
-    Serial.println(_maxAmmo);
-    _maxAmmo = _magSizes[_currentMagSize];
-    Serial.println(_maxAmmo);
-
-    Serial.println(_magSizes[1]);
-    Serial.println(_magSizes[2]);
-    Serial.println(_magSizes[3]);
-    Serial.println(_magSizes[4]);
-    initDisplay();
+    // Serial.println(_maxAmmo);
+    // // _maxAmmo = _magSizes[_currentMagSize];
+    // Serial.println(_maxAmmo);
+    //
+    // Serial.println(_magSizes[1]);
+    // Serial.println(_magSizes[2]);
+    // Serial.println(_magSizes[3]);
+    // Serial.println(_magSizes[4]);
+    // initDisplay();
 
     _display.clearDisplay();
     initAmmoForDisplay(false);
@@ -58,7 +58,7 @@ SmartBlaster SmartBlaster::smartMyBlaster() {
 
 
 
-SmartBlaster SmartBlaster::initMagSizes (uint8_t magSizes[]) {
+SmartBlaster SmartBlaster::initMagSizes (int magSizes[]) {
       // _numOfMagSizes = (sizeof(magSizes)/sizeof(magSizes[0]) - 1);
       _numOfMagSizes = 8;
       for (int i = 0; i < _numOfMagSizes; i++) {
