@@ -4,6 +4,12 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Button.h>
+// #include <Vector.h>
+#include <StandardCplusplus.h>
+#include <serstream>
+#include <string>
+#include <vector>
+#include <iterator>
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64

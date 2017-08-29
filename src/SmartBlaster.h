@@ -6,7 +6,13 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Button.h>
-#include <Vector.h>
+// #include <Vector.h>
+#include <StandardCplusplus.h>
+#include <serstream>
+#include <string>
+#include <vector>
+#include <iterator>
+
 
 class SmartBlaster {
   private:
@@ -22,8 +28,8 @@ class SmartBlaster {
     String _fireModeToPrint;
 
     //keep track of ammo
-    // Vector<int> _magSizes;
-    uint8_t _magSizes[];
+    vector<int> _magSizes;
+        // uint8_t _magSizes[];
     uint8_t _numOfMagSizes;
     uint8_t _currentMagSize;
     int _maxAmmo;
