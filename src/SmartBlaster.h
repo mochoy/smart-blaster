@@ -28,7 +28,7 @@ class SmartBlaster {
     String _fireModeToPrint;
 
     //keep track of ammo
-    vector<int> _magSizes;
+    std::vector<int> _magSizes;
         // uint8_t _magSizes[];
     uint8_t _numOfMagSizes;
     uint8_t _currentMagSize;
