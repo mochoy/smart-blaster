@@ -35,9 +35,7 @@ SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
 }
 
 SmartBlaster SmartBlaster::init() {
-    _display.clearDisplay();
-    initAmmoForDisplay(false);
-    // printVals();
+    initDisplay().initAmmoForDisplay(true);
 
     return *this;
 }
@@ -49,6 +47,13 @@ SmartBlaster SmartBlaster::smartMyBlaster() {
 }
 
 
+
+SmartBlaster SmartBlaster::initDisplay () {
+    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    _display.clearDisplay();
+
+    return *this;
+}
 
 SmartBlaster SmartBlaster::initMagSizes (int magSizes[], int numOfMagSizes) {
       _numOfMagSizes = numOfMagSizes;
@@ -62,14 +67,6 @@ SmartBlaster SmartBlaster::initMagSizes (int magSizes[], int numOfMagSizes) {
 
       return *this;
 }
-
-SmartBlaster SmartBlaster::initDisplay () {
-    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    _display.clearDisplay();
-
-    return *this;
-}
-
 
 //helper function to display ammo. Initializes value to be passed displayed on display
 SmartBlaster SmartBlaster::initAmmoForDisplay (bool toPrint) {
