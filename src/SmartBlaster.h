@@ -26,10 +26,10 @@ class SmartBlaster {
     uint8_t _isSelectFire;
 
     //stuff to keep track of what to print for each different value
-    String _ammoToPrint;
-    String _chronoToPrint;
-    String _voltageToPrint;
-    String _fireModeToPrint;
+    char _ammoToPrint[2];
+    char _chronoToPrint[6];
+    String _voltageToPrint[4];
+    String _fireModeToPrint[2];
 
     //keep track of ammo
     std::vector<int> _magSizes;
@@ -39,7 +39,7 @@ class SmartBlaster {
     int _maxAmmo;
     int _currentAmmo;
 
-    Adafruit_SSD1306 _display;
+    U8G2_SSD1306_128X64_NONAME_F_SW_I2C _u8g2;
 
     Button _triggerBtnArg;
     Button _magInsDetBtn;

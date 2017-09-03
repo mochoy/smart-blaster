@@ -24,7 +24,7 @@
 #define DEBOUNCE 20
 
 SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
-  _display(OLED_RESET),
+  u8g2(U8G2_R0, SCL, SDA, U8X8_PIN_NONE),
   _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
   _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
@@ -69,8 +69,8 @@ SmartBlaster SmartBlaster::initMagSizes (int magSizes[], int numOfMagSizes) {
 }
 
 SmartBlaster SmartBlaster::initDisplay () {
-    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    _display.clearDisplay();
+    _u8g2.begin();
+    _u8g2.clearDisplay();
 
     return *this;
 }
