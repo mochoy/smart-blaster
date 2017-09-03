@@ -28,10 +28,10 @@ SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
 
     initMagSizes(magSizes, numOfMagSizes);
 
-    // _ammoToPrint = "7";
-    // _chronoToPrint = "109.3";
-    // _voltageToPrint = "8.2";
-    // _fireModeToPrint = "SS";
+    _ammoToPrint = "";
+    _chronoToPrint = "";
+    _voltageToPrint = "";
+    _fireModeToPrint = "";
 }
 
 SmartBlaster SmartBlaster::init() {
@@ -41,19 +41,12 @@ SmartBlaster SmartBlaster::init() {
 }
 
 SmartBlaster SmartBlaster::smartMyBlaster() {
-    reload().toggleMagSizes();
+    // reload().toggleMagSizes();
 
     return *this;
 }
 
 
-
-SmartBlaster SmartBlaster::initDisplay () {
-    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    _display.clearDisplay();
-
-    return *this;
-}
 
 SmartBlaster SmartBlaster::initMagSizes (int magSizes[], int numOfMagSizes) {
       _numOfMagSizes = numOfMagSizes;
@@ -68,11 +61,19 @@ SmartBlaster SmartBlaster::initMagSizes (int magSizes[], int numOfMagSizes) {
       return *this;
 }
 
+SmartBlaster SmartBlaster::initDisplay () {
+    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    _display.clearDisplay();
+
+    return *this;
+}
+
 //helper function to display ammo. Initializes value to be passed displayed on display
 SmartBlaster SmartBlaster::initAmmoForDisplay (bool toPrint) {
-    // Serial.println("initing ammo!");   //for debugging
-
     _ammoToPrint = "00";    //default value
+
+    String myString = String(_currentAmmo);
+    Serial.println(myString);
 
     if (_currentAmmo < 10) {
         _ammoToPrint = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
@@ -80,7 +81,6 @@ SmartBlaster SmartBlaster::initAmmoForDisplay (bool toPrint) {
         _ammoToPrint = (String)_currentAmmo;       //convert int to string
     }
 
-    Serial.println(_ammoToPrint);
 
     if (toPrint) {
       printVals();
@@ -96,6 +96,7 @@ SmartBlaster SmartBlaster::printVals() {
     //tell the display where to draw the text
     _display.setCursor( (SCREEN_WIDTH/2) - ((_ammoToPrint.length()*2) * 9) , (SCREEN_HEIGHT/2) - 30 );  //center text
     _display.print(_ammoToPrint);    //print the text
+
 
     _display.setTextSize(1);
 
@@ -128,7 +129,6 @@ SmartBlaster SmartBlaster::reload () {
 
     //if button pressed, reload
     if (_magInsDetBtn.wasPressed()) {
-        Serial.println("Reloading!");
         _currentAmmo = _maxAmmo;
         initAmmoForDisplay(true);      //display new ammo
     }
