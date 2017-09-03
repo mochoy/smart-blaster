@@ -26,10 +26,10 @@ class SmartBlaster {
     uint8_t _isSelectFire;
 
     //stuff to keep track of what to print for each different value
-    char _ammoToPrint[2];
-    char _chronoToPrint[6];
-    String _voltageToPrint[4];
-    String _fireModeToPrint[2];
+    char _ammoToPrint[3];
+    char _chronoToPrint[7];
+    String _voltageToPrint[5];
+    String _fireModeToPrint[3];
 
     //keep track of ammo
     std::vector<int> _magSizes;

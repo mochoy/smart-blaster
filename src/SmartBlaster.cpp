@@ -24,7 +24,7 @@
 #define DEBOUNCE 20
 
 SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
-  u8g2(U8G2_R0, SCL, SDA, U8X8_PIN_NONE),
+  _u8g2(U8G2_R0, SCL, SDA, U8X8_PIN_NONE),
   _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
   _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
@@ -34,11 +34,6 @@ SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
     _isSelectFire = false;
 
     initMagSizes(magSizes, numOfMagSizes);
-
-    _ammoToPrint = "";
-    _chronoToPrint = "";
-    _voltageToPrint = "";
-    _fireModeToPrint = "";
 }
 
 SmartBlaster SmartBlaster::init() {
@@ -77,15 +72,12 @@ SmartBlaster SmartBlaster::initDisplay () {
 
 //helper function to display ammo. Initializes value to be passed displayed on display
 SmartBlaster SmartBlaster::initAmmoForDisplay (bool toPrint) {
-    _ammoToPrint = "00";    //default value
-
-    String myString = String(_currentAmmo);
-    Serial.println(myString);
+    String ammoToPrintBuffer = "00";    //default value
 
     if (_currentAmmo < 10) {
-        _ammoToPrint = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
+        ammoToPrintBuffer = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
     } else {
-        _ammoToPrint = (String)_currentAmmo;       //convert int to string
+        ammoToPrintBuffer = (String)_currentAmmo;       //convert int to string
     }
 
 
@@ -97,15 +89,15 @@ SmartBlaster SmartBlaster::initAmmoForDisplay (bool toPrint) {
 }
 
 SmartBlaster SmartBlaster::printVals() {
-    _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
-    _display.setTextSize(6);  //set the size of the text
-    _display.setTextColor(WHITE);    //set the color of text text
-    //tell the display where to draw the text
-    _display.setCursor( (SCREEN_WIDTH/2) - ((_ammoToPrint.length()*2) * 9) , (SCREEN_HEIGHT/2) - 30 );  //center text
-    _display.print(_ammoToPrint);    //print the text
+    // _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
+    // _display.setTextSize(6);  //set the size of the text
+    // _display.setTextColor(WHITE);    //set the color of text text
+    // //tell the display where to draw the text
+    // _display.setCursor( (SCREEN_WIDTH/2) - ((_ammoToPrint.length()*2) * 9) , (SCREEN_HEIGHT/2) - 30 );  //center text
+    // _display.print(_ammoToPrint);    //print the text
 
 
-    _display.setTextSize(1);
+    // _display.setTextSize(1);
 
     //display chrono values
     // if (_isChrono) {
@@ -125,7 +117,7 @@ SmartBlaster SmartBlaster::printVals() {
     //     _display.print(_fireModeToPrint);
     // }
 
-    _display.display(); //display the text
+    // _display.display(); //display the text
 
     return *this;
 }
