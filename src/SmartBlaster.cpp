@@ -12,9 +12,6 @@
 
 #include <Button.h>
 
-#include <StandardCplusplus.h>
-#include <vector>
-
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET 4
@@ -23,7 +20,7 @@
 #define INVERT false
 #define DEBOUNCE 20
 
-SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
+SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
   _u8g2(U8G2_R0, SCL, SDA, U8X8_PIN_NONE),
   _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
   _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
@@ -33,11 +30,14 @@ SmartBlaster::SmartBlaster (int magSizes[], int numOfMagSizes) :
     _isVoltmeter = false;
     _isSelectFire = false;
 
-    initMagSizes(magSizes, numOfMagSizes);
+    initMagSizes(magSizes);
 }
 
 SmartBlaster SmartBlaster::init() {
-    initDisplay().initAmmoForDisplay(true);
+	Serial.println("initing!");
+
+	initDisplay();
+	initAmmoForDisplay(true);
 
     return *this;
 }
@@ -50,45 +50,38 @@ SmartBlaster SmartBlaster::smartMyBlaster() {
 
 
 
-SmartBlaster SmartBlaster::initMagSizes (int magSizes[], int numOfMagSizes) {
-      _numOfMagSizes = numOfMagSizes;
-      for (int i = 0; i < _numOfMagSizes; i++) {
-          _magSizes.push_back(magSizes[i]);
-      }
+void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
+    _magSizes = magSizes;
 
-      _currentMagSize = 0;
-      _maxAmmo = _magSizes[_currentMagSize];
-      _currentAmmo = _maxAmmo;
-
-      return *this;
+	_currentMagSize = 0;
+	_maxAmmo = _magSizes[_currentMagSize];
+	_currentAmmo = _maxAmmo;
 }
 
-SmartBlaster SmartBlaster::initDisplay () {
+void SmartBlaster::initDisplay () {
     _u8g2.begin();
     _u8g2.clearDisplay();
-
-    return *this;
 }
 
 //helper function to display ammo. Initializes value to be passed displayed on display
-SmartBlaster SmartBlaster::initAmmoForDisplay (bool toPrint) {
-    String ammoToPrintBuffer = "00";    //default value
+void SmartBlaster::initAmmoForDisplay (bool toPrint) {
+    String ammoToPrintBuffer = (_currentAmmo < 10 ? "0" : "") + (String)_currentAmmo;    //determine whether to insert 0 at the beginning of ammo
 
-    if (_currentAmmo < 10) {
-        ammoToPrintBuffer = "0" + (String)_currentAmmo;     //put leading '0' if ammo less than 10
-    } else {
-        ammoToPrintBuffer = (String)_currentAmmo;       //convert int to string
-    }
+    Serial.print("ammo is ");
+    Serial.println(ammoToPrintBuffer);
 
+    ammoToPrintBuffer.toCharArray(_ammoToPrint, 3);	 //string to char arr
 
-    if (toPrint) {
-      printVals();
-    }
-
-    return *this;
+    if (toPrint) printVals();   //print vals based on whether to print them from this method 
 }
 
-SmartBlaster SmartBlaster::printVals() {
+void SmartBlaster::printVals() {
+    _u8g2.firstPage();   //keep track of pages
+    do {
+        _u8g2.setFont(u8g2_font_ncenB10_tr);   //select font
+        _u8g2.drawUTF8(0, 24, _ammoToPrint);    //draw text at certain coordiantes
+    } while (_u8g2.nextPage()); //keep track of pages
+
     // _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
     // _display.setTextSize(6);  //set the size of the text
     // _display.setTextColor(WHITE);    //set the color of text text
@@ -118,8 +111,6 @@ SmartBlaster SmartBlaster::printVals() {
     // }
 
     // _display.display(); //display the text
-
-    return *this;
 }
 
 //method to deal with reloading

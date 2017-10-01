@@ -14,9 +14,6 @@
 
 #include <Button.h>
 
-#include <StandardCplusplus.h>
-#include <vector>
-
 
 class SmartBlaster {
   private:
@@ -28,16 +25,15 @@ class SmartBlaster {
     //stuff to keep track of what to print for each different value
     char _ammoToPrint[3];
     char _chronoToPrint[7];
-    String _voltageToPrint[5];
-    String _fireModeToPrint[3];
+    char _voltageToPrint[5];
+    char _fireModeToPrint[3];
 
     //keep track of ammo
-    std::vector<int> _magSizes;
-        // uint8_t _magSizes[];
+    uint8_t *_magSizes;
     uint8_t _numOfMagSizes;
     uint8_t _currentMagSize;
-    int _maxAmmo;
-    int _currentAmmo;
+    uint8_t _maxAmmo;
+    uint8_t _currentAmmo;
 
     U8G2_SSD1306_128X64_NONAME_F_SW_I2C _u8g2;
 
@@ -46,19 +42,19 @@ class SmartBlaster {
     Button _magSzTogBtn;
 
     //init methods
-    SmartBlaster initMagSizes(int magSizes[], int numOfMagSizes);
+    void initMagSizes(uint8_t magSizes[]);
 
     //display methods
-    SmartBlaster initDisplay();     //initialize display right when it's created
-    SmartBlaster initAmmoForDisplay(bool toPrint);
-    SmartBlaster printVals();   //print all values at the same time, including ammo, chrono vals, etc.
+    void initDisplay();     //initialize display right when it's created
+    void initAmmoForDisplay(bool toPrint);
+    void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
     //smart blaster funcitonality methods
     SmartBlaster reload ();  //reload
     SmartBlaster toggleMagSizes ();
 
   public:
-    SmartBlaster(int magSizes[], int numOfMagSizes);
+    SmartBlaster(uint8_t magSizes[]);
     SmartBlaster init ();
     SmartBlaster smartMyBlaster();
 
