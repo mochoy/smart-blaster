@@ -1,27 +1,25 @@
 #include "Arduino.h"
 #include "SmartBlaster.h"
 
-#include <U8g2lib.h>
-
-#ifdef U8X8_HAVE_HW_SPI
-#include <SPI.h>
-#endif
-#ifdef U8X8_HAVE_HW_I2C
-#include <Wire.h>
-#endif
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 #include <Button.h>
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
-#define OLED_RESET 4
+#define OLED_MOSI   9
+#define OLED_CLK   10
+#define OLED_DC    11
+#define OLED_CS    12
+#define OLED_RESET 13
 
 #define PULLUP false
 #define INVERT false
 #define DEBOUNCE 20
 
 SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
-  _u8g2(U8G2_R0, SCL, SDA, U8X8_PIN_NONE),
+  _display(OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS),
   _triggerBtnArg(4, PULLUP, INVERT, DEBOUNCE),
   _magInsDetBtn(7, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
@@ -59,8 +57,8 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 }
 
 void SmartBlaster::initDisplay () {
-    _u8g2.begin();
-    _u8g2.clearDisplay();
+    _display.begin();
+    _display.clearDisplay();
 }
 
 //helper function to display ammo. Initializes value to be passed displayed on display
@@ -76,11 +74,11 @@ void SmartBlaster::initAmmoForDisplay (bool toPrint) {
 }
 
 void SmartBlaster::printVals() {
-    _u8g2.firstPage();   //keep track of pages
-    do {
-        _u8g2.setFont(u8g2_font_ncenB10_tr);   //select font
-        _u8g2.drawUTF8(0, 24, _ammoToPrint);    //draw text at certain coordiantes
-    } while (_u8g2.nextPage()); //keep track of pages
+    // _u8g2.firstPage();   //keep track of pages
+    // do {
+    //     _u8g2.setFont(u8g2_font_ncenB10_tr);   //select font
+    //     _u8g2.drawUTF8(0, 24, _ammoToPrint);    //draw text at certain coordiantes
+    // } while (_u8g2.nextPage()); //keep track of pages
 
     // _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
     // _display.setTextSize(6);  //set the size of the text

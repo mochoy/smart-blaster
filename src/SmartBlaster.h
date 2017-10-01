@@ -3,14 +3,8 @@
 
 #include "Arduino.h"
 
-#include <U8g2lib.h>
-
-#ifdef U8X8_HAVE_HW_SPI
-#include <SPI.h>
-#endif
-#ifdef U8X8_HAVE_HW_I2C
-#include <Wire.h>
-#endif
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 #include <Button.h>
 
@@ -35,7 +29,7 @@ class SmartBlaster {
     uint8_t _maxAmmo;
     uint8_t _currentAmmo;
 
-    U8G2_SSD1306_128X64_NONAME_F_SW_I2C _u8g2;
+    Adafruit_SSD1306 _display;
 
     Button _triggerBtnArg;
     Button _magInsDetBtn;
