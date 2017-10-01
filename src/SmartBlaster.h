@@ -31,21 +31,21 @@ class SmartBlaster {
 
     Adafruit_SSD1306 _display;
 
-    Button _triggerBtnArg;
-    Button _magInsDetBtn;
+    Button _swCntBtn;
+    Button _reloadBtn;
     Button _magSzTogBtn;
 
     //init methods
-    void initMagSizes(uint8_t magSizes[]);
+    // void initMagSizes(uint8_t magSizes[]);
 
-    //display methods
-    void initDisplay();     //initialize display right when it's created
-    void initAmmoForDisplay(bool toPrint);
-    void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
+    // //display methods
+    // void initDisplay();     //initialize display right when it's created
+    // void initAmmoForDisplay(bool toPrint);
+    // void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
-    //smart blaster funcitonality methods
-    SmartBlaster reload ();  //reload
-    SmartBlaster toggleMagSizes ();
+    // //smart blaster funcitonality methods
+    // SmartBlaster reload ();  //reload
+    // SmartBlaster toggleMagSizes ();
 
   public:
     SmartBlaster(uint8_t magSizes[]);
