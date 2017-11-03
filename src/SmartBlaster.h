@@ -36,21 +36,21 @@ class SmartBlaster {
     Button _magSzTogBtn;
 
     //init methods
-    // void initMagSizes(uint8_t magSizes[]);
+    void initMagSizes(uint8_t magSizes[]);
 
-    // //display methods
-    // void initDisplay();     //initialize display right when it's created
-    // void initAmmoForDisplay(bool toPrint);
-    // void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
+    //display methods
+    void initDisplay();     //initialize display right when it's created
+    void initAmmoForDisplay(bool toPrint);
+    void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
-    // //smart blaster funcitonality methods
-    // SmartBlaster reload ();  //reload
-    // SmartBlaster toggleMagSizes ();
+    //smart blaster funcitonality methods
+    SmartBlaster reload ();  //reload
+    SmartBlaster toggleMagSizes ();
 
   public:
     SmartBlaster(uint8_t magSizes[]);
-    SmartBlaster init ();
-    SmartBlaster smartMyBlaster();
+    void init ();
+    void smartMyBlaster();
 
 };
 
