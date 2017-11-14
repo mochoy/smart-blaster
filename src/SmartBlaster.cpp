@@ -51,6 +51,13 @@ uint8_t SmartBlaster::reload () {
 }
 
 //toggle between magazine sizes
+uint8_t SmartBlaster::countAmmo () {
+    
+
+    return _currentAmmo;
+}
+
+//toggle between magazine sizes
 uint8_t SmartBlaster::toggleMagSizes () {
     _magSzTogBtn.read(); //read button, using Button library
 

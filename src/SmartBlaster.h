@@ -49,8 +49,10 @@ class SmartBlaster {
     void smartMyBlaster();
     
     //smart blaster funcitonality methods
+    uint8_t countAmmo ();
     uint8_t reload ();  //reload
     uint8_t toggleMagSizes ();
+
 
 };
 
