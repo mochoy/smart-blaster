@@ -44,8 +44,8 @@ class SmartBlaster {
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
     //smart blaster funcitonality methods
-    SmartBlaster reload ();  //reload
-    SmartBlaster toggleMagSizes ();
+    uint8_t reload ();  //reload
+    uint8_t toggleMagSizes ();
 
   public:
     SmartBlaster(uint8_t magSizes[]);

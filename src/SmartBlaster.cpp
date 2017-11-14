@@ -107,7 +107,7 @@ void SmartBlaster::printVals() {
 }
 
 //method to deal with reloading
-SmartBlaster SmartBlaster::reload () {
+uint8_t SmartBlaster::reload () {
     _reloadBtn.read();    //read button, using Button library
 
     //if button pressed, reload
@@ -116,11 +116,11 @@ SmartBlaster SmartBlaster::reload () {
         initAmmoForDisplay(true);      //display new ammo
     }
 
-    return *this;
+    return _currentAmmo;
 }
 
 //toggle between magazine sizes
-SmartBlaster SmartBlaster::toggleMagSizes () {
+uint8_t SmartBlaster::toggleMagSizes () {
     _magSzTogBtn.read(); //read button, using Button library
 
     //if button was pressed, toggle size
@@ -136,5 +136,5 @@ SmartBlaster SmartBlaster::toggleMagSizes () {
 
     }
 
-    return *this;
+    return _maxAmmo;
 }
