@@ -38,6 +38,39 @@ void SmartBlaster::smartMyBlaster() {
     reload().toggleMagSizes().printVals();
 }
 
+uint8_t SmartBlaster::reload () {
+    _reloadBtn.read();    //read button, using Button library
+
+    //if button pressed, reload
+    if (_reloadBtn.wasPressed()) {
+        _currentAmmo = _maxAmmo;
+        initAmmoForDisplay(true);      //display new ammo
+    }
+
+    return _currentAmmo;
+}
+
+//toggle between magazine sizes
+uint8_t SmartBlaster::toggleMagSizes () {
+    _magSzTogBtn.read(); //read button, using Button library
+
+    //if button was pressed, toggle size
+    if (_magSzTogBtn.wasPressed()) {
+      //make sure mag sizes dont overflow
+      //if it does, it goes back to the first mag size
+      //if it doesn't, then goes to next mag size
+      //if it doesn't, then goes to next mag size
+      _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
+      _maxAmmo = _magSizes[_currentMagSize];
+      _currentAmmo = _maxAmmo;
+      initAmmoForDisplay(true);
+
+    }
+
+    return _maxAmmo;
+}
+
+
 
 
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
@@ -107,34 +140,4 @@ void SmartBlaster::printVals() {
 }
 
 //method to deal with reloading
-uint8_t SmartBlaster::reload () {
-    _reloadBtn.read();    //read button, using Button library
 
-    //if button pressed, reload
-    if (_reloadBtn.wasPressed()) {
-        _currentAmmo = _maxAmmo;
-        initAmmoForDisplay(true);      //display new ammo
-    }
-
-    return _currentAmmo;
-}
-
-//toggle between magazine sizes
-uint8_t SmartBlaster::toggleMagSizes () {
-    _magSzTogBtn.read(); //read button, using Button library
-
-    //if button was pressed, toggle size
-    if (_magSzTogBtn.wasPressed()) {
-      //make sure mag sizes dont overflow
-      //if it does, it goes back to the first mag size
-      //if it doesn't, then goes to next mag size
-      //if it doesn't, then goes to next mag size
-      _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
-      _maxAmmo = _magSizes[_currentMagSize];
-      _currentAmmo = _maxAmmo;
-      initAmmoForDisplay(true);
-
-    }
-
-    return _maxAmmo;
-}
