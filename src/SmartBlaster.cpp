@@ -72,14 +72,14 @@ uint8_t SmartBlaster::countAmmo () {
 }
 
 //toggle between magazine sizes
-uint8_t SmartBlaster::chrono () {
+uint32_t SmartBlaster::chrono () {
   if (_isChrono) {
     if (map(analogRead(IR_RECEIVER_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
       if (_firstTripTime == -10 && _secondTripTime == -10) {
         _firstTripTime = micros();
       } else if () {
         _secondTripTime = micros();
-        calculateChronoReadings();
+        return calculateChronoReadings();
       }
     }
   }
@@ -122,7 +122,7 @@ void SmartBlaster::initDisplay () {
     _display.clearDisplay();
 }
 
-void SmartBlaster::calculateChronoReadings () {
+uint32_t SmartBlaster::calculateChronoReadings () {
   if ( (tripTime > -10) && (exitTime > -10) ) {
       resetChronoVals();
       return (DART_LEGNTH_FEET) / ((secondTime-firstTime)/1000000.0);
