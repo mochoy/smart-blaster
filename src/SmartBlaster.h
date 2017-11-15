@@ -13,6 +13,7 @@ class SmartBlaster {
   private:
     //flags to know which modes are enabled
     uint8_t _isAmmoCounter;
+    uint8_t _isIRGate;
     uint8_t _isChrono;
     uint8_t _isVoltmeter;
 
