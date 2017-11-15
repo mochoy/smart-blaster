@@ -73,7 +73,16 @@ uint8_t SmartBlaster::countAmmo () {
 
 //toggle between magazine sizes
 uint8_t SmartBlaster::chrono () {
-  
+  if (_isChrono) {
+    if (map(analogRead(IR_RECEIVER_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
+      if (_firstTripTime == -10 && _secondTripTime == -10) {
+        _firstTripTime = micros();
+      } else if () {
+        _secondTripTime = micros();
+        calculateChronoReadings();
+      }
+    }
+  }
 }
 
 //toggle between magazine sizes
