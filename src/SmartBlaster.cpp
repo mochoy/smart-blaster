@@ -35,19 +35,22 @@ void SmartBlaster::init() {
 }
 
 void SmartBlaster::smartMyBlaster() {
-    reload().toggleMagSizes().printVals();
+  countAmmo();
+  reload();
+  toggleMagSizes();
+  printVals();
 }
 
 uint8_t SmartBlaster::reload () {
-    _reloadBtn.read();    //read button, using Button library
+  _reloadBtn.read();    //read button, using Button library
 
-    //if button pressed, reload
-    if (_reloadBtn.wasPressed()) {
-        _currentAmmo = _maxAmmo;
-        initAmmoForDisplay(true);      //display new ammo
-    }
+  //if button pressed, reload
+  if (_reloadBtn.wasPressed()) {
+    _currentAmmo = _maxAmmo;
+    initAmmoForDisplay(true);      //display new ammo
+  }
 
-    return _currentAmmo;
+  return _currentAmmo;
 }
 
 //toggle between magazine sizes
