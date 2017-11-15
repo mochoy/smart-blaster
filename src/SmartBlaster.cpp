@@ -58,8 +58,8 @@ uint8_t SmartBlaster::reload () {
 
 //toggle between magazine sizes
 uint8_t SmartBlaster::countAmmo () {
-    _swCntBtn.read();
     if (!_isChrono && !isIRGate && _isAmmoCounter) {
+      _swCntBtn.read();
       if (_swCntBtn.wasPressed()) {
         if (_maxAmmo != 0 && _currentAmmo < 99) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
           currentAmmo--;    //increment ammo
