@@ -118,12 +118,6 @@ void SmartBlaster::initAmmoForDisplay (bool toPrint) {
 }
 
 void SmartBlaster::printVals() {
-    // _u8g2.firstPage();   //keep track of pages
-    // do {
-    //     _u8g2.setFont(u8g2_font_ncenB10_tr);   //select font
-    //     _u8g2.drawUTF8(0, 24, _ammoToPrint);    //draw text at certain coordiantes
-    // } while (_u8g2.nextPage()); //keep track of pages
-
     String toPrint = ((String)(8) + "");
 
     _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
@@ -134,29 +128,4 @@ void SmartBlaster::printVals() {
 
     _display.display(); //display the text
 
-
-
-    // _display.setTextSize(1);
-
-    //display chrono values
-    // if (_isChrono) {
-    //     _display.setCursor(0, 50);
-    //     _display.print(_chronoToPrint);
-    // }
-    //
-    // //display voltage values
-    // if (_isVoltmeter) {
-    //     _display.setCursor(60, 50);
-    //     _display.print(_voltageToPrint);
-    // }
-    //
-    // //display fire mode
-    // if (_isSelectFire) {
-    //     _display.setCursor(100, 50);
-    //     _display.print(_fireModeToPrint);
-    // }
-
 }
-
-//method to deal with reloading
-
