@@ -73,7 +73,7 @@ uint32_t SmartBlaster::chrono () {
     if (map(analogRead(IR_RECEIVER_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
       if (_firstTripTime == -10 && _secondTripTime == -10) {
         _firstTripTime = micros();
-      } else if () {
+      } else if (_firstTripTime != -10 && _secondTripTime == -10) {
         _secondTripTime = micros();
         resetChronoVals();
         countAmmo();
