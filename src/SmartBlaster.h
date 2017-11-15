@@ -32,9 +32,15 @@ class SmartBlaster {
 
     Adafruit_SSD1306 _display;
 
+    //keep track of buttons
     Button _swCntBtn;
     Button _reloadBtn;
     Button _magSzTogBtn;
+    
+    //keep track of chrono vals
+    uint32_t _chronoVal;
+    uint32_t _firstTripTime;
+    uint32_t _secondTripTime;
 
     //init methods
     void initMagSizes(uint8_t magSizes[]);
@@ -53,6 +59,7 @@ class SmartBlaster {
     uint8_t countAmmo ();
     uint8_t reload ();  //reload
     uint8_t toggleMagSizes ();
+    uint8_t chrono ();
 
 
 };
