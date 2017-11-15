@@ -79,9 +79,11 @@ uint32_t SmartBlaster::chrono () {
         _firstTripTime = micros();
       } else if () {
         _secondTripTime = micros();
+        resetChronoVals();
+        countAmmo();
         return calculateChronoReadings();
       }
-    }
+    } 
   }
 }
 
