@@ -44,6 +44,9 @@ class SmartBlaster {
 
     //init methods
     void initMagSizes(uint8_t magSizes[]);
+    
+    void calculateChronoReading();
+    void resetChronoVals();
 
     //display methods
     void initDisplay();     //initialize display right when it's created

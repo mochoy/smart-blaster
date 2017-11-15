@@ -20,10 +20,9 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
   _reloadBtn(7, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
 
-    _isChrono = false;
-    _isVoltmeter = false;
-    _isSelectFire = false;
-
+    _firstTripTime = -10;
+    _secondTripTime = -10;
+  
     initMagSizes(magSizes);
 }
 
@@ -100,6 +99,7 @@ uint8_t SmartBlaster::toggleMagSizes () {
 
 
 
+
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
     _magSizes = magSizes;
 
@@ -111,6 +111,18 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 void SmartBlaster::initDisplay () {
     _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     _display.clearDisplay();
+}
+
+void SmartBlaster::calculateChronoReadings () {
+  if ( (tripTime > -10) && (exitTime > -10) ) {
+      resetChronoVals();
+      return (DART_LEGNTH_FEET) / ((secondTime-firstTime)/1000000.0);
+  }
+}
+
+void SmartBlaster::resetChronoVals () {
+  _firstTripTime = -10;
+  _secondTripTime = -10;
 }
 
 //helper function to display ammo. Initializes value to be passed displayed on display
