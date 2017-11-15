@@ -56,18 +56,14 @@ uint8_t SmartBlaster::reload () {
 }
 
 //toggle between magazine sizes
-uint8_t SmartBlaster::countAmmo () {
+uint8_t SmartBlaster::ammoCounter () {
     if (!_isChrono && !isIRGate && _isAmmoCounter) {
       _swCntBtn.read();
       if (_swCntBtn.wasPressed()) {
-        if (_maxAmmo != 0 && _currentAmmo < 99) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
-          currentAmmo--;    //increment ammo
-        } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
-          _currentAmmo++;    //decrement ammo
-        }
+        countAmmo();
       }
     }
-
+    
     return _currentAmmo;
 }
 
@@ -122,6 +118,14 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 void SmartBlaster::initDisplay () {
     _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     _display.clearDisplay();
+}
+
+void countAmmo () {
+  if (_maxAmmo != 0 && _currentAmmo < 99) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
+        currentAmmo--;    //increment ammo
+    } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
+      _currentAmmo++;    //decrement ammo
+    }
 }
 
 uint32_t SmartBlaster::calculateChronoReadings () {
