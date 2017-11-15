@@ -27,7 +27,7 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
     initMagSizes(magSizes);
 }
 
-void SmartBlaster::init() {
+void SmartBlaster::init(bool isAmmoCounter, bool isChrono, bool isVoltMeter) {
 	// Serial.println("initing!");
 
 	initDisplay();

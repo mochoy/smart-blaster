@@ -12,9 +12,9 @@
 class SmartBlaster {
   private:
     //flags to know which modes are enabled
+    uint8_t _isAmmoCounter;
     uint8_t _isChrono;
     uint8_t _isVoltmeter;
-    uint8_t _isSelectFire;
 
     //stuff to keep track of what to print for each different value
     char _ammoToPrint[3];
@@ -45,7 +45,7 @@ class SmartBlaster {
 
   public:
     SmartBlaster(uint8_t magSizes[]);
-    void init ();
+    void init (bool isAmmoCounter, bool isChrono, bool isVoltMeter);
     void smartMyBlaster();
     
     //smart blaster funcitonality methods
