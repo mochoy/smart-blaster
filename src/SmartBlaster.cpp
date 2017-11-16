@@ -38,7 +38,15 @@ void SmartBlaster::init(bool isAmmoCounter, bool isIRGate bool isChrono, bool is
 }
 
 void SmartBlaster::smartMyBlaster() {
-  countAmmo();
+  if (_isAmmoCounter) {
+    ammoCounter();
+  }
+  if (_isChrono) {
+    chrono();
+  }
+  if (_isVoltmeter) {
+    voltmeter();
+  }
   reload();
   toggleMagSizes();
   printVals();
