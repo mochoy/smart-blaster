@@ -79,7 +79,11 @@ uint32_t SmartBlaster::chrono () {
         countAmmo();
         return calculateChronoReadings();
       }
-    } 
+    } else if (micros() > _firstTripTime + 1000000 && _secondTripTime != -10) {
+      return 0;
+    } else if (_firstTripTime > _secondTripTime) {
+      return 0;
+    }
   }
 }
 
