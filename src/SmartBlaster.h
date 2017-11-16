@@ -16,6 +16,8 @@ class SmartBlaster {
     uint8_t _isIRGate;
     uint8_t _isChrono;
     uint8_t _isVoltmeter;
+    uint8_t _isSelectFire;
+
 
     //stuff to keep track of what to print for each different value
     char _ammoToPrint[3];

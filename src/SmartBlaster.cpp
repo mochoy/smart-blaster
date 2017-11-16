@@ -26,11 +26,12 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
     initMagSizes(magSizes);
 }
 
-void SmartBlaster::init(bool isAmmoCounter, bool isIRGate bool isChrono, bool isVoltMeter) {
+void SmartBlaster::init(bool isAmmoCounter, bool isIRGate bool isChrono, bool isVoltMeter bool isSelectFire) {
   _isAmmoCounter = isAmmoCounter;
   _isIRGate = isIRGate;
   _isChrono = isChrono;
   _isVoltmeter = isVoltMeter;
+  _isSelectFire = isSelectFire
 
 	initDisplay();
 	initAmmoForDisplay(true);
