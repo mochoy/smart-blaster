@@ -134,7 +134,8 @@ void countAmmo () {
 uint32_t SmartBlaster::calculateChronoReadings () {
   if ( (tripTime > -10) && (exitTime > -10) ) {
       resetChronoVals();
-      return (DART_LEGNTH_FEET) / ((secondTime-firstTime)/1000000.0);
+      _chronoVal = (DART_LEGNTH_FEET) / ((secondTime-firstTime)/1000000.0);
+      return _chronoVals;
   }
 }
 
