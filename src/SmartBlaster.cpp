@@ -31,7 +31,7 @@ void SmartBlaster::init(bool isAmmoCounter, bool isIRGate bool isChrono, bool is
   _isIRGate = isIRGate;
   _isChrono = isChrono;
   _isVoltmeter = isVoltMeter;
-  _isSelectFire = isSelectFire
+  _isSelectFire = isSelectFire;
 
 	initDisplay();
 	initAmmoForDisplay(true);
