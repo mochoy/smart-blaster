@@ -13,18 +13,15 @@ byte modes[] = {false, false, false, false};
 byte pins[] = {1, 2, 3, 255, 255, 255};
 byte magSizes[] = {5, 6, 8, 10, 12, 15, 18, 19, 20, 22, 25, 36, 0};
 
-SmartBlaster smartBlaster(modes, pins, magSizes);
+SmartBlaster smartBlaster(magSizes);
 
 
 void setup() {
-  // put your setup code here, to run once:
-  pinMode(2, INPUT);
-  pinMode(3, INPUT);
-  pinMode(5, INPUT);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  smartBlaster.smartMyBlaster();
+  // smartBlaster.smartMyBlaster();
 
 }

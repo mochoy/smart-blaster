@@ -18,6 +18,7 @@ class SmartBlaster {
     uint8_t _isVoltmeter;
     uint8_t _isSelectFire;
 
+    uint8_t _IR_RECEIVER_PIN;
 
     //stuff to keep track of what to print for each different value
     char _ammoToPrint[3];
@@ -38,7 +39,7 @@ class SmartBlaster {
     Button _swCntBtn;
     Button _reloadBtn;
     Button _magSzTogBtn;
-    
+
     //keep track of chrono vals
     uint32_t _chronoVal;
     uint32_t _firstTripTime;
@@ -46,9 +47,9 @@ class SmartBlaster {
 
     //init methods
     void initMagSizes(uint8_t magSizes[]);
-    
+
     void countAmmo();
-    
+
     uint32_t calculateChronoReading();
     void resetChronoVals();
 
@@ -59,9 +60,9 @@ class SmartBlaster {
 
   public:
     SmartBlaster(uint8_t magSizes[]);
-    void init (bool isAmmoCounter, bool isChrono, bool isVoltMeter);
+    void init (bool isAmmoCounter, bool isIRGate, bool isChrono, bool isVoltMeter, bool isSelectFire);
     void smartMyBlaster();
-    
+
     //smart blaster funcitonality methods
     uint8_t ammoCounter ();
     uint8_t reload ();  //reload

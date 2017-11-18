@@ -14,6 +14,9 @@
 #define INVERT false
 #define DEBOUNCE 20
 
+#define DART_LEGNTH_FEET 2.83465
+#define IR_MAP_TRIP_VAL 90
+
 SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
   _display(OLED_RESET),
   _swCntBtn(4, PULLUP, INVERT, DEBOUNCE),
@@ -22,11 +25,11 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
 
     _firstTripTime = -10;
     _secondTripTime = -10;
-  
+
     initMagSizes(magSizes);
 }
 
-void SmartBlaster::init(bool isAmmoCounter, bool isIRGate bool isChrono, bool isVoltMeter bool isSelectFire) {
+void SmartBlaster::init(bool isAmmoCounter, bool isIRGate, bool isChrono, bool isVoltMeter, bool isSelectFire) {
   _isAmmoCounter = isAmmoCounter;
   _isIRGate = isIRGate;
   _isChrono = isChrono;
@@ -45,7 +48,7 @@ void SmartBlaster::smartMyBlaster() {
     chrono();
   }
   if (_isVoltmeter) {
-    voltmeter();
+    // voltmeter();
   }
   reload();
   toggleMagSizes();
@@ -66,32 +69,32 @@ uint8_t SmartBlaster::reload () {
 
 //toggle between magazine sizes
 uint8_t SmartBlaster::ammoCounter () {
-    if (!_isChrono && !isIRGate && _isAmmoCounter) {
+    if (!_isChrono && !_isIRGate && _isAmmoCounter) {
       _swCntBtn.read();
       if (_swCntBtn.wasPressed()) {
         countAmmo();
       }
     }
-    
+
     return _currentAmmo;
 }
 
 //toggle between magazine sizes
 uint32_t SmartBlaster::chrono () {
   if (_isChrono) {
-    if (map(analogRead(IR_RECEIVER_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
+    if (map(analogRead(_IR_RECEIVER_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
       if (_firstTripTime == -10 && _secondTripTime == -10) {
         _firstTripTime = micros();
       } else if (_firstTripTime != -10 && _secondTripTime == -10) {
         _secondTripTime = micros();
         resetChronoVals();
         countAmmo();
-        return calculateChronoReadings();
+        return calculateChronoReading();
       }
-    } else if ( (micros() > _firstTripTime + 1000000 && _secondTripTime != -10) || ((_firstTripTime > _secondTripTime) ) {
+    } else if ( (micros() > _firstTripTime + 1000000 && _secondTripTime != -10) || (_firstTripTime > _secondTripTime)  ) {
       resetChronoVals();
       return 0;
-    } 
+    }
   }
 }
 
@@ -132,19 +135,19 @@ void SmartBlaster::initDisplay () {
     _display.clearDisplay();
 }
 
-void countAmmo () {
+void SmartBlaster::countAmmo () {
   if (_maxAmmo != 0 && _currentAmmo < 99) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
-        currentAmmo--;    //increment ammo
+        _currentAmmo--;    //increment ammo
     } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
       _currentAmmo++;    //decrement ammo
     }
 }
 
-uint32_t SmartBlaster::calculateChronoReadings () {
-  if ( (tripTime > -10) && (exitTime > -10) ) {
+uint32_t SmartBlaster::calculateChronoReading () {
+  if ( (_firstTripTime > -10) && (_secondTripTime > -10) ) {
       resetChronoVals();
-      _chronoVal = (DART_LEGNTH_FEET) / ((secondTime-firstTime)/1000000.0);
-      return _chronoVals;
+      _chronoVal = (DART_LEGNTH_FEET) / ((_secondTripTime-_firstTripTime)/1000000.0);
+      return _chronoVal;
   }
 }
 
@@ -162,7 +165,7 @@ void SmartBlaster::initAmmoForDisplay (bool toPrint) {
 
     ammoToPrintBuffer.toCharArray(_ammoToPrint, 3);	 //string to char arr
 
-    if (toPrint) printVals();   //print vals based on whether to print them from this method 
+    if (toPrint) printVals();   //print vals based on whether to print them from this method
 }
 
 void SmartBlaster::printVals() {
