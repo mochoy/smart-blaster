@@ -23,18 +23,11 @@ SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
   _reloadBtn(7, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
 
-    _firstTripTime = -10;
-    _secondTripTime = -10;
-
     initMagSizes(magSizes);
 }
 
-void SmartBlaster::init(bool isAmmoCounter, bool isIRGate, bool isChrono, bool isVoltMeter, bool isSelectFire) {
+void SmartBlaster::init(bool isAmmoCounter) {
   _isAmmoCounter = isAmmoCounter;
-  _isIRGate = isIRGate;
-  _isChrono = isChrono;
-  _isVoltmeter = isVoltMeter;
-  _isSelectFire = isSelectFire;
 
 	initDisplay();
 	initAmmoForDisplay();
@@ -42,14 +35,33 @@ void SmartBlaster::init(bool isAmmoCounter, bool isIRGate, bool isChrono, bool i
 
 void SmartBlaster::smartMyBlaster() {
   ammoCounter();
-  if (_isChrono) {
-    chrono();
-  }
-  if (_isVoltmeter) {
-    // voltmeter();
-  }
   reload();
   toggleMagSizes();
+}
+
+
+
+
+void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
+    _magSizes = magSizes;
+
+  _currentMagSize = 0;
+  _maxAmmo = _magSizes[_currentMagSize];
+  _currentAmmo = _maxAmmo;
+}
+
+void SmartBlaster::initDisplay () {
+    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    _display.clearDisplay();
+}
+
+//toggle between magazine sizes
+uint8_t SmartBlaster::ammoCounter () {
+  _swCntBtn.read();
+  if (_swCntBtn.wasPressed()) {
+    countAmmo();
+  }
+  return _currentAmmo;
 }
 
 uint8_t SmartBlaster::reload () {
@@ -63,31 +75,6 @@ uint8_t SmartBlaster::reload () {
   }
 
   return _currentAmmo;
-}
-
-//toggle between magazine sizes
-uint8_t SmartBlaster::ammoCounter () {
-  ammoCounterPriv();
-  return _currentAmmo;
-}
-
-//toggle between magazine sizes
-uint32_t SmartBlaster::chrono () {
-  if (_isChrono) {
-    if (map(analogRead(_IR_RECEIVER_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
-      if (_firstTripTime == -10 && _secondTripTime == -10) {
-        _firstTripTime = micros();
-      } else if (_firstTripTime != -10 && _secondTripTime == -10) {
-        _secondTripTime = micros();
-        resetChronoVals();
-        countAmmo();
-        return calculateChronoReading();
-      }
-    } else if ( (micros() > _firstTripTime + 1000000 && _secondTripTime != -10) || (_firstTripTime > _secondTripTime)  ) {
-      resetChronoVals();
-      return 0;
-    }
-  }
 }
 
 //toggle between magazine sizes
@@ -110,32 +97,6 @@ uint8_t SmartBlaster::toggleMagSizes () {
     return _maxAmmo;
 }
 
-
-
-
-
-void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
-    _magSizes = magSizes;
-
-	_currentMagSize = 0;
-	_maxAmmo = _magSizes[_currentMagSize];
-	_currentAmmo = _maxAmmo;
-}
-
-void SmartBlaster::initDisplay () {
-    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    _display.clearDisplay();
-}
-
-void SmartBlaster::ammoCounterPriv () {
-  if (!_isChrono && !_isIRGate && _isAmmoCounter) {
-    _swCntBtn.read();
-    if (_swCntBtn.wasPressed()) {
-      countAmmo();
-    }
-  }
-}
-
 void SmartBlaster::countAmmo () {
   Serial.print("From countAmmo():");
   Serial.println(_currentAmmo);
@@ -150,19 +111,6 @@ void SmartBlaster::countAmmo () {
   Serial.println(_currentAmmo);
 
   initAmmoForDisplay();
-}
-
-uint32_t SmartBlaster::calculateChronoReading () {
-  if ( (_firstTripTime > -10) && (_secondTripTime > -10) ) {
-      resetChronoVals();
-      _chronoVal = (DART_LEGNTH_FEET) / ((_secondTripTime-_firstTripTime)/1000000.0);
-      return _chronoVal;
-  }
-}
-
-void SmartBlaster::resetChronoVals () {
-  _firstTripTime = -10;
-  _secondTripTime = -10;
 }
 
 //helper function to display ammo. Initializes value to be passed displayed on display

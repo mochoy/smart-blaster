@@ -13,18 +13,9 @@ class SmartBlaster {
   private:
     //flags to know which modes are enabled
     uint8_t _isAmmoCounter;
-    uint8_t _isIRGate;
-    uint8_t _isChrono;
-    uint8_t _isVoltmeter;
-    uint8_t _isSelectFire;
-
-    uint8_t _IR_RECEIVER_PIN;
 
     //stuff to keep track of what to print for each different value
     String _ammoToPrint;
-    String _chronoToPrint;
-    String _voltageToPrint;
-    String _fireModeToPrint;
 
     //keep track of ammo
     uint8_t *_magSizes;
@@ -33,6 +24,7 @@ class SmartBlaster {
     uint8_t _maxAmmo;
     uint8_t _currentAmmo;
 
+    //display to print stuff on
     Adafruit_SSD1306 _display;
 
     //keep track of buttons
@@ -40,36 +32,24 @@ class SmartBlaster {
     Button _reloadBtn;
     Button _magSzTogBtn;
 
-    //keep track of chrono vals
-    uint32_t _chronoVal;
-    uint32_t _firstTripTime;
-    uint32_t _secondTripTime;
-
-    //init methods
+    //init methods upon instantiation
     void initMagSizes(uint8_t magSizes[]);
-
-    void ammoCounterPriv ();
-
-    void countAmmo();
-
-    uint32_t calculateChronoReading();
-    void resetChronoVals();
-
-    //display methods
-    void initDisplay();     //initialize display right when it's created
-    void initAmmoForDisplay();
-    void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
-
-  public:
-    SmartBlaster(uint8_t magSizes[]);
-    void init (bool isAmmoCounter, bool isIRGate, bool isChrono, bool isVoltMeter, bool isSelectFire);
-    void smartMyBlaster();
+    void initDisplay();
 
     //smart blaster funcitonality methods
     uint8_t ammoCounter ();
     uint8_t reload ();  //reload
     uint8_t toggleMagSizes ();
-    uint32_t chrono ();
+
+    void countAmmo();
+
+    void initAmmoForDisplay();
+    void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
+
+  public:
+    SmartBlaster(uint8_t magSizes[]);
+    void init (bool isAmmoCounter);
+    void smartMyBlaster();
 
 
 };
