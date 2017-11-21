@@ -57,6 +57,7 @@ uint8_t SmartBlaster::reload () {
 
   //if button pressed, reload
   if (_reloadBtn.wasPressed()) {
+    // Serial.println("reloading!");
     _currentAmmo = _maxAmmo;
     initAmmoForDisplay();      //display new ammo
   }
@@ -136,11 +137,18 @@ void SmartBlaster::ammoCounterPriv () {
 }
 
 void SmartBlaster::countAmmo () {
+  Serial.print("From countAmmo():");
+  Serial.println(_currentAmmo);
+
   if (_maxAmmo != 0 && _currentAmmo < 99 && _currentAmmo > 0) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
     _currentAmmo--;    //increment ammo
   } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
     _currentAmmo++;    //decrement ammo
   }
+
+  Serial.print("After:");
+  Serial.println(_currentAmmo);
+
   initAmmoForDisplay();
 }
 
@@ -161,8 +169,8 @@ void SmartBlaster::resetChronoVals () {
 void SmartBlaster::initAmmoForDisplay () {
   _ammoToPrint = (_currentAmmo < 10 ? "0" : "") + (String)_currentAmmo;    //determine whether to insert 0 at the beginning of ammo
 
-  Serial.print("ammo is ");
-  Serial.println(_ammoToPrint);
+  // Serial.print("ammo is ");
+  // Serial.println(_ammoToPrint);
 
    printVals();   //print vals based on whether to print them from this method
 }
