@@ -3,8 +3,11 @@
 
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-
 #include <Button.h>
+
+#define SW_CNT_BTN_PIN 4
+#define RELOAD_BTN_PIN 7
+#define MAG_SZ_TOG_BTN_PIN 8
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -20,9 +23,9 @@
 
 SmartBlaster::SmartBlaster () :
   _display(OLED_RESET),
-  _swCntBtn(4, PULLUP, INVERT, DEBOUNCE),
-  _reloadBtn(7, PULLUP, INVERT, DEBOUNCE),
-  _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
+  _swCntBtn(SW_CNT_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
+  _reloadBtn(RELOAD_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
+  _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
 
 }
 
@@ -41,8 +44,6 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 }
 
 void SmartBlaster::smartMyBlaster() {
-  initAmmoForDisplay();
-
   ammoCounter();
   reload();
   toggleMagSizes();
@@ -53,8 +54,8 @@ void SmartBlaster::smartMyBlaster() {
 
 
 void SmartBlaster::initDisplay () {
-    _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    _display.clearDisplay();
+  _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  _display.clearDisplay();
 }
 
 //toggle between magazine sizes
@@ -100,17 +101,11 @@ uint8_t SmartBlaster::toggleMagSizes () {
 }
 
 void SmartBlaster::countAmmo () {
-  Serial.print("From countAmmo():");
-  Serial.println(_currentAmmo);
-
   if (_maxAmmo != 0 && _currentAmmo < 99 && _currentAmmo > 0) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
     _currentAmmo--;    //increment ammo
   } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
     _currentAmmo++;    //decrement ammo
   }
-
-  Serial.print("After:");
-  Serial.println(_currentAmmo);
 
   initAmmoForDisplay();
 }
@@ -118,10 +113,6 @@ void SmartBlaster::countAmmo () {
 //helper function to display ammo. Initializes value to be passed displayed on display
 void SmartBlaster::initAmmoForDisplay () {
   _ammoToPrint = (_currentAmmo < 10 ? "0" : "") + (String)_currentAmmo;    //determine whether to insert 0 at the beginning of ammo
-
-  // Serial.print("ammo is ");
-  // Serial.println(_ammoToPrint);
-
    printVals();   //print vals based on whether to print them from this method
 }
 
