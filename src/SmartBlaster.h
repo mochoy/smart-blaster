@@ -55,7 +55,7 @@ class SmartBlaster {
 
     //display methods
     void initDisplay();     //initialize display right when it's created
-    void initAmmoForDisplay(bool toPrint);
+    void initAmmoForDisplay();
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
   public:
