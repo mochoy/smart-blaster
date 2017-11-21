@@ -17,23 +17,32 @@
 #define DART_LEGNTH_FEET 2.83465
 #define IR_MAP_TRIP_VAL 90
 
-SmartBlaster::SmartBlaster (uint8_t magSizes[]) :
+
+SmartBlaster::SmartBlaster () :
   _display(OLED_RESET),
   _swCntBtn(4, PULLUP, INVERT, DEBOUNCE),
   _reloadBtn(7, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(8, PULLUP, INVERT, DEBOUNCE)  {
 
-    initMagSizes(magSizes);
 }
 
 void SmartBlaster::init(bool isAmmoCounter) {
   _isAmmoCounter = isAmmoCounter;
 
-	initDisplay();
-	initAmmoForDisplay();
+  initDisplay();
+}
+
+void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
+  _magSizes = magSizes;
+
+  _currentMagSize = 0;
+  _maxAmmo = _magSizes[_currentMagSize];
+  _currentAmmo = _maxAmmo;
 }
 
 void SmartBlaster::smartMyBlaster() {
+  initAmmoForDisplay();
+
   ammoCounter();
   reload();
   toggleMagSizes();
@@ -42,13 +51,6 @@ void SmartBlaster::smartMyBlaster() {
 
 
 
-void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
-    _magSizes = magSizes;
-
-  _currentMagSize = 0;
-  _maxAmmo = _magSizes[_currentMagSize];
-  _currentAmmo = _maxAmmo;
-}
 
 void SmartBlaster::initDisplay () {
     _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);

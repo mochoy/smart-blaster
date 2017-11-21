@@ -33,7 +33,6 @@ class SmartBlaster {
     Button _magSzTogBtn;
 
     //init methods upon instantiation
-    void initMagSizes(uint8_t magSizes[]);
     void initDisplay();
 
     //smart blaster funcitonality methods
@@ -47,8 +46,9 @@ class SmartBlaster {
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
   public:
-    SmartBlaster(uint8_t magSizes[]);
+    SmartBlaster();
     void init (bool isAmmoCounter);
+    void initMagSizes(uint8_t magSizes[]);
     void smartMyBlaster();
 
 
