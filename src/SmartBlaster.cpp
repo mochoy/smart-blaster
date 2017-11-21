@@ -41,18 +41,15 @@ void SmartBlaster::init(bool isAmmoCounter, bool isIRGate, bool isChrono, bool i
 }
 
 void SmartBlaster::smartMyBlaster() {
-  if (_isAmmoCounter) {
-    ammoCounter();
-  }
+  ammoCounter();
   if (_isChrono) {
     chrono();
   }
   if (_isVoltmeter) {
     // voltmeter();
   }
-  // reload();
-  // toggleMagSizes();
-  // printVals();
+  reload();
+  toggleMagSizes();
 }
 
 uint8_t SmartBlaster::reload () {
@@ -69,14 +66,8 @@ uint8_t SmartBlaster::reload () {
 
 //toggle between magazine sizes
 uint8_t SmartBlaster::ammoCounter () {
-    if (!_isChrono && !_isIRGate && _isAmmoCounter) {
-      _swCntBtn.read();
-      if (_swCntBtn.wasPressed()) {
-        countAmmo();
-      }
-    }
-
-    return _currentAmmo;
+  ammoCounterPriv();
+  return _currentAmmo;
 }
 
 //toggle between magazine sizes
@@ -135,8 +126,17 @@ void SmartBlaster::initDisplay () {
     _display.clearDisplay();
 }
 
+void SmartBlaster::ammoCounterPriv () {
+  if (!_isChrono && !_isIRGate && _isAmmoCounter) {
+    _swCntBtn.read();
+    if (_swCntBtn.wasPressed()) {
+      countAmmo();
+    }
+  }
+}
+
 void SmartBlaster::countAmmo () {
-  if (_maxAmmo != 0 && _currentAmmo < 99) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
+  if (_maxAmmo != 0 && _currentAmmo < 99 && _currentAmmo > 0) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
     _currentAmmo--;    //increment ammo
   } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
     _currentAmmo++;    //decrement ammo
@@ -159,12 +159,10 @@ void SmartBlaster::resetChronoVals () {
 
 //helper function to display ammo. Initializes value to be passed displayed on display
 void SmartBlaster::initAmmoForDisplay () {
-  String ammoToPrintBuffer = (_currentAmmo < 10 ? "0" : "") + (String)_currentAmmo;    //determine whether to insert 0 at the beginning of ammo
+  _ammoToPrint = (_currentAmmo < 10 ? "0" : "") + (String)_currentAmmo;    //determine whether to insert 0 at the beginning of ammo
 
   Serial.print("ammo is ");
-  Serial.println(ammoToPrintBuffer);
-
-  // ammoToPrintBuffer.toCharArray(_ammoToPrint, 3);	 //string to char arr
+  Serial.println(_ammoToPrint);
 
    printVals();   //print vals based on whether to print them from this method
 }
@@ -174,7 +172,7 @@ void SmartBlaster::printVals() {
     _display.setTextSize(4);  //set the size of the text
     _display.setTextColor(WHITE);    //set the color of text text
     _display.setCursor(0, 0);  //center text
-    _display.print(_currentAmmo);    //print the text
+    _display.print(_ammoToPrint);    //print the text
 
     _display.display(); //display the text
 

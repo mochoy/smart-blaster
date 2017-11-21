@@ -48,6 +48,8 @@ class SmartBlaster {
     //init methods
     void initMagSizes(uint8_t magSizes[]);
 
+    void ammoCounterPriv ();
+
     void countAmmo();
 
     uint32_t calculateChronoReading();
