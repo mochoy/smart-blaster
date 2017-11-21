@@ -21,10 +21,10 @@ class SmartBlaster {
     uint8_t _IR_RECEIVER_PIN;
 
     //stuff to keep track of what to print for each different value
-    char _ammoToPrint[3];
-    char _chronoToPrint[7];
-    char _voltageToPrint[5];
-    char _fireModeToPrint[3];
+    String _ammoToPrint;
+    String _chronoToPrint;
+    String _voltageToPrint;
+    String _fireModeToPrint;
 
     //keep track of ammo
     uint8_t *_magSizes;
