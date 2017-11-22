@@ -13,8 +13,8 @@
 #define SCREEN_HEIGHT 64
 #define OLED_RESET 4
 
-#define PULLUP false
-#define INVERT false
+#define PULLUP true
+#define INVERT true
 #define DEBOUNCE 20
 
 #define DART_LEGNTH_FEET 2.83465
