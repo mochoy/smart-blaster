@@ -26,6 +26,7 @@ SmartBlaster::SmartBlaster () :
   _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
 
     resetChronoVals();
+    _chronoVal = 0;
 }
 
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[]) {
@@ -146,10 +147,12 @@ void SmartBlaster::chrono () {
         if (_isIRGateAmmoCounter) {
           countAmmo();
         }
-        // calculateChronoReading();
+        calculateChronoReading();
+        initChronoValForDisplay(false);
       }
     } else if ( (micros() > _firstTripTime + 1000000 && _secondTripTime != -10) || (_firstTripTime > _secondTripTime)  ) {
       resetChronoVals();
+      initChronoValForDisplay(true);
     }
   }
 }
@@ -173,16 +176,33 @@ void SmartBlaster::initAmmoForDisplay () {
    printVals();   //print vals based on whether to print them from this method
 }
 
-void SmartBlaster::printVals() {
-    _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
-    if (_isSwitchAmmoCounter || _isIRGateAmmoCounter) {
-      _display.setTextSize(4);  //set the size of the text
-      _display.setTextColor(WHITE);    //set the color of text text
-      _display.setCursor(35, 0);  //center text
-      _display.print(_ammoToPrint);    //print the text
-    }
-    
+void SmartBlaster::initChronoValForDisplay (uint8_t err) {
+  if (!err) {
+    _chronoToPrint = _chronoVal + " fps";
+  } else if (err) {
+    _chronoToPrint = "ERR";
+  }
+  printVals();
+}
 
-    _display.display(); //display the text
+void SmartBlaster::printVals() {
+  _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
+  _display.setTextColor(WHITE);    //set the color of text
+
+  if (_isSwitchAmmoCounter || _isIRGateAmmoCounter) {
+    _display.setTextSize(4);  //set the size of the text
+    _display.setCursor(35, 0);  //center text
+    _display.print(_ammoToPrint);    //print the text
+  }
+
+  _display.setTextSize(1);
+  
+  if (_isChrono) {
+    _display.setCursor(0, 60);
+    _display.print(_chronoToPrint);
+  }
+  
+
+  _display.display(); //display the text
 
 }

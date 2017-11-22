@@ -28,6 +28,7 @@ class SmartBlaster {
 
     //stuff to keep track of what to print for each different value
     String _ammoToPrint;
+    String _chronoToPrint;
 
     //keep track of ammo
     uint8_t *_magSizes;
@@ -59,7 +60,9 @@ class SmartBlaster {
     void calculateChronoReading();
     void resetChronoVals();
 
+
     void initAmmoForDisplay();
+    void initChronoValForDisplay(uint8_t err);
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
   public:
