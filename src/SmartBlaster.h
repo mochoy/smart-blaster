@@ -54,7 +54,9 @@ class SmartBlaster {
     void countAmmo();
     void reload();  
     void toggleMagSizes();
+
     void chrono();
+    void calculateChronoReading();
     void resetChronoVals();
 
     void initAmmoForDisplay();

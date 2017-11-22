@@ -154,10 +154,18 @@ void SmartBlaster::chrono () {
   }
 }
 
+void SmartBlaster::calculateChronoReading () {
+  _chronoVal = (DART_LEGNTH_FEET) / ((_secondTripTime-_firstTripTime)/1000000.0);
+  resetChronoVals();
+}
+
 void SmartBlaster::resetChronoVals () {
   _firstTripTime = -10;
   _secondTripTime = -10;
 }
+
+
+
 
 //helper function to display ammo. Initializes value to be passed displayed on display
 void SmartBlaster::initAmmoForDisplay () {
