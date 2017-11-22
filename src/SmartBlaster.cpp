@@ -27,7 +27,7 @@ SmartBlaster::SmartBlaster () :
 
 }
 
-void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[]) {
+void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[]) {
   initModes(modes);
   initMagSizes(magSizes);
   initDisplay();
@@ -99,7 +99,6 @@ void SmartBlaster::countAmmo () {
 
 void SmartBlaster::reload () {
   _reloadBtn.read();    //read button, using Button library
-
   //if button pressed, reload
   if (_reloadBtn.wasPressed()) {
     // Serial.println("reloading!");

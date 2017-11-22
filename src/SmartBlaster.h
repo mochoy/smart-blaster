@@ -14,6 +14,9 @@ class SmartBlaster {
     uint8_t _isSwitchAmmoCounter;
     uint8_t _isIRGateAmmoCounter;
 
+    //pins
+    uint8_t _IR_GATE_AMMO_COUNTER_PIN;
+
     //stuff to keep track of what to print for each different value
     String _ammoToPrint;
 
@@ -50,7 +53,7 @@ class SmartBlaster {
 
   public:
     SmartBlaster();
-    void init (uint8_t modes[], uint8_t magSizes[]);
+    void init (uint8_t modes[], uint8_t magSizes[], uint8_t pins[]);
     void smartMyBlaster();
 
     //getters
