@@ -90,7 +90,7 @@ void SmartBlaster::IRGateAmmoCounter () {
 void SmartBlaster::countAmmo () {
   if (_maxAmmo != 0 && _currentAmmo < 99 && _currentAmmo > 0) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
     _currentAmmo--;    //increment ammo
-  } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
+  } else if (_maxAmmo == 0 && _currentAmmo < 255) { //make sure ammo doesn't overflow uint_8 max val
     _currentAmmo++;    //decrement ammo
   }
 
