@@ -18,6 +18,14 @@ class SmartBlaster {
     //pins
     uint8_t _IR_GATE_PIN;
 
+    //display to print stuff on
+    Adafruit_SSD1306 _display;
+
+    //keep track of buttons
+    Button _swCntBtn;
+    Button _reloadBtn;
+    Button _magSzTogBtn;
+
     //stuff to keep track of what to print for each different value
     String _ammoToPrint;
 
@@ -28,13 +36,10 @@ class SmartBlaster {
     uint8_t _maxAmmo;
     uint8_t _currentAmmo;
 
-    //display to print stuff on
-    Adafruit_SSD1306 _display;
-
-    //keep track of buttons
-    Button _swCntBtn;
-    Button _reloadBtn;
-    Button _magSzTogBtn;
+    //keep track of chrono vals
+    uint32_t _chronoVal;
+    int32_t _firstTripTime;
+    int32_t _secondTripTime;
 
     //init methods upon instantiation
     void initDisplay();
@@ -49,6 +54,8 @@ class SmartBlaster {
     void countAmmo();
     void reload();  
     void toggleMagSizes();
+    void chrono();
+    void resetChronoVals();
 
     void initAmmoForDisplay();
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.

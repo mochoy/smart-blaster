@@ -25,6 +25,7 @@ SmartBlaster::SmartBlaster () :
   _reloadBtn(RELOAD_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
 
+    resetChronoVals();
 }
 
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[]) {
@@ -130,6 +131,13 @@ void SmartBlaster::toggleMagSizes () {
     initAmmoForDisplay();
 
   }
+}
+
+
+
+void SmartBlaster::resetChronoVals () {
+  _firstTripTime = -10;
+  _secondTripTime = -10;
 }
 
 //helper function to display ammo. Initializes value to be passed displayed on display
