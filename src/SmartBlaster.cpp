@@ -40,7 +40,9 @@ void SmartBlaster::smartMyBlaster() {
 }
 
 uint8_t SmartBlaster::getAmmo () {
-  return _currentAmmo;
+  if (_isSwitchAmmoCounter || _isIRGateAmmoCounter) {
+    return _currentAmmo;
+  }
 }
 
 
