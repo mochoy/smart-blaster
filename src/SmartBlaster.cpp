@@ -184,6 +184,8 @@ void SmartBlaster::initChronoValForDisplay (uint8_t err) {
     _chronoToPrint = _chronoVal + " fps";
   } else if (err) {
     _chronoToPrint = "ERR";
+  } else if (_chronoVal == 0) {
+    _chronoToPrint = "NO FPS";
   }
   printVals();
 }
@@ -201,7 +203,7 @@ void SmartBlaster::printVals() {
   _display.setTextSize(1);
 
   if (_isChrono) {
-    _display.setCursor(0, 0);
+    _display.setCursor(0, 20);
     _display.print(_chronoToPrint);
   }
   
