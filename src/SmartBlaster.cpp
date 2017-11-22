@@ -57,6 +57,7 @@ void SmartBlaster::initDisplay () {
 void SmartBlaster::initModes (uint8_t modes[]) {
   _isSwitchAmmoCounter = modes[0];
   _isIRGateAmmoCounter = modes[1];
+  _isChrono = modes[2];
 }
 
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
@@ -75,7 +76,7 @@ void SmartBlaster::initPins (uint8_t pins[]) {
 void SmartBlaster::ammoCounter () {
   if (_isSwitchAmmoCounter) {
     switchAmmoCounter();
-  } else if (_isIRGateAmmoCounter) {
+  } else if (_isIRGateAmmoCounter && !_isChrono) {
     IRGateAmmoCounter();
   }
   

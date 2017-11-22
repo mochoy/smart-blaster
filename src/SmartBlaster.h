@@ -13,6 +13,7 @@ class SmartBlaster {
     //flags to know which modes are enabled
     uint8_t _isSwitchAmmoCounter;
     uint8_t _isIRGateAmmoCounter;
+    uint8_t _isChrono;
 
     //pins
     uint8_t _IR_GATE_PIN;
