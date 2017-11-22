@@ -35,11 +35,10 @@ class SmartBlaster {
     void initDisplay();
 
     //smart blaster funcitonality methods
-    uint8_t ammoCounter ();
-    uint8_t reload ();  //reload
-    uint8_t toggleMagSizes ();
-
+    void ammoCounter ();
     void countAmmo();
+    void reload ();  
+    void toggleMagSizes ();
 
     void initAmmoForDisplay();
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
@@ -49,6 +48,9 @@ class SmartBlaster {
     void init (bool isAmmoCounter);
     void initMagSizes(uint8_t magSizes[]);
     void smartMyBlaster();
+
+    //getters
+    uint8_t getAmmo();
 
 
 };

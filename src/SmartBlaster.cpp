@@ -49,6 +49,10 @@ void SmartBlaster::smartMyBlaster() {
   toggleMagSizes();
 }
 
+uint8_t SmartBlaster::getAmmo () {
+  return _currentAmmo;
+}
+
 
 
 
@@ -59,15 +63,24 @@ void SmartBlaster::initDisplay () {
 }
 
 //toggle between magazine sizes
-uint8_t SmartBlaster::ammoCounter () {
+void SmartBlaster::ammoCounter () {
   _swCntBtn.read();
   if (_swCntBtn.wasPressed()) {
     countAmmo();
   }
-  return _currentAmmo;
 }
 
-uint8_t SmartBlaster::reload () {
+void SmartBlaster::countAmmo () {
+  if (_maxAmmo != 0 && _currentAmmo < 99 && _currentAmmo > 0) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
+    _currentAmmo--;    //increment ammo
+  } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
+    _currentAmmo++;    //decrement ammo
+  }
+
+  initAmmoForDisplay();
+}
+
+void SmartBlaster::reload () {
   _reloadBtn.read();    //read button, using Button library
 
   //if button pressed, reload
@@ -76,12 +89,10 @@ uint8_t SmartBlaster::reload () {
     _currentAmmo = _maxAmmo;
     initAmmoForDisplay();      //display new ammo
   }
-
-  return _currentAmmo;
 }
 
 //toggle between magazine sizes
-uint8_t SmartBlaster::toggleMagSizes () {
+void SmartBlaster::toggleMagSizes () {
     _magSzTogBtn.read(); //read button, using Button library
 
     //if button was pressed, toggle size
@@ -96,18 +107,6 @@ uint8_t SmartBlaster::toggleMagSizes () {
       initAmmoForDisplay();
 
     }
-
-    return _maxAmmo;
-}
-
-void SmartBlaster::countAmmo () {
-  if (_maxAmmo != 0 && _currentAmmo < 99 && _currentAmmo > 0) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
-    _currentAmmo--;    //increment ammo
-  } else if (_maxAmmo == 0 && _currentAmmo > 0) { //make sure that the ammo is more than 0 so no negative numbers are displayed and in count-up mode
-    _currentAmmo++;    //decrement ammo
-  }
-
-  initAmmoForDisplay();
 }
 
 //helper function to display ammo. Initializes value to be passed displayed on display
