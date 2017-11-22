@@ -135,6 +135,25 @@ void SmartBlaster::toggleMagSizes () {
 
 
 
+void SmartBlaster::chrono () {
+  if (_isChrono) {
+    if (map(analogRead(_IR_GATE_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
+      if (_firstTripTime == -10 && _secondTripTime == -10) {
+        _firstTripTime = micros();
+      } else if (_firstTripTime != -10 && _secondTripTime == -10) {
+        _secondTripTime = micros();
+        resetChronoVals();
+        if (_isIRGateAmmoCounter) {
+          countAmmo();
+        }
+        // calculateChronoReading();
+      }
+    } else if ( (micros() > _firstTripTime + 1000000 && _secondTripTime != -10) || (_firstTripTime > _secondTripTime)  ) {
+      resetChronoVals();
+    }
+  }
+}
+
 void SmartBlaster::resetChronoVals () {
   _firstTripTime = -10;
   _secondTripTime = -10;
