@@ -65,10 +65,23 @@ void SmartBlaster::initDisplay () {
 
 //toggle between magazine sizes
 void SmartBlaster::ammoCounter () {
+  if (_isSwitchAmmoCounter) {
+    switchAmmoCounter();
+  } else if (_isIRGateAmmoCounter) {
+    IRGateAmmoCounter();
+  }
+  
+}
+
+void SmartBlaster::switchAmmoCounter () {
   _swCntBtn.read();
   if (_swCntBtn.wasPressed()) {
     countAmmo();
   }
+}
+
+void SmartBlaster::IRGateAmmoCounter () {
+  
 }
 
 void SmartBlaster::countAmmo () {

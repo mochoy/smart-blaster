@@ -36,10 +36,12 @@ class SmartBlaster {
     void initDisplay();
 
     //smart blaster funcitonality methods
-    void ammoCounter ();
+    void ammoCounter();
+    void switchAmmoCounter();
+    void IRGateAmmoCounter();
     void countAmmo();
-    void reload ();  
-    void toggleMagSizes ();
+    void reload();  
+    void toggleMagSizes();
 
     void initAmmoForDisplay();
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
