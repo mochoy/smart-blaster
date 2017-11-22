@@ -35,8 +35,6 @@ void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[]) {
 
 void SmartBlaster::smartMyBlaster() {
   ammoCounter();
-  reload();
-  toggleMagSizes();
 }
 
 uint8_t SmartBlaster::getAmmo () {
@@ -78,8 +76,9 @@ void SmartBlaster::ammoCounter () {
     switchAmmoCounter();
   } else if (_isIRGateAmmoCounter && !_isChrono) {
     IRGateAmmoCounter();
-  }
-  
+  } 
+  reload();
+  toggleMagSizes();
 }
 
 void SmartBlaster::switchAmmoCounter () {
@@ -117,20 +116,20 @@ void SmartBlaster::reload () {
 
 //toggle between magazine sizes
 void SmartBlaster::toggleMagSizes () {
-    _magSzTogBtn.read(); //read button, using Button library
+  _magSzTogBtn.read(); //read button, using Button library
 
-    //if button was pressed, toggle size
-    if (_magSzTogBtn.wasPressed()) {
-      //make sure mag sizes dont overflow
-      //if it does, it goes back to the first mag size
-      //if it doesn't, then goes to next mag size
-      //if it doesn't, then goes to next mag size
-      _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
-      _maxAmmo = _magSizes[_currentMagSize];
-      _currentAmmo = _maxAmmo;
-      initAmmoForDisplay();
+  //if button was pressed, toggle size
+  if (_magSzTogBtn.wasPressed()) {
+    //make sure mag sizes dont overflow
+    //if it does, it goes back to the first mag size
+    //if it doesn't, then goes to next mag size
+    //if it doesn't, then goes to next mag size
+    _currentMagSize = (_currentMagSize == _numOfMagSizes - 1) ? 0 : _currentMagSize + 1;
+    _maxAmmo = _magSizes[_currentMagSize];
+    _currentAmmo = _maxAmmo;
+    initAmmoForDisplay();
 
-    }
+  }
 }
 
 //helper function to display ammo. Initializes value to be passed displayed on display
