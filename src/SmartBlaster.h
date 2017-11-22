@@ -11,7 +11,8 @@
 class SmartBlaster {
   private:
     //flags to know which modes are enabled
-    uint8_t _isAmmoCounter;
+    uint8_t _isSwitchAmmoCounter;
+    uint8_t _isIRGateAmmoCounter;
 
     //stuff to keep track of what to print for each different value
     String _ammoToPrint;
@@ -45,7 +46,7 @@ class SmartBlaster {
 
   public:
     SmartBlaster();
-    void init (bool isAmmoCounter);
+    void init (uint8_t _isSwitchAmmoCounter, uint8_t isIRGateAmmoCounter);
     void initMagSizes(uint8_t magSizes[]);
     void smartMyBlaster();
 

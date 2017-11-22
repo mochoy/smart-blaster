@@ -29,8 +29,9 @@ SmartBlaster::SmartBlaster () :
 
 }
 
-void SmartBlaster::init(bool isAmmoCounter) {
-  _isAmmoCounter = isAmmoCounter;
+void SmartBlaster::init(uint8_t isSwitchAmmoCounter, uint8_t isIRGateAmmoCounter) {
+  _isSwitchAmmoCounter = isSwitchAmmoCounter;
+  _isIRGateAmmoCounter = isIRGateAmmoCounter;
 
   initDisplay();
 }
