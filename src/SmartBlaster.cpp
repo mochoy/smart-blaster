@@ -89,7 +89,9 @@ void SmartBlaster::switchAmmoCounter () {
 }
 
 void SmartBlaster::IRGateAmmoCounter () {
-  
+  if (map(analogRead(_IR_GATE_PIN), 0, 1023, 0, 100) > IR_MAP_TRIP_VAL) {
+    countAmmo();
+  }
 }
 
 void SmartBlaster::countAmmo () {
