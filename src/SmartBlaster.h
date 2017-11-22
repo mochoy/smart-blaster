@@ -34,7 +34,8 @@ class SmartBlaster {
 
     //init methods upon instantiation
     void initDisplay();
-    void initMagSizes( uint8_t magSizes[]);
+    void initModes(uint8_t modes[]);
+    void initMagSizes(uint8_t magSizes[]);
 
     //smart blaster funcitonality methods
     void ammoCounter();
@@ -49,7 +50,7 @@ class SmartBlaster {
 
   public:
     SmartBlaster();
-    void init (uint8_t _isSwitchAmmoCounter, uint8_t isIRGateAmmoCounter, uint8_t magSizes[]);
+    void init (uint8_t modes[], uint8_t magSizes[]);
     void smartMyBlaster();
 
     //getters

@@ -8,15 +8,13 @@
 #define SW_CNT_BTN_PIN 4
 #define RELOAD_BTN_PIN 7
 #define MAG_SZ_TOG_BTN_PIN 8
-
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_RESET 4
-
 #define PULLUP true
 #define INVERT true
 #define DEBOUNCE 20
 
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET 4
 #define DART_LEGNTH_FEET 2.83465
 #define IR_MAP_TRIP_VAL 90
 
@@ -29,10 +27,8 @@ SmartBlaster::SmartBlaster () :
 
 }
 
-void SmartBlaster::init(uint8_t isSwitchAmmoCounter, uint8_t isIRGateAmmoCounter, uint8_t magSizes[]) {
-  _isSwitchAmmoCounter = isSwitchAmmoCounter;
-  _isIRGateAmmoCounter = isIRGateAmmoCounter;
-
+void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[]) {
+  initModes(modes);
   initMagSizes(magSizes);
   initDisplay();
 }
@@ -50,6 +46,11 @@ uint8_t SmartBlaster::getAmmo () {
 
 
 
+
+void SmartBlaster::initModes (uint8_t modes[]) {
+  _isSwitchAmmoCounter = modes[0];
+  _isIRGateAmmoCounter = modes[1];
+}
 
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
   _magSizes = magSizes;
