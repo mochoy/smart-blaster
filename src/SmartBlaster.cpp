@@ -33,6 +33,9 @@ void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[]) {
   initModes(modes);
   initMagSizes(magSizes);
   initDisplay();
+
+  initAmmoForDisplay();
+  initChronoValForDisplay(false);
 }
 
 void SmartBlaster::smartMyBlaster() {
@@ -196,9 +199,9 @@ void SmartBlaster::printVals() {
   }
 
   _display.setTextSize(1);
-  
+
   if (_isChrono) {
-    _display.setCursor(0, 60);
+    _display.setCursor(0, 0);
     _display.print(_chronoToPrint);
   }
   
