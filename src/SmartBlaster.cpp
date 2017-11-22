@@ -67,7 +67,7 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 }
 
 void SmartBlaster::initPins (uint8_t pins[]) {
-  _IR_GATE_AMMO_COUNTER_PIN = pins[0];
+  _IR_GATE_PIN = pins[0];
 }
 
 
