@@ -39,6 +39,7 @@ class SmartBlaster {
     void initDisplay();
     void initModes(uint8_t modes[]);
     void initMagSizes(uint8_t magSizes[]);
+    void initPins(uint8_t pins[]);
 
     //smart blaster funcitonality methods
     void ammoCounter();

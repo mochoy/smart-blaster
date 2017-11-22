@@ -49,6 +49,11 @@ uint8_t SmartBlaster::getAmmo () {
 
 
 
+void SmartBlaster::initDisplay () {
+  _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  _display.clearDisplay();
+}
+
 void SmartBlaster::initModes (uint8_t modes[]) {
   _isSwitchAmmoCounter = modes[0];
   _isIRGateAmmoCounter = modes[1];
@@ -61,10 +66,10 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
   _currentAmmo = _maxAmmo;
 }
 
-void SmartBlaster::initDisplay () {
-  _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  _display.clearDisplay();
+void SmartBlaster::initPins (uint8_t pins[]) {
+  _IR_GATE_AMMO_COUNTER_PIN = pins[0];
 }
+
 
 //toggle between magazine sizes
 void SmartBlaster::ammoCounter () {
