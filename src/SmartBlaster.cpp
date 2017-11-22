@@ -140,10 +140,13 @@ void SmartBlaster::initAmmoForDisplay () {
 
 void SmartBlaster::printVals() {
     _display.clearDisplay(); //clear the display, so the stuff that was here before is no longer here
-    _display.setTextSize(4);  //set the size of the text
-    _display.setTextColor(WHITE);    //set the color of text text
-    _display.setCursor(0, 0);  //center text
-    _display.print(_ammoToPrint);    //print the text
+    if (_isSwitchAmmoCounter || _isIRGateAmmoCounter) {
+      _display.setTextSize(4);  //set the size of the text
+      _display.setTextColor(WHITE);    //set the color of text text
+      _display.setCursor(35, 0);  //center text
+      _display.print(_ammoToPrint);    //print the text
+    }
+    
 
     _display.display(); //display the text
 
