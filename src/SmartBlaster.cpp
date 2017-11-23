@@ -48,7 +48,7 @@ void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uin
 void SmartBlaster::smartMyBlaster() {
   ammoCounter();
   chrono();
-  PWM();
+  PWM(0);
 }
 
 uint8_t SmartBlaster::getAmmo () {
@@ -200,7 +200,7 @@ void SmartBlaster::resetChronoVals () {
 
 
 
-void SmartBlaster::PWM () {
+void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
   if (_isFlywheelPWM) {
     Button& trigBtn = _isFlywheelPWM ? _revTrigBtn : _revTrigBtn;
     uint8_t hasAccelerated = _isFlywheelPWM ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
@@ -214,7 +214,7 @@ void SmartBlaster::PWM () {
         _flywheelAccelStartTime = millis();
       }
     } else if (trigBtn.isPressed() && hasAccelerated) {    //if trigger pressed
-      analogWrite(PWM_OUT_PIN, analogRead(_FLYWHEEL_PWM_POT_PIN)/4);    //write PWM depending on pot value
+      analogWrite(PWM_OUT_PIN, analogRead(PWM_IN_PIN)/4);    //write PWM depending on pot value
     } else if (trigBtn.wasReleased()) {                     //when trigger released
       digitalWrite(PWM_OUT_PIN, LOW);                          //turn motor off
       hasAccelerated = false;                                  //reset flag to check for acceleration

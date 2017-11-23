@@ -71,7 +71,7 @@ class SmartBlaster {
     void calculateChronoReading();
     void resetChronoVals();
 
-    void PWM();
+    void PWM(uint8_t toPWM);
     void checkFinishAccel();
 
 
