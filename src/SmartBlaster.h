@@ -47,10 +47,16 @@ class SmartBlaster {
     int32_t _secondTripTime;
 
     //PWM vals
+    //for flywheel
     uint32_t _FLYWHEEL_MOTOR_ACCEL_TIME;
     uint8_t _hasFlywheelsAccelerated;
     uint32_t _flywheelAccelStartTime;
     uint8_t _lastFlywheelPWMPotReading;
+    //for pusher
+    uint32_t _PUSHER_MOTOR_ACCEL_TIME;
+    uint8_t _hasPusherAccelerated;
+    uint32_t _pusherAccelStartTime;
+    uint8_t _lastPusherPWMPotReading;
 
     //init methods upon instantiation
     void initDisplay();
