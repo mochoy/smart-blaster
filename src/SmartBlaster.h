@@ -67,6 +67,8 @@ class SmartBlaster {
     void calculateChronoReading();
     void resetChronoVals();
 
+    void PWM();
+
 
     void initAmmoForDisplay();
     void initChronoValForDisplay(uint8_t err);

@@ -187,6 +187,10 @@ void SmartBlaster::resetChronoVals () {
 
 
 
+void SmartBlaster::PWM () {
+  
+}
+
 
 
 //helper function to display ammo. Initializes value to be passed displayed on display
