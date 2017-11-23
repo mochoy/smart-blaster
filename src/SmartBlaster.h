@@ -88,6 +88,7 @@ class SmartBlaster {
     //getters
     uint8_t getAmmo();
     uint32_t getChrono();
+    uint8_t getFlywheelPWM();
 
 
 };
