@@ -53,6 +53,7 @@ void SmartBlaster::smartMyBlaster() {
   ammoCounter();
   chrono();
   PWM(0);
+  PWM(1);
 }
 
 uint8_t SmartBlaster::getAmmo () {
@@ -209,16 +210,16 @@ void SmartBlaster::resetChronoVals () {
 
 
 void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
-  if (_isFlywheelPWM) {
+  if (_isFlywheelPWM || _isPusherPWM) {
     uint8_t isFlywheel = (toPWM == 0 && _isFlywheelPWM);
 
     Button& trigBtn = isFlywheel ? _revTrigBtn : _revTrigBtn;
-    uint8_t& hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
-    uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : _flywheelAccelStartTime;
-    uint8_t& lastPotReading = isFlywheel ? _lastFlywheelPWMPotReading : _lastFlywheelPWMPotReading;
-    const uint8_t PWM_IN_PIN = isFlywheel ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
-    const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
-    const uint32_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : _FLYWHEEL_MOTOR_ACCEL_TIME; 
+    uint8_t& hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasPusherAccelerated;
+    uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : _pusherAccelStartTime;
+    uint8_t& lastPotReading = isFlywheel ? _lastFlywheelPWMPotReading : _lastPusherPWMPotReading;
+    const uint8_t PWM_IN_PIN = isFlywheel ? _FLYWHEEL_PWM_POT_PIN : _PUSHER_PWM_POT_PIN;
+    const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_PWM_OUT_PIN : _PUSHER_PWM_OUT_PIN; 
+    const uint32_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : _PUSHER_MOTOR_ACCEL_TIME; 
 
     trigBtn.read();
     if(trigBtn.isPressed() && !hasAccelerated) {           //when trigger first pressed
