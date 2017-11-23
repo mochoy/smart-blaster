@@ -202,18 +202,19 @@ void SmartBlaster::resetChronoVals () {
 
 void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
   if (_isFlywheelPWM) {
-    uint8_t isFlywheelPWM = (toPWM == 0 && _isFlywheelPWM);
+    uint8_t isFlywheel = (toPWM == 0 && _isFlywheelPWM);
 
-    Button& trigBtn = isFlywheelPWM ? _revTrigBtn : _revTrigBtn;
-    uint8_t hasAccelerated = isFlywheelPWM ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
-    const uint8_t PWM_IN_PIN = isFlywheelPWM ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
-    const uint8_t PWM_OUT_PIN = isFlywheelPWM ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
+    Button& trigBtn = isFlywheel ? _revTrigBtn : _revTrigBtn;
+    uint8_t hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
+    uint32_t accelStartTime = isFlywheel ? _flywheelAccelStartTime : _flywheelAccelStartTime;
+    const uint8_t PWM_IN_PIN = isFlywheel ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
+    const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
 
     trigBtn.read();
     if(trigBtn.isPressed() && !hasAccelerated) {           //when trigger first pressed
       digitalWrite(PWM_OUT_PIN, HIGH);                         //motor at full power
-      if (_flywheelAccelStartTime == 0) {
-        _flywheelAccelStartTime = millis();
+      if (accelStartTime == 0) {
+        accelStartTime = millis();
       }
     } else if (trigBtn.isPressed() && hasAccelerated) {    //if trigger pressed
       analogWrite(PWM_OUT_PIN, analogRead(PWM_IN_PIN)/4);    //write PWM depending on pot value
