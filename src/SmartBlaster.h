@@ -72,7 +72,7 @@ class SmartBlaster {
     void resetChronoVals();
 
     void PWM(uint8_t toPWM);
-    void checkFinishAccel();
+    void checkFinishAccel(uint8_t toPWM, uint32_t& accelStartTime, uint8_t& hasAccelerated, uint8_t MOTOR_ACCEL_TIME);
 
 
     void initAmmoForDisplay();

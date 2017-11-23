@@ -205,10 +205,11 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
     uint8_t isFlywheel = (toPWM == 0 && _isFlywheelPWM);
 
     Button& trigBtn = isFlywheel ? _revTrigBtn : _revTrigBtn;
-    uint8_t hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
-    uint32_t accelStartTime = isFlywheel ? _flywheelAccelStartTime : _flywheelAccelStartTime;
+    uint8_t& hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
+    uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : _flywheelAccelStartTime;
     const uint8_t PWM_IN_PIN = isFlywheel ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
     const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
+    const uint8_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : _FLYWHEEL_MOTOR_ACCEL_TIME; 
 
     trigBtn.read();
     if(trigBtn.isPressed() && !hasAccelerated) {           //when trigger first pressed
@@ -223,15 +224,15 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
       hasAccelerated = false;                                  //reset flag to check for acceleration
     }
 
-    checkFinishAccel();
+    checkFinishAccel(toPWM, accelStartTime, hasAccelerated, MOTOR_ACCEL_TIME);
     initDisplayPWM();
   }
 }
 
-void SmartBlaster::checkFinishAccel () {
-    if ( (_flywheelAccelStartTime > 0) && (millis() > _flywheelAccelStartTime + _FLYWHEEL_MOTOR_ACCEL_TIME) ) {       //passed accel time
-      _hasFlywheelsAccelerated = true;
-      _flywheelAccelStartTime = 0;
+void SmartBlaster::checkFinishAccel (uint8_t toPWM, uint32_t& accelStartTime, uint8_t& hasAccelerated, uint8_t MOTOR_ACCEL_TIME) {
+    if ( (accelStartTime > 0) && (millis() > accelStartTime + _FLYWHEEL_MOTOR_ACCEL_TIME) ) {       //passed accel time
+      hasAccelerated = true;
+      accelStartTime = 0;
     }
 }
 
