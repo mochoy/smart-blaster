@@ -45,6 +45,9 @@ class SmartBlaster {
     int32_t _firstTripTime;
     int32_t _secondTripTime;
 
+    //PWM vals
+    uint8_t _MOTOR_ACCEL_TIME;
+
     //init methods upon instantiation
     void initDisplay();
     void initModes(uint8_t modes[]);

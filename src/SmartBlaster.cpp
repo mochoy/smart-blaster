@@ -85,7 +85,7 @@ void SmartBlaster::initPins (uint8_t pins[]) {
 }
 
 void SmartBlaster::initOtherOptions (uint8_t otherOptions[]) {
-  
+  _MOTOR_ACCEL_TIME = otherOptions[0];
 }
 
 
