@@ -28,6 +28,7 @@ class SmartBlaster {
     Button _swCntBtn;
     Button _reloadBtn;
     Button _magSzTogBtn;
+    Button _revTrigBtn;
 
     //stuff to keep track of what to print for each different value
     String _ammoToPrint;

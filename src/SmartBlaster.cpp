@@ -8,6 +8,7 @@
 #define SW_CNT_BTN_PIN 4
 #define RELOAD_BTN_PIN 7
 #define MAG_SZ_TOG_BTN_PIN 8
+#define REV_TRIG_BTN_PIN 12
 #define PULLUP true
 #define INVERT true
 #define DEBOUNCE 20
@@ -23,7 +24,8 @@ SmartBlaster::SmartBlaster () :
   _display(OLED_RESET),
   _swCntBtn(SW_CNT_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _reloadBtn(RELOAD_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
-  _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
+  _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
+  _revTrigBtn (REV_TRIG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
 
     resetChronoVals();
     _chronoVal = 0;
@@ -188,7 +190,7 @@ void SmartBlaster::resetChronoVals () {
 
 
 void SmartBlaster::PWM () {
-  
+
 }
 
 
