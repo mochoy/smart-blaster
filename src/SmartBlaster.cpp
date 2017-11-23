@@ -195,15 +195,15 @@ void SmartBlaster::printVals() {
   _display.setTextColor(WHITE);    //set the color of text
 
   if (_isSwitchAmmoCounter || _isIRGateAmmoCounter) {
-    _display.setTextSize(4);  //set the size of the text
-    _display.setCursor(35, 0);  //center text
+    _display.setTextSize(7);  //set the size of the text
+    _display.setCursor(30, 0);  //center text
     _display.print(_ammoToPrint);    //print the text
   }
 
   _display.setTextSize(1);
 
   if (_isChrono) {
-    _display.setCursor(0, 20);
+    _display.setCursor(0, 50);
     _display.print(_chronoToPrint);
   }
   
