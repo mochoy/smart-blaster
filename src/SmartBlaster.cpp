@@ -40,6 +40,7 @@ void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[]) {
 
 void SmartBlaster::smartMyBlaster() {
   ammoCounter();
+  chrono();
 }
 
 uint8_t SmartBlaster::getAmmo () {
@@ -79,6 +80,8 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 
 void SmartBlaster::initPins (uint8_t pins[]) {
   _IR_GATE_PIN = pins[0];
+  _PWM_POT_PIN = pins[1];
+  _PWM_OUT_PIN = pins[2];
 }
 
 
