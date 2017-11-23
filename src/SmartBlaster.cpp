@@ -72,7 +72,7 @@ uint32_t SmartBlaster:: getChrono () {
 
 uint8_t SmartBlaster::getFlywheelPWM () {
   if (_isFlywheelPWM) {
-    return analogRead(_FLYWHEEL_PWM_OUT_PIN);
+    return analogRead(_FLYWHEEL_PWM_POT_PIN);
   }
 }
 
@@ -103,9 +103,9 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 void SmartBlaster::initPins (uint8_t pins[]) {
   _IR_GATE_PIN = pins[0];
   _FLYWHEEL_PWM_POT_PIN = pins[1];
-  _FLYWHEEL_PWM_OUT_PIN = pins[2];
+  _FLYWHEEL_OUT_PIN = pins[2];
   _PUSHER_PWM_POT_PIN = pins[3];
-  _PUSHER_PWM_OUT_PIN = pins[4];
+  _PUSHER_OUT_PIN = pins[4];
 }
 
 void SmartBlaster::initOtherOptions (uint32_t otherOptions[]) {
@@ -220,7 +220,7 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
     uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : _pusherAccelStartTime;
     uint8_t& lastPotReading = isFlywheel ? _lastFlywheelPWMPotReading : _lastPusherPWMPotReading;
     const uint8_t PWM_IN_PIN = isFlywheel ? _FLYWHEEL_PWM_POT_PIN : _PUSHER_PWM_POT_PIN;
-    const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_PWM_OUT_PIN : _PUSHER_PWM_OUT_PIN; 
+    const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_OUT_PIN : _PUSHER_OUT_PIN; 
     const uint32_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : _PUSHER_MOTOR_ACCEL_TIME; 
 
     trigBtn.read();
