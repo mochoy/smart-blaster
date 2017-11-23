@@ -93,7 +93,7 @@ void SmartBlaster::initPins (uint8_t pins[]) {
 }
 
 void SmartBlaster::initOtherOptions (uint8_t otherOptions[]) {
-  _MOTOR_ACCEL_TIME = otherOptions[0];
+  _FLYWHEEL_MOTOR_ACCEL_TIME = otherOptions[0];
 }
 
 
@@ -215,7 +215,7 @@ void SmartBlaster::PWM () {
 }
 
 void SmartBlaster::checkFinishAccel () {
-    if ( (_accelStartTime > 0) && (millis() > _accelStartTime + _MOTOR_ACCEL_TIME) ) {       //passed accel time
+    if ( (_accelStartTime > 0) && (millis() > _accelStartTime + _FLYWHEEL_MOTOR_ACCEL_TIME) ) {       //passed accel time
       _hasAccelerated = true;
       _accelStartTime = 0;
     }

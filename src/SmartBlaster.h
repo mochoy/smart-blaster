@@ -47,7 +47,7 @@ class SmartBlaster {
     int32_t _secondTripTime;
 
     //PWM vals
-    uint8_t _MOTOR_ACCEL_TIME;
+    uint8_t _FLYWHEEL_MOTOR_ACCEL_TIME;
     uint8_t _hasAccelerated;
     uint32_t _accelStartTime;
     uint8_t _lastPWMPotReading;
