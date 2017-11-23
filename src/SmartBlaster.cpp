@@ -202,10 +202,12 @@ void SmartBlaster::resetChronoVals () {
 
 void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
   if (_isFlywheelPWM) {
-    Button& trigBtn = _isFlywheelPWM ? _revTrigBtn : _revTrigBtn;
-    uint8_t hasAccelerated = _isFlywheelPWM ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
-    const uint8_t PWM_IN_PIN = _isFlywheelPWM ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
-    const uint8_t PWM_OUT_PIN = _isFlywheelPWM ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
+    uint8_t isFlywheelPWM = (toPWM == 0 && _isFlywheelPWM);
+
+    Button& trigBtn = isFlywheelPWM ? _revTrigBtn : _revTrigBtn;
+    uint8_t hasAccelerated = isFlywheelPWM ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
+    const uint8_t PWM_IN_PIN = isFlywheelPWM ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
+    const uint8_t PWM_OUT_PIN = isFlywheelPWM ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
 
     trigBtn.read();
     if(trigBtn.isPressed() && !hasAccelerated) {           //when trigger first pressed
