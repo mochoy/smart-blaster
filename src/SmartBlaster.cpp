@@ -76,7 +76,7 @@ void SmartBlaster::initModes (uint8_t modes[]) {
   _isSwitchAmmoCounter = modes[0];
   _isIRGateAmmoCounter = modes[1];
   _isChrono = modes[2];
-  _isPWM = modes[3];
+  _isFlywheelPWM = modes[3];
 }
 
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
@@ -195,7 +195,7 @@ void SmartBlaster::resetChronoVals () {
 
 
 void SmartBlaster::PWM () {
-  if (_isPWM) {
+  if (_isFlywheelPWM) {
     _revTrigBtn.read();
     if(_revTrigBtn.isPressed() && !_hasAccelerated) {           //when trigger first pressed
       digitalWrite(_PWM_OUT_PIN, HIGH);                         //motor at full power
@@ -266,7 +266,7 @@ void SmartBlaster::printVals() {
     _display.print(_chronoToPrint);
   }
 
-  if (_isPWM) {
+  if (_isFlywheelPWM) {
     uint8_t lineLength = 64 - _lastPWMPotReading * 4;
     _display.drawLine(0, 63, 0, lineLength, WHITE);
     _display.drawLine(1, 63, 1, lineLength, WHITE);
