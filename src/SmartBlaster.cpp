@@ -29,7 +29,7 @@ SmartBlaster::SmartBlaster () :
     _chronoVal = 0;
 }
 
-void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[]) {
+void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint8_t otherOptions[]) {
   initModes(modes);
   initMagSizes(magSizes);
   initDisplay();
@@ -83,6 +83,11 @@ void SmartBlaster::initPins (uint8_t pins[]) {
   _PWM_POT_PIN = pins[1];
   _PWM_OUT_PIN = pins[2];
 }
+
+void SmartBlaster::initOtherOptions (uint8_t otherOptions[]) {
+  
+}
+
 
 
 //toggle between magazine sizes
@@ -179,6 +184,7 @@ void SmartBlaster::resetChronoVals () {
   _firstTripTime = -10;
   _secondTripTime = -10;
 }
+
 
 
 
