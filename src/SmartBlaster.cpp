@@ -48,6 +48,12 @@ uint8_t SmartBlaster::getAmmo () {
   }
 }
 
+uint32_t SmartBlaster:: getChrono () {
+  if (_isChrono) {
+    return _chronoVal;
+  }
+}
+
 
 
 
