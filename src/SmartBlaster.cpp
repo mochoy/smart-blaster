@@ -35,11 +35,12 @@ SmartBlaster::SmartBlaster () :
     _flywheelAccelStartTime = 0;
 }
 
-void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint8_t otherOptions[]) {
+void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint32_t otherOptions[]) {
+  initDisplay();
   initModes(modes);
   initMagSizes(magSizes);
   initPins(pins);
-  initDisplay();
+  initOtherOptions(otherOptions);
 
   initAmmoForDisplay();
   initChronoValForDisplay(false);
@@ -98,7 +99,7 @@ void SmartBlaster::initPins (uint8_t pins[]) {
   _FLYWHEEL_PWM_OUT_PIN = pins[2];
 }
 
-void SmartBlaster::initOtherOptions (uint8_t otherOptions[]) {
+void SmartBlaster::initOtherOptions (uint32_t otherOptions[]) {
   _FLYWHEEL_MOTOR_ACCEL_TIME = otherOptions[0];
 }
 
@@ -209,7 +210,7 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
     uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : _flywheelAccelStartTime;
     const uint8_t PWM_IN_PIN = isFlywheel ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
     const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
-    const uint8_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : _FLYWHEEL_MOTOR_ACCEL_TIME; 
+    const uint32_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : _FLYWHEEL_MOTOR_ACCEL_TIME; 
 
     trigBtn.read();
     if(trigBtn.isPressed() && !hasAccelerated) {           //when trigger first pressed
@@ -229,8 +230,8 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
   }
 }
 
-void SmartBlaster::checkFinishAccel (uint8_t toPWM, uint32_t& accelStartTime, uint8_t& hasAccelerated, uint8_t MOTOR_ACCEL_TIME) {
-    if ( (accelStartTime > 0) && (millis() > accelStartTime + _FLYWHEEL_MOTOR_ACCEL_TIME) ) {       //passed accel time
+void SmartBlaster::checkFinishAccel (uint8_t toPWM, uint32_t& accelStartTime, uint8_t& hasAccelerated, uint32_t MOTOR_ACCEL_TIME) {
+    if ( (accelStartTime > 0) && (millis() > accelStartTime + MOTOR_ACCEL_TIME) ) {       //passed accel time
       hasAccelerated = true;
       accelStartTime = 0;
     }

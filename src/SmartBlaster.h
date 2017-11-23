@@ -47,7 +47,7 @@ class SmartBlaster {
     int32_t _secondTripTime;
 
     //PWM vals
-    uint8_t _FLYWHEEL_MOTOR_ACCEL_TIME;
+    uint32_t _FLYWHEEL_MOTOR_ACCEL_TIME;
     uint8_t _hasFlywheelsAccelerated;
     uint32_t _flywheelAccelStartTime;
     uint8_t _lastFlywheelPWMPotReading;
@@ -57,7 +57,7 @@ class SmartBlaster {
     void initModes(uint8_t modes[]);
     void initMagSizes(uint8_t magSizes[]);
     void initPins(uint8_t pins[]);
-    void initOtherOptions(uint8_t otherOptions[]);
+    void initOtherOptions(uint32_t otherOptions[]);
 
     //smart blaster funcitonality methods
     void ammoCounter();
@@ -72,7 +72,7 @@ class SmartBlaster {
     void resetChronoVals();
 
     void PWM(uint8_t toPWM);
-    void checkFinishAccel(uint8_t toPWM, uint32_t& accelStartTime, uint8_t& hasAccelerated, uint8_t MOTOR_ACCEL_TIME);
+    void checkFinishAccel(uint8_t toPWM, uint32_t& accelStartTime, uint8_t& hasAccelerated, uint32_t MOTOR_ACCEL_TIME);
 
 
     void initAmmoForDisplay();
@@ -82,7 +82,7 @@ class SmartBlaster {
 
   public:
     SmartBlaster();
-    void init (uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint8_t otherOptions[]);
+    void init (uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint32_t otherOptions[]);
     void smartMyBlaster();
 
     //getters
