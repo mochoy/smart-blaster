@@ -18,6 +18,7 @@
 #define OLED_RESET 4
 #define DART_LEGNTH_FEET 2.83465
 #define IR_MAP_TRIP_VAL 90
+#define PWM_MAPPED_MAX_OUTPUT_THRESHOLD 16
 
 
 SmartBlaster::SmartBlaster () :
@@ -29,6 +30,9 @@ SmartBlaster::SmartBlaster () :
 
     resetChronoVals();
     _chronoVal = 0;
+
+    _hasAccelerated = false;
+    _accelStartTime = 0;
 }
 
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint8_t otherOptions[]) {
@@ -43,6 +47,7 @@ void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uin
 void SmartBlaster::smartMyBlaster() {
   ammoCounter();
   chrono();
+  PWM();
 }
 
 uint8_t SmartBlaster::getAmmo () {
@@ -190,7 +195,34 @@ void SmartBlaster::resetChronoVals () {
 
 
 void SmartBlaster::PWM () {
+  if (_isPWM) {
+    _revTrigBtn.read();
+    if(_revTrigBtn.isPressed() && !_hasAccelerated) {           //when trigger first pressed
+      Serial.println("trig pressed, accel!");
+      digitalWrite(_PWM_OUT_PIN, HIGH);                         //motor at full power
+      if (_accelStartTime == 0) {
+        _accelStartTime = millis();
+      }
+    } else if (_revTrigBtn.isPressed() && _hasAccelerated) {    //if trigger pressed
+      Serial.println("analogWrite!");
+      analogWrite(_PWM_OUT_PIN, analogRead(_PWM_POT_PIN)/4);    //write PWM depending on pot value
+    } else if (_revTrigBtn.wasReleased()) {                     //when trigger released
+      Serial.println("released!");
+      digitalWrite(_PWM_OUT_PIN, LOW);                          //turn motor off
+      _hasAccelerated = false;                                  //reset flag to check for acceleration
+    }
 
+    if ( (_accelStartTime > 0) && (millis() > _accelStartTime + _MOTOR_ACCEL_TIME) ) {       //passed accel time
+      _hasAccelerated = true;
+      _accelStartTime = 0;
+    }
+
+    uint8_t mappedPWMReading = map(analogRead(_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
+    if (mappedPWMReading != _lastPWMPotReading) {
+      _lastPWMPotReading = mappedPWMReading;
+      // displayValues();
+    }
+  }
 }
 
 

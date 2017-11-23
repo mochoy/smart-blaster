@@ -48,6 +48,9 @@ class SmartBlaster {
 
     //PWM vals
     uint8_t _MOTOR_ACCEL_TIME;
+    uint8_t _hasAccelerated;
+    uint32_t _accelStartTime;
+    uint8_t _lastPWMPotReading;
 
     //init methods upon instantiation
     void initDisplay();
