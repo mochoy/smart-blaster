@@ -76,6 +76,13 @@ uint16_t SmartBlaster::getFlywheelPWM () {
   }
 }
 
+uint16_t SmartBlaster::getPusherPWM () {
+  if (_isPusherPWM) {
+    return analogRead(_PUSHER_PWM_POT_PIN);
+  }
+}
+
+
 
 
 
