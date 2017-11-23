@@ -254,7 +254,7 @@ void SmartBlaster::printVals() {
   _display.setTextColor(WHITE);    //set the color of text
 
   if (_isSwitchAmmoCounter || _isIRGateAmmoCounter) {
-    _display.setTextSize(6);  //set the size of the text
+    _display.setTextSize(7);  //set the size of the text
     _display.setCursor(30, 0);  //center text
     _display.print(_ammoToPrint);    //print the text
   }
@@ -262,15 +262,14 @@ void SmartBlaster::printVals() {
   _display.setTextSize(1);
 
   if (_isChrono) {
-    _display.setCursor(0, 50);
+    _display.setCursor(7, 55);
     _display.print(_chronoToPrint);
   }
 
   if (_isPWM) {
-    uint8_t lineLength = _lastPWMPotReading * 8;
-    _display.drawLine(0, 61, lineLength, 61, WHITE);
-    _display.drawLine(0, 62, lineLength, 62, WHITE);
-    _display.drawLine(0, 63, lineLength, 63, WHITE);
+    uint8_t lineLength = _lastPWMPotReading * 4;
+    _display.drawLine(0, 63, 0, lineLength, WHITE);
+    _display.drawLine(1, 63, 1, lineLength, WHITE);
   }
   
 
