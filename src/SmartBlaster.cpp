@@ -267,7 +267,7 @@ void SmartBlaster::printVals() {
   }
 
   if (_isPWM) {
-    uint8_t lineLength = _lastPWMPotReading * 4;
+    uint8_t lineLength = 64 - _lastPWMPotReading * 4;
     _display.drawLine(0, 63, 0, lineLength, WHITE);
     _display.drawLine(1, 63, 1, lineLength, WHITE);
   }
