@@ -243,8 +243,8 @@ void SmartBlaster::initChronoValForDisplay (uint8_t err) {
 
 void SmartBlaster::initDisplayPWM () {
   uint8_t mappedPWMReading = map(analogRead(_FLYWHEEL_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
-  if (mappedPWMReading != _lastPWMPotReading) {
-    _lastPWMPotReading = mappedPWMReading;
+  if (mappedPWMReading != _lastFlywheelPWMPotReading) {
+    _lastFlywheelPWMPotReading = mappedPWMReading;
     printVals();
   }
 }
@@ -267,7 +267,7 @@ void SmartBlaster::printVals() {
   }
 
   if (_isFlywheelPWM) {
-    uint8_t lineLength = 64 - _lastPWMPotReading * 4;
+    uint8_t lineLength = 64 - _lastFlywheelPWMPotReading * 4;
     _display.drawLine(0, 63, 0, lineLength, WHITE);
     _display.drawLine(1, 63, 1, lineLength, WHITE);
   }

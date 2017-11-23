@@ -50,7 +50,7 @@ class SmartBlaster {
     uint8_t _FLYWHEEL_MOTOR_ACCEL_TIME;
     uint8_t _hasAccelerated;
     uint32_t _accelStartTime;
-    uint8_t _lastPWMPotReading;
+    uint8_t _lastFlywheelPWMPotReading;
 
     //init methods upon instantiation
     void initDisplay();
