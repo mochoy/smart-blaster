@@ -180,13 +180,14 @@ void SmartBlaster::initAmmoForDisplay () {
 }
 
 void SmartBlaster::initChronoValForDisplay (uint8_t err) {
-  if (!err) {
-    _chronoToPrint = _chronoVal + " fps";
-  } else if (err) {
+  if (err) {
     _chronoToPrint = "ERR";
   } else if (_chronoVal == 0) {
     _chronoToPrint = "NO FPS";
+  } else if (!err) {
+    _chronoToPrint = _chronoVal + " fps";
   }
+
   printVals();
 }
 
@@ -195,7 +196,7 @@ void SmartBlaster::printVals() {
   _display.setTextColor(WHITE);    //set the color of text
 
   if (_isSwitchAmmoCounter || _isIRGateAmmoCounter) {
-    _display.setTextSize(7);  //set the size of the text
+    _display.setTextSize(6);  //set the size of the text
     _display.setCursor(30, 0);  //center text
     _display.print(_ammoToPrint);    //print the text
   }
