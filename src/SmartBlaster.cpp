@@ -212,16 +212,23 @@ void SmartBlaster::PWM () {
       _hasAccelerated = false;                                  //reset flag to check for acceleration
     }
 
+    checkFinishAccel();
+    checkPWMDiff();
+  }
+}
+
+void SmartBlaster::checkFinishAccel () {
     if ( (_accelStartTime > 0) && (millis() > _accelStartTime + _MOTOR_ACCEL_TIME) ) {       //passed accel time
       _hasAccelerated = true;
       _accelStartTime = 0;
     }
+}
 
-    uint8_t mappedPWMReading = map(analogRead(_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
-    if (mappedPWMReading != _lastPWMPotReading) {
-      _lastPWMPotReading = mappedPWMReading;
-      // displayValues();
-    }
+void SmartBlaster::checkPWMDiff () {
+  uint8_t mappedPWMReading = map(analogRead(_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
+  if (mappedPWMReading != _lastPWMPotReading) {
+    _lastPWMPotReading = mappedPWMReading;
+    // displayValues();
   }
 }
 

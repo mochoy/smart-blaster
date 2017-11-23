@@ -72,6 +72,8 @@ class SmartBlaster {
     void resetChronoVals();
 
     void PWM();
+    void checkFinishAccel();
+    void checkPWMDiff();
 
 
     void initAmmoForDisplay();
