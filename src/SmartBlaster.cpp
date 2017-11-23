@@ -202,15 +202,18 @@ void SmartBlaster::resetChronoVals () {
 
 void SmartBlaster::PWM () {
   if (_isFlywheelPWM) {
-    _revTrigBtn.read();
-    if(_revTrigBtn.isPressed() && !_hasFlywheelsAccelerated) {           //when trigger first pressed
+    Button& trigBtn = _isFlywheelPWM ? _revTrigBtn : _revTrigBtn;
+
+
+    trigBtn.read();
+    if(trigBtn.isPressed() && !_hasFlywheelsAccelerated) {           //when trigger first pressed
       digitalWrite(_FLYWHEEL_PWM_OUT_PIN, HIGH);                         //motor at full power
       if (_flywheelAccelStartTime == 0) {
         _flywheelAccelStartTime = millis();
       }
-    } else if (_revTrigBtn.isPressed() && _hasFlywheelsAccelerated) {    //if trigger pressed
+    } else if (trigBtn.isPressed() && _hasFlywheelsAccelerated) {    //if trigger pressed
       analogWrite(_FLYWHEEL_PWM_OUT_PIN, analogRead(_FLYWHEEL_PWM_POT_PIN)/4);    //write PWM depending on pot value
-    } else if (_revTrigBtn.wasReleased()) {                     //when trigger released
+    } else if (trigBtn.wasReleased()) {                     //when trigger released
       digitalWrite(_FLYWHEEL_PWM_OUT_PIN, LOW);                          //turn motor off
       _hasFlywheelsAccelerated = false;                                  //reset flag to check for acceleration
     }
