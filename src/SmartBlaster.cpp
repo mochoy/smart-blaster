@@ -33,6 +33,9 @@ SmartBlaster::SmartBlaster () :
 
     _hasFlywheelsAccelerated = false;
     _flywheelAccelStartTime = 0;
+
+    _hasPusherAccelerated = false;
+    _pusherAccelStartTime = 0;
 }
 
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint32_t otherOptions[]) {
@@ -84,6 +87,7 @@ void SmartBlaster::initModes (uint8_t modes[]) {
   _isIRGateAmmoCounter = modes[1];
   _isChrono = modes[2];
   _isFlywheelPWM = modes[3];
+  _isPusherPWM = modes[4];
 }
 
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
