@@ -31,8 +31,8 @@ SmartBlaster::SmartBlaster () :
     resetChronoVals();
     _chronoVal = 0;
 
-    _hasAccelerated = false;
-    _accelStartTime = 0;
+    _hasFlywheelsAccelerated = false;
+    _flywheelAccelStartTime = 0;
 }
 
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint8_t otherOptions[]) {
@@ -203,16 +203,16 @@ void SmartBlaster::resetChronoVals () {
 void SmartBlaster::PWM () {
   if (_isFlywheelPWM) {
     _revTrigBtn.read();
-    if(_revTrigBtn.isPressed() && !_hasAccelerated) {           //when trigger first pressed
+    if(_revTrigBtn.isPressed() && !_hasFlywheelsAccelerated) {           //when trigger first pressed
       digitalWrite(_FLYWHEEL_PWM_OUT_PIN, HIGH);                         //motor at full power
-      if (_accelStartTime == 0) {
-        _accelStartTime = millis();
+      if (_flywheelAccelStartTime == 0) {
+        _flywheelAccelStartTime = millis();
       }
-    } else if (_revTrigBtn.isPressed() && _hasAccelerated) {    //if trigger pressed
+    } else if (_revTrigBtn.isPressed() && _hasFlywheelsAccelerated) {    //if trigger pressed
       analogWrite(_FLYWHEEL_PWM_OUT_PIN, analogRead(_FLYWHEEL_PWM_POT_PIN)/4);    //write PWM depending on pot value
     } else if (_revTrigBtn.wasReleased()) {                     //when trigger released
       digitalWrite(_FLYWHEEL_PWM_OUT_PIN, LOW);                          //turn motor off
-      _hasAccelerated = false;                                  //reset flag to check for acceleration
+      _hasFlywheelsAccelerated = false;                                  //reset flag to check for acceleration
     }
 
     checkFinishAccel();
@@ -221,9 +221,9 @@ void SmartBlaster::PWM () {
 }
 
 void SmartBlaster::checkFinishAccel () {
-    if ( (_accelStartTime > 0) && (millis() > _accelStartTime + _FLYWHEEL_MOTOR_ACCEL_TIME) ) {       //passed accel time
-      _hasAccelerated = true;
-      _accelStartTime = 0;
+    if ( (_flywheelAccelStartTime > 0) && (millis() > _flywheelAccelStartTime + _FLYWHEEL_MOTOR_ACCEL_TIME) ) {       //passed accel time
+      _hasFlywheelsAccelerated = true;
+      _flywheelAccelStartTime = 0;
     }
 }
 

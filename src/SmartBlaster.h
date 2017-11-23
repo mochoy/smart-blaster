@@ -48,8 +48,8 @@ class SmartBlaster {
 
     //PWM vals
     uint8_t _FLYWHEEL_MOTOR_ACCEL_TIME;
-    uint8_t _hasAccelerated;
-    uint32_t _accelStartTime;
+    uint8_t _hasFlywheelsAccelerated;
+    uint32_t _flywheelAccelStartTime;
     uint8_t _lastFlywheelPWMPotReading;
 
     //init methods upon instantiation
