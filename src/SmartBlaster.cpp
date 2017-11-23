@@ -132,7 +132,7 @@ void SmartBlaster::IRGateAmmoCounter () {
 void SmartBlaster::countAmmo () {
   if (_maxAmmo != 0 && _currentAmmo < 99 && _currentAmmo > 0) {  //make sure that the ammo is less than 99 so it doesnt overflow the display and not in count-up mode
     _currentAmmo--;    //increment ammo
-  } else if (_maxAmmo == 0 && _currentAmmo < 255) { //make sure ammo doesn't overflow uint_8 max val
+  } else if (_maxAmmo == 0 && _currentAmmo < 255) { //make sure ammo doesn't overflow uint8_t max val
     _currentAmmo++;    //decrement ammo
   }
 
@@ -208,6 +208,7 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
     Button& trigBtn = isFlywheel ? _revTrigBtn : _revTrigBtn;
     uint8_t& hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
     uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : _flywheelAccelStartTime;
+    uint8_t& lastPotReading = isFlywheel ? _lastFlywheelPWMPotReading : _lastFlywheelPWMPotReading;
     const uint8_t PWM_IN_PIN = isFlywheel ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
     const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
     const uint32_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : _FLYWHEEL_MOTOR_ACCEL_TIME; 
@@ -226,7 +227,7 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
     }
 
     checkFinishAccel(toPWM, accelStartTime, hasAccelerated, MOTOR_ACCEL_TIME);
-    initDisplayPWM();
+    initDisplayPWM(PWM_IN_PIN, lastPotReading);
   }
 }
 
@@ -257,10 +258,10 @@ void SmartBlaster::initChronoValForDisplay (uint8_t err) {
   printVals();
 }
 
-void SmartBlaster::initDisplayPWM () {
-  uint8_t mappedPWMReading = map(analogRead(_FLYWHEEL_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
-  if (mappedPWMReading != _lastFlywheelPWMPotReading) {
-    _lastFlywheelPWMPotReading = mappedPWMReading;
+void SmartBlaster::initDisplayPWM (uint8_t POT_PIN, uint8_t& lastPotReading) {
+  uint8_t mappedPWMReading = map(analogRead(POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
+  if (mappedPWMReading != lastPotReading) {
+    lastPotReading = mappedPWMReading;
     printVals();
   }
 }
