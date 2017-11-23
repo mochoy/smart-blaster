@@ -14,6 +14,7 @@ class SmartBlaster {
     uint8_t _isSwitchAmmoCounter;
     uint8_t _isIRGateAmmoCounter;
     uint8_t _isChrono;
+    uint8_t _isPWM;
 
     //pins
     uint8_t _IR_GATE_PIN;

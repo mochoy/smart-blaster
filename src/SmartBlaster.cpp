@@ -67,6 +67,7 @@ void SmartBlaster::initModes (uint8_t modes[]) {
   _isSwitchAmmoCounter = modes[0];
   _isIRGateAmmoCounter = modes[1];
   _isChrono = modes[2];
+  _isPWM = modes[3];
 }
 
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
