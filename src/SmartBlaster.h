@@ -18,8 +18,8 @@ class SmartBlaster {
 
     //pins
     uint8_t _IR_GATE_PIN;
-    uint8_t _PWM_POT_PIN;
-    uint8_t _PWM_OUT_PIN;
+    uint8_t _FLYWHEEL_PWM_POT_PIN;
+    uint8_t _FLYWHEEL_PWM_OUT_PIN;
 
     //display to print stuff on
     Adafruit_SSD1306 _display;

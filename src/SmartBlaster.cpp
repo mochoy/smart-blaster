@@ -88,8 +88,8 @@ void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
 
 void SmartBlaster::initPins (uint8_t pins[]) {
   _IR_GATE_PIN = pins[0];
-  _PWM_POT_PIN = pins[1];
-  _PWM_OUT_PIN = pins[2];
+  _FLYWHEEL_PWM_POT_PIN = pins[1];
+  _FLYWHEEL_PWM_OUT_PIN = pins[2];
 }
 
 void SmartBlaster::initOtherOptions (uint8_t otherOptions[]) {
@@ -198,14 +198,14 @@ void SmartBlaster::PWM () {
   if (_isFlywheelPWM) {
     _revTrigBtn.read();
     if(_revTrigBtn.isPressed() && !_hasAccelerated) {           //when trigger first pressed
-      digitalWrite(_PWM_OUT_PIN, HIGH);                         //motor at full power
+      digitalWrite(_FLYWHEEL_PWM_OUT_PIN, HIGH);                         //motor at full power
       if (_accelStartTime == 0) {
         _accelStartTime = millis();
       }
     } else if (_revTrigBtn.isPressed() && _hasAccelerated) {    //if trigger pressed
-      analogWrite(_PWM_OUT_PIN, analogRead(_PWM_POT_PIN)/4);    //write PWM depending on pot value
+      analogWrite(_FLYWHEEL_PWM_OUT_PIN, analogRead(_FLYWHEEL_PWM_POT_PIN)/4);    //write PWM depending on pot value
     } else if (_revTrigBtn.wasReleased()) {                     //when trigger released
-      digitalWrite(_PWM_OUT_PIN, LOW);                          //turn motor off
+      digitalWrite(_FLYWHEEL_PWM_OUT_PIN, LOW);                          //turn motor off
       _hasAccelerated = false;                                  //reset flag to check for acceleration
     }
 
@@ -242,7 +242,7 @@ void SmartBlaster::initChronoValForDisplay (uint8_t err) {
 }
 
 void SmartBlaster::initDisplayPWM () {
-  uint8_t mappedPWMReading = map(analogRead(_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
+  uint8_t mappedPWMReading = map(analogRead(_FLYWHEEL_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
   if (mappedPWMReading != _lastPWMPotReading) {
     _lastPWMPotReading = mappedPWMReading;
     printVals();
