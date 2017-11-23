@@ -73,7 +73,7 @@ class SmartBlaster {
 
     void PWM();
     void checkFinishAccel();
-    void checkPWMDiff();
+    void displayPWM();
 
 
     void initAmmoForDisplay();

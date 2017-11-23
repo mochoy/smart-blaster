@@ -38,6 +38,7 @@ SmartBlaster::SmartBlaster () :
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint8_t otherOptions[]) {
   initModes(modes);
   initMagSizes(magSizes);
+  initPins(pins);
   initDisplay();
 
   initAmmoForDisplay();
@@ -135,7 +136,6 @@ void SmartBlaster::reload () {
   _reloadBtn.read();    //read button, using Button library
   //if button pressed, reload
   if (_reloadBtn.wasPressed()) {
-    // Serial.println("reloading!");
     _currentAmmo = _maxAmmo;
     initAmmoForDisplay();      //display new ammo
   }
@@ -198,22 +198,19 @@ void SmartBlaster::PWM () {
   if (_isPWM) {
     _revTrigBtn.read();
     if(_revTrigBtn.isPressed() && !_hasAccelerated) {           //when trigger first pressed
-      Serial.println("trig pressed, accel!");
       digitalWrite(_PWM_OUT_PIN, HIGH);                         //motor at full power
       if (_accelStartTime == 0) {
         _accelStartTime = millis();
       }
     } else if (_revTrigBtn.isPressed() && _hasAccelerated) {    //if trigger pressed
-      Serial.println("analogWrite!");
       analogWrite(_PWM_OUT_PIN, analogRead(_PWM_POT_PIN)/4);    //write PWM depending on pot value
     } else if (_revTrigBtn.wasReleased()) {                     //when trigger released
-      Serial.println("released!");
       digitalWrite(_PWM_OUT_PIN, LOW);                          //turn motor off
       _hasAccelerated = false;                                  //reset flag to check for acceleration
     }
 
     checkFinishAccel();
-    checkPWMDiff();
+    displayPWM();
   }
 }
 
@@ -224,11 +221,11 @@ void SmartBlaster::checkFinishAccel () {
     }
 }
 
-void SmartBlaster::checkPWMDiff () {
+void SmartBlaster::displayPWM () {
   uint8_t mappedPWMReading = map(analogRead(_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
   if (mappedPWMReading != _lastPWMPotReading) {
     _lastPWMPotReading = mappedPWMReading;
-    // displayValues();
+    printVals();
   }
 }
 
@@ -267,6 +264,13 @@ void SmartBlaster::printVals() {
   if (_isChrono) {
     _display.setCursor(0, 50);
     _display.print(_chronoToPrint);
+  }
+
+  if (_isPWM) {
+    uint8_t lineLength = _lastPWMPotReading * 8;
+    _display.drawLine(0, 61, lineLength, 61, WHITE);
+    _display.drawLine(0, 62, lineLength, 62, WHITE);
+    _display.drawLine(0, 63, lineLength, 63, WHITE);
   }
   
 
