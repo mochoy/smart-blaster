@@ -298,6 +298,12 @@ void SmartBlaster::printVals() {
     _display.drawLine(0, 63, 0, lineLength, WHITE);
     _display.drawLine(1, 63, 1, lineLength, WHITE);
   }
+
+  if (_isPusherPWM) {
+    uint8_t lineLength = 64 - _lastPusherPWMPotReading * 4;
+    _display.drawLine(126, 63, 126, lineLength, WHITE);
+    _display.drawLine(127, 63, 127, lineLength, WHITE);
+  }
   
 
   _display.display(); //display the text
