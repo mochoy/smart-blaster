@@ -69,7 +69,7 @@ uint32_t SmartBlaster:: getChrono () {
 
 uint8_t SmartBlaster::getFlywheelPWM () {
   if (_isFlywheelPWM) {
-    return analogRead(_FLYWHEEL_PWM_OUT_PIN) * 4;
+    return analogRead(_FLYWHEEL_PWM_OUT_PIN);
   }
 }
 
@@ -107,6 +107,7 @@ void SmartBlaster::initPins (uint8_t pins[]) {
 
 void SmartBlaster::initOtherOptions (uint32_t otherOptions[]) {
   _FLYWHEEL_MOTOR_ACCEL_TIME = otherOptions[0];
+  _PUSHER_MOTOR_ACCEL_TIME = otherOptions[1];
 }
 
 
