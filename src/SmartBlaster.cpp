@@ -70,7 +70,7 @@ uint32_t SmartBlaster:: getChrono () {
   }
 }
 
-uint8_t SmartBlaster::getFlywheelPWM () {
+uint16_t SmartBlaster::getFlywheelPWM () {
   if (_isFlywheelPWM) {
     return analogRead(_FLYWHEEL_PWM_POT_PIN);
   }
