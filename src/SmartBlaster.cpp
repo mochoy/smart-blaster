@@ -210,7 +210,7 @@ void SmartBlaster::PWM () {
     }
 
     checkFinishAccel();
-    displayPWM();
+    initDisplayPWM();
   }
 }
 
@@ -219,14 +219,6 @@ void SmartBlaster::checkFinishAccel () {
       _hasAccelerated = true;
       _accelStartTime = 0;
     }
-}
-
-void SmartBlaster::displayPWM () {
-  uint8_t mappedPWMReading = map(analogRead(_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
-  if (mappedPWMReading != _lastPWMPotReading) {
-    _lastPWMPotReading = mappedPWMReading;
-    printVals();
-  }
 }
 
 
@@ -247,6 +239,14 @@ void SmartBlaster::initChronoValForDisplay (uint8_t err) {
   }
 
   printVals();
+}
+
+void SmartBlaster::initDisplayPWM () {
+  uint8_t mappedPWMReading = map(analogRead(_PWM_POT_PIN), 0, 1010, 0, PWM_MAPPED_MAX_OUTPUT_THRESHOLD);
+  if (mappedPWMReading != _lastPWMPotReading) {
+    _lastPWMPotReading = mappedPWMReading;
+    printVals();
+  }
 }
 
 void SmartBlaster::printVals() {

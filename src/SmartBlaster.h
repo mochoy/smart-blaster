@@ -73,11 +73,11 @@ class SmartBlaster {
 
     void PWM();
     void checkFinishAccel();
-    void displayPWM();
 
 
     void initAmmoForDisplay();
     void initChronoValForDisplay(uint8_t err);
+    void initDisplayPWM();
     void printVals();   //print all values at the same time, including ammo, chrono vals, etc.
 
   public:
