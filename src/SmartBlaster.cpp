@@ -101,6 +101,8 @@ void SmartBlaster::initPins (uint8_t pins[]) {
   _IR_GATE_PIN = pins[0];
   _FLYWHEEL_PWM_POT_PIN = pins[1];
   _FLYWHEEL_PWM_OUT_PIN = pins[2];
+  _PUSHER_PWM_POT_PIN = pins[3];
+  _PUSHER_PWM_OUT_PIN = pins[4];
 }
 
 void SmartBlaster::initOtherOptions (uint32_t otherOptions[]) {
