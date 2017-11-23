@@ -203,19 +203,21 @@ void SmartBlaster::resetChronoVals () {
 void SmartBlaster::PWM () {
   if (_isFlywheelPWM) {
     Button& trigBtn = _isFlywheelPWM ? _revTrigBtn : _revTrigBtn;
-
+    uint8_t hasAccelerated = _isFlywheelPWM ? _hasFlywheelsAccelerated : _hasFlywheelsAccelerated;
+    const uint8_t PWM_IN_PIN = _isFlywheelPWM ? _FLYWHEEL_PWM_POT_PIN : _FLYWHEEL_PWM_POT_PIN;
+    const uint8_t PWM_OUT_PIN = _isFlywheelPWM ? _FLYWHEEL_PWM_OUT_PIN : _FLYWHEEL_PWM_OUT_PIN; 
 
     trigBtn.read();
-    if(trigBtn.isPressed() && !_hasFlywheelsAccelerated) {           //when trigger first pressed
-      digitalWrite(_FLYWHEEL_PWM_OUT_PIN, HIGH);                         //motor at full power
+    if(trigBtn.isPressed() && !hasAccelerated) {           //when trigger first pressed
+      digitalWrite(PWM_OUT_PIN, HIGH);                         //motor at full power
       if (_flywheelAccelStartTime == 0) {
         _flywheelAccelStartTime = millis();
       }
-    } else if (trigBtn.isPressed() && _hasFlywheelsAccelerated) {    //if trigger pressed
-      analogWrite(_FLYWHEEL_PWM_OUT_PIN, analogRead(_FLYWHEEL_PWM_POT_PIN)/4);    //write PWM depending on pot value
+    } else if (trigBtn.isPressed() && hasAccelerated) {    //if trigger pressed
+      analogWrite(PWM_OUT_PIN, analogRead(_FLYWHEEL_PWM_POT_PIN)/4);    //write PWM depending on pot value
     } else if (trigBtn.wasReleased()) {                     //when trigger released
-      digitalWrite(_FLYWHEEL_PWM_OUT_PIN, LOW);                          //turn motor off
-      _hasFlywheelsAccelerated = false;                                  //reset flag to check for acceleration
+      digitalWrite(PWM_OUT_PIN, LOW);                          //turn motor off
+      hasAccelerated = false;                                  //reset flag to check for acceleration
     }
 
     checkFinishAccel();
