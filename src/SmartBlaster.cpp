@@ -8,7 +8,8 @@
 #define SW_CNT_BTN_PIN 4
 #define RELOAD_BTN_PIN 7
 #define MAG_SZ_TOG_BTN_PIN 8
-#define REV_TRIG_BTN_PIN 12
+#define REV_TRIG_BTN_PIN 11
+#define MAIN_TRIG_BTN_PIN 13
 #define PULLUP true
 #define INVERT true
 #define DEBOUNCE 20
@@ -26,7 +27,8 @@ SmartBlaster::SmartBlaster () :
   _swCntBtn(SW_CNT_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _reloadBtn(RELOAD_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
-  _revTrigBtn (REV_TRIG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
+  _revTrigBtn (REV_TRIG_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
+  _mainTrigBtn (MAIN_TRIG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
 
     resetChronoVals();
     _chronoVal = 0;
@@ -213,7 +215,7 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
   if (_isFlywheelPWM || _isPusherPWM) {
     uint8_t isFlywheel = (toPWM == 0 && _isFlywheelPWM);
 
-    Button& trigBtn = isFlywheel ? _revTrigBtn : _revTrigBtn;
+    Button& trigBtn = isFlywheel ? _revTrigBtn : _mainTrigBtn;
     uint8_t& hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasPusherAccelerated;
     uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : _pusherAccelStartTime;
     uint8_t& lastPotReading = isFlywheel ? _lastFlywheelPWMPotReading : _lastPusherPWMPotReading;
