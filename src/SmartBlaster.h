@@ -16,6 +16,7 @@ class SmartBlaster {
     uint8_t _isChrono;
     uint8_t _isFlywheelPWM;
     uint8_t _isPusherPWM;
+    uint8_t _isSelectFire;
 
     //pins
     uint8_t _IR_GATE_PIN;

@@ -98,6 +98,7 @@ void SmartBlaster::initModes (uint8_t modes[]) {
   _isChrono = modes[2];
   _isFlywheelPWM = modes[3];
   _isPusherPWM = modes[4];
+  _isSelectFire = modes[5];
 }
 
 void SmartBlaster::initMagSizes (uint8_t magSizes[]) {
