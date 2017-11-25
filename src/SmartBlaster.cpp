@@ -9,7 +9,8 @@
 #define RELOAD_BTN_PIN 7
 #define MAG_SZ_TOG_BTN_PIN 8
 #define REV_TRIG_BTN_PIN 11
-#define MAIN_TRIG_BTN_PIN 13
+#define MAIN_TRIG_BTN_PIN 12
+#define FIRE_MODE_TOG_BTN_PIN 13
 #define PULLUP true
 #define INVERT true
 #define DEBOUNCE 20
@@ -28,7 +29,8 @@ SmartBlaster::SmartBlaster () :
   _reloadBtn(RELOAD_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _revTrigBtn (REV_TRIG_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
-  _mainTrigBtn (MAIN_TRIG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
+  _mainTrigBtn (MAIN_TRIG_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
+  _fireModeTogBtn (FIRE_MODE_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE)  {
 
     resetChronoVals();
     _chronoVal = 0;

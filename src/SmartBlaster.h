@@ -34,6 +34,7 @@ class SmartBlaster {
     Button _magSzTogBtn;
     Button _revTrigBtn;
     Button _mainTrigBtn;
+    Button _fireModeTogBtn;
 
     //stuff to keep track of what to print for each different value
     String _ammoToPrint;
@@ -62,6 +63,9 @@ class SmartBlaster {
     uint8_t _hasPusherAccelerated;
     uint32_t _pusherAccelStartTime;
     uint8_t _lastPusherPWMPotReading;
+
+    //select-fire vals
+
 
     //init methods upon instantiation
     void initDisplay();
