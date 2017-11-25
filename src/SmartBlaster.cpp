@@ -5,11 +5,11 @@
 #include <Adafruit_SSD1306.h>
 #include <Button.h>
 
-#define SW_CNT_BTN_PIN 4
-#define RELOAD_BTN_PIN 7
-#define MAG_SZ_TOG_BTN_PIN 8
-#define REV_TRIG_BTN_PIN 11
-#define MAIN_TRIG_BTN_PIN 12
+#define SW_CNT_BTN_PIN 2
+#define RELOAD_BTN_PIN 4
+#define MAG_SZ_TOG_BTN_PIN 7
+#define REV_TRIG_BTN_PIN 8
+#define MAIN_TRIG_BTN_PIN 11
 #define FIRE_MODE_TOG_BTN_PIN 13
 #define PULLUP true
 #define INVERT true
