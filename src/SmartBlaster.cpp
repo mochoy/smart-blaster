@@ -280,6 +280,7 @@ void SmartBlaster::selectFire () {
   if (_isSelectFire) {
     toggleFireModes();
     fireBurstAndSingle();
+    checkForDartsFired();
   }
 }
 
@@ -304,6 +305,7 @@ void SmartBlaster::fireBurstAndSingle () {
   if (_isCheckingForDartsFired &&                                        
    (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE)) { 
     byte dartsToFire = (_fireMode == SINGLE_FIRE ? 1 : 3); 
+    _swCntBtn.read();
     if (_dartsFiredForSelectFire < dartsToFire) {
       digitalWrite(_PUSHER_OUT_PIN, HIGH); 
     } else if (_swCntBtn.isPressed() &&  
@@ -311,6 +313,11 @@ void SmartBlaster::fireBurstAndSingle () {
       resetSelectFireVals();             
     }
   }
+}
+
+void SmartBlaster::checkForDartsFired () {
+  _swCntBtn.read(); 
+  _dartsFiredForSelectFire += ( (_isCheckingForDartsFired && _swCntBtn.wasPressed()) ? 1 : 0); 
 }
 
 
