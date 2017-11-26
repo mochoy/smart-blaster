@@ -285,9 +285,10 @@ void SmartBlaster::selectFire () {
 void SmartBlaster::toggleFireModes () {
   if (_isSelectFire) {
     _fireModeTogBtn.read();
-    if (_fireModeTogBtn.isPressed()) {
+    if (_fireModeTogBtn.wasPressed()) {
       _fireMode += (_fireMode == 3 ? -3 : 1);
       resetSelectFireVals();
+      printVals();
     }
   }
 }
@@ -356,7 +357,7 @@ void SmartBlaster::printVals() {
   } 
 
   if (_isSelectFire) {
-    _display.setCursor(80, 55);
+    _display.setCursor(85, 55);
     if (_fireMode == SAFETY) {
       _display.print("SAFETY");
     } else if (_fireMode == SINGLE_FIRE) {
