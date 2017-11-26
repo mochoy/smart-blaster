@@ -94,7 +94,7 @@ class SmartBlaster {
     void selectFire();
     void toggleFireModes();
     void resetSelectFireVals();
-    void checkForDartsFired();
+    void fireBurst();
 
     void initAmmoForDisplay();
     void initChronoValForDisplay(uint8_t err);
