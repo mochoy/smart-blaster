@@ -269,6 +269,17 @@ void SmartBlaster::checkFinishAccel (uint8_t toPWM, uint32_t& accelStartTime, ui
 
 
 
+void SmartBlaster::toggleFireModes () {
+  if (_isSelectFire) {
+    _fireModeTogBtn.read();
+    if (_fireModeTogBtn.isPressed()) {
+      _fireMode += (_fireMode == 3 ? -3 : 1);
+    }
+  }
+}
+
+
+
 //helper function to display ammo. Initializes value to be passed displayed on display
 void SmartBlaster::initAmmoForDisplay () {
   _ammoToPrint = (_currentAmmo < 10 ? "0" : "") + (String)_currentAmmo;    //determine whether to insert 0 at the beginning of ammo
