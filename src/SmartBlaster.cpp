@@ -20,8 +20,12 @@
 #define SCREEN_HEIGHT 64
 #define OLED_RESET 4
 
-#define DART_LEGNTH_FEET 2.83465
 #define IR_MAP_TRIP_VAL 90
+
+#define DART_LEGNTH_FEET 2.83465
+
+#define FLYWHEEL_PWM 0
+#define PUSHER_PWM 1
 #define PWM_MAPPED_MAX_OUTPUT_THRESHOLD 16
 
 #define SAFETY 0
@@ -67,8 +71,8 @@ void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uin
 void SmartBlaster::smartMyBlaster() {
   ammoCounter();
   chrono();
-  PWM(0);
-  PWM(1);
+  PWM(FLYWHEEL_PWM);
+  PWM(PUSHER_PWM);
   selectFire();
 }
 
@@ -238,7 +242,7 @@ void SmartBlaster::resetChronoVals () {
 
 void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
   if (_isFlywheelPWM || _isPusherPWM) {
-    uint8_t isFlywheel = (toPWM == 0 && _isFlywheelPWM);
+    uint8_t isFlywheel = (toPWM == FLYWHEEL_PWM && _isFlywheelPWM);
 
     Button& trigBtn = isFlywheel ? _revTrigBtn : _mainTrigBtn;
     uint8_t& hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : _hasPusherAccelerated;
