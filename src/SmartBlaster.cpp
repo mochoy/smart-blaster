@@ -353,6 +353,19 @@ void SmartBlaster::printVals() {
     uint8_t lineLength = 64 - _lastPusherPWMPotReading * 4;
     _display.drawLine(126, 63, 126, lineLength, WHITE);
     _display.drawLine(127, 63, 127, lineLength, WHITE);
+  } 
+
+  if (_isSelectFire) {
+    _display.setCursor(80, 55);
+    if (_fireMode == SAFETY) {
+      _display.print("SAFETY");
+    } else if (_fireMode == SINGLE_FIRE) {
+      _display.print("SINGLE");
+    } else if (_fireMode == BURST_FIRE) {
+      _display.print("BURST");
+    } else if (_fireMode == FULL_AUTO) {
+      _display.print("AUTO");
+    }
   }
   
 
