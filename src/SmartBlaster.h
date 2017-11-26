@@ -66,6 +66,8 @@ class SmartBlaster {
 
     //select-fire vals
     uint8_t _fireMode;
+    uint8_t _dartsFiredForSelectFire;
+    uint8_t _isCheckingForDartsFired;
 
     //init methods upon instantiation
     void initDisplay();
