@@ -279,7 +279,7 @@ void SmartBlaster::checkFinishAccel (uint8_t toPWM, uint32_t& accelStartTime, ui
 void SmartBlaster::selectFire () {
   if (_isSelectFire) {
     toggleFireModes();
-    fireBurst();
+    fireBurstAndSingle();
   }
 }
 
@@ -300,7 +300,7 @@ void SmartBlaster::resetSelectFireVals () {
   _isCheckingForDartsFired = false;
 }
 
-void SmartBlaster::fireBurst () {
+void SmartBlaster::fireBurstAndSingle () {
   if (_isCheckingForDartsFired &&                                        
    (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE)) { 
     byte dartsToFire = (_fireMode == SINGLE_FIRE ? 1 : 3); 
