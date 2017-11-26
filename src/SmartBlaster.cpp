@@ -67,6 +67,7 @@ void SmartBlaster::smartMyBlaster() {
   chrono();
   PWM(0);
   PWM(1);
+  selectFire();
 }
 
 uint8_t SmartBlaster::getAmmo () {
@@ -268,6 +269,13 @@ void SmartBlaster::checkFinishAccel (uint8_t toPWM, uint32_t& accelStartTime, ui
 }
 
 
+
+
+void SmartBlaster::selectFire () {
+  if (_isSelectFire) {
+    toggleFireModes();
+  }
+}
 
 void SmartBlaster::toggleFireModes () {
   if (_isSelectFire) {

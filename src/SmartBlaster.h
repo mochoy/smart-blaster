@@ -89,6 +89,7 @@ class SmartBlaster {
     void PWM(uint8_t toPWM);
     void checkFinishAccel(uint8_t toPWM, uint32_t& accelStartTime, uint8_t& hasAccelerated, uint32_t MOTOR_ACCEL_TIME);
 
+    void selectFire();
     void toggleFireModes();
 
     void initAmmoForDisplay();
