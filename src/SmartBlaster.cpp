@@ -11,6 +11,7 @@
 #define REV_TRIG_BTN_PIN 8
 #define MAIN_TRIG_BTN_PIN 11
 #define FIRE_MODE_TOG_BTN_PIN 13
+
 #define PULLUP true
 #define INVERT true
 #define DEBOUNCE 20
@@ -18,9 +19,15 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET 4
+
 #define DART_LEGNTH_FEET 2.83465
 #define IR_MAP_TRIP_VAL 90
 #define PWM_MAPPED_MAX_OUTPUT_THRESHOLD 16
+
+#define SAFETY 0
+#define SINGLE_FIRE 1
+#define BURST_FIRE 2
+#define FULL_AUTO 3
 
 
 SmartBlaster::SmartBlaster () :
@@ -40,6 +47,8 @@ SmartBlaster::SmartBlaster () :
 
     _hasPusherAccelerated = false;
     _pusherAccelStartTime = 0;
+
+    _fireMode = 0;
 }
 
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint32_t otherOptions[]) {

@@ -65,7 +65,7 @@ class SmartBlaster {
     uint8_t _lastPusherPWMPotReading;
 
     //select-fire vals
-
+    uint8_t _fireMode;
 
     //init methods upon instantiation
     void initDisplay();
