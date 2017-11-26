@@ -334,7 +334,9 @@ void SmartBlaster::fireBurstAndSingle () {
 }
 
 void SmartBlaster::checkForDartsFired () {
+  if (!_isSwitchAmmoCounter) {
   _swCntBtn.read(); 
+  }
   _dartsFiredForSelectFire += ( (_isCheckingForDartsFired && _swCntBtn.wasPressed()) ? 1 : 0); 
 }
 
