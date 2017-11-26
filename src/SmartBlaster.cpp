@@ -284,6 +284,7 @@ void SmartBlaster::toggleFireModes () {
     _fireModeTogBtn.read();
     if (_fireModeTogBtn.isPressed()) {
       _fireMode += (_fireMode == 3 ? -3 : 1);
+      resetSelectFireVals();
     }
   }
 }
