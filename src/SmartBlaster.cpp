@@ -281,6 +281,24 @@ void SmartBlaster::selectFire () {
     toggleFireModes();
     fireBurstAndSingle();
     checkForDartsFired();
+
+    _mainTrigBtn.read();
+    if (_mainTrigBtn.isPressed()) {                                            
+      if (_fireMode == SAFETY) {                        
+        digitalWrite(_PUSHER_OUT_PIN, LOW);                          
+      } else if (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE) { 
+        _isCheckingForDartsFired = true;  
+      } else if (_fireMode == FULL_AUTO) { 
+        digitalWrite(_PUSHER_OUT_PIN, HIGH);                         
+      }
+    } else if (!_mainTrigBtn.isPressed()) { 
+      if (_fireMode == FULL_AUTO || _fireMode == SAFETY) { 
+        digitalWrite(_PUSHER_OUT_PIN, LOW);                          
+      } else if ( !_isCheckingForDartsFired                       
+         && (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE) ) {
+        resetSelectFireVals();
+      }   
+    }
   }
 }
 
