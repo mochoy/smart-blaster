@@ -288,6 +288,12 @@ void SmartBlaster::toggleFireModes () {
   }
 }
 
+void SmartBlaster::resetSelectFireVals () {
+  digitalWrite(_PUSHER_OUT_PIN, LOW);
+  _dartsFiredForSelectFire = 0;
+  _isCheckingForDartsFired = false;
+}
+
 
 
 //helper function to display ammo. Initializes value to be passed displayed on display
