@@ -140,6 +140,7 @@ void SmartBlaster::initPins (uint8_t pins[]) {
 void SmartBlaster::initOtherOptions (uint32_t otherOptions[]) {
   _FLYWHEEL_MOTOR_ACCEL_TIME = otherOptions[0];
   _PUSHER_MOTOR_ACCEL_TIME = otherOptions[1];
+  _IS_RAPIDSTRIKE = (uint8_t)otherOptions[2];
 }
 
 

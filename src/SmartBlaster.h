@@ -65,6 +65,7 @@ class SmartBlaster {
     uint8_t _lastPusherPWMPotReading;
 
     //select-fire vals
+    uint8_t _IS_RAPIDSTRIKE;
     uint8_t _fireMode;
     uint8_t _dartsFiredForSelectFire;
     uint8_t _isCheckingForDartsFired;
