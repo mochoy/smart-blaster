@@ -358,6 +358,11 @@ void SmartBlaster::checkForDartsFired () {
   _dartsFiredForSelectFire += ( (_isCheckingForDartsFired && _swCntBtn.wasPressed()) ? 1 : 0); 
 }
 
+uint8_t SmartBlaster::canStopMotor () {
+  return (_IS_RAPIDSTRIKE && _swCntBtn.isPressed()) || !(_IS_RAPIDSTRIKE || _swCntBtn.isPressed());
+}
+
+
 
 
 //helper function to display ammo. Initializes value to be passed displayed on display
