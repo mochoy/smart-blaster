@@ -327,8 +327,10 @@ void SmartBlaster::resetSelectFireVals () {
 void SmartBlaster::fireBurstAndSingle () {
   if (_isCheckingForDartsFired &&                                        
    (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE)) { 
-    byte dartsToFire = (_fireMode == SINGLE_FIRE ? 1 : 3); 
-    _swCntBtn.read();
+    byte dartsToFire = (_fireMode == SINGLE_FIRE ? 1 : 3);
+    if (!_isSwitchAmmoCounter) {
+      _swCntBtn.read();  
+    } 
     if (_dartsFiredForSelectFire < dartsToFire) {
       digitalWrite(_PUSHER_OUT_PIN, HIGH); 
     } else if (_swCntBtn.isPressed() &&  
