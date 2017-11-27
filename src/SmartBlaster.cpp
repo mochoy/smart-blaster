@@ -245,7 +245,7 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
     uint8_t isFlywheel = (toPWM == FLYWHEEL_PWM && _isFlywheelPWM);
     uint8_t zero = 0;
 
-    Button& trigBtn = isFlywheel ? _revTrigBtn : _mainTrigBtn;
+    Button& trigBtn = isFlywheel ? _revTrigBtn : (_isPusherPWM ? _mainTrigBtn : (Button&)zero);
     uint8_t& hasAccelerated = isFlywheel ? _hasFlywheelsAccelerated : (_isPusherPWM ? _hasPusherAccelerated : zero);
     uint32_t& accelStartTime = isFlywheel ? _flywheelAccelStartTime : (_isPusherPWM ? _pusherAccelStartTime : (uint32_t&)zero);
     uint8_t& lastPotReading = isFlywheel ? _lastFlywheelPWMPotReading : (_isPusherPWM ? _lastPusherPWMPotReading : zero);
@@ -288,11 +288,14 @@ void SmartBlaster::selectFire () {
     checkForDartsFired();
 
     _mainTrigBtn.read();
-    if (_mainTrigBtn.isPressed()) {                                            
+    Serial.println(_mainTrigBtn.wasPressed());
+    if (_mainTrigBtn.wasPressed()) {
+      if (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE) {
+        _isCheckingForDartsFired = true;  
+      }
+    } else if (_mainTrigBtn.isPressed()) {  
       if (_fireMode == SAFETY) {                        
         digitalWrite(_PUSHER_OUT_PIN, LOW);                          
-      } else if (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE) { 
-        _isCheckingForDartsFired = true;  
       } else if (_fireMode == FULL_AUTO) { 
         digitalWrite(_PUSHER_OUT_PIN, HIGH);                         
       }
@@ -306,7 +309,7 @@ void SmartBlaster::selectFire () {
         if (_swCntBtn.isPressed()) {
           resetSelectFireVals();
         }
-      }else if ( !_isCheckingForDartsFired                       
+      } else if ( !_isCheckingForDartsFired                       
          && (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE) ) {
         resetSelectFireVals();
       }   
