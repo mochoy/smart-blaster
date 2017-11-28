@@ -299,7 +299,11 @@ void SmartBlaster::selectFire () {
       if (_fireMode == SAFETY) {                        
         digitalWrite(_PUSHER_OUT_PIN, LOW);                          
       } else if (_fireMode == FULL_AUTO) { 
-        digitalWrite(_PUSHER_OUT_PIN, HIGH);                         
+        if (!_isPusherPWM) {
+          digitalWrite(_PUSHER_OUT_PIN, HIGH);                         
+        } else {
+          _toPWMSelectFire = true;
+        }
       }
     } else if (!_mainTrigBtn.isPressed()) { 
       if (_fireMode == SAFETY) { 
