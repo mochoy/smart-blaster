@@ -55,6 +55,7 @@ SmartBlaster::SmartBlaster () :
     _fireMode = 0;
     _dartsFiredForSelectFire = 0;
     _isCheckingForDartsFired = false;
+    _toPWMSelectFire = false;
 }
 
 void SmartBlaster::init(uint8_t modes[], uint8_t magSizes[], uint8_t pins[], uint32_t otherOptions[]) {
