@@ -307,11 +307,7 @@ void SmartBlaster::selectFire () {
       if (_fireMode == SAFETY) {                        
         digitalWrite(_PUSHER_OUT_PIN, LOW);                          
       } else if (_fireMode == FULL_AUTO) { 
-        if (!_isPusherPWM) {
-          digitalWrite(_PUSHER_OUT_PIN, HIGH);                         
-        } else {
-          _toPWMSelectFire = true;
-        }
+        powerPusher();
       }
     } else if (!_mainTrigBtn.isPressed()) { 
       if (_fireMode == SAFETY) { 
@@ -350,11 +346,7 @@ void SmartBlaster::fireBurstAndSingle () {
       _swCntBtn.read();  
     } 
     if (_dartsFiredForSelectFire < dartsToFire) {
-      if (!_isPusherPWM) {
-        digitalWrite(_PUSHER_OUT_PIN, HIGH); 
-      } else {
-        _toPWMSelectFire = true;
-      }
+      powerPusher();
     } else if (_swCntBtn.isPressed() &&  
      _dartsFiredForSelectFire >= dartsToFire) {      
       resetSelectFireVals();             
@@ -364,9 +356,17 @@ void SmartBlaster::fireBurstAndSingle () {
 
 void SmartBlaster::checkForDartsFired () {
   if (!_isSwitchAmmoCounter) {
-  _swCntBtn.read(); 
+    _swCntBtn.read(); 
   }
   _dartsFiredForSelectFire += ( (_isCheckingForDartsFired && _swCntBtn.wasPressed()) ? 1 : 0); 
+}
+
+void SmartBlaster::powerPusher () {
+  if (!_isPusherPWM) {
+    digitalWrite(_PUSHER_OUT_PIN, HIGH); 
+  } else {
+    _toPWMSelectFire = true;
+  }
 }
 
 uint8_t SmartBlaster::canStopMotor () {
