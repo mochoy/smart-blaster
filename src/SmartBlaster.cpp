@@ -348,7 +348,11 @@ void SmartBlaster::fireBurstAndSingle () {
       _swCntBtn.read();  
     } 
     if (_dartsFiredForSelectFire < dartsToFire) {
-      digitalWrite(_PUSHER_OUT_PIN, HIGH); 
+      if (!_isPusherPWM) {
+        digitalWrite(_PUSHER_OUT_PIN, HIGH); 
+      } else {
+        _toPWMSelectFire = true;
+      }
     } else if (_swCntBtn.isPressed() &&  
      _dartsFiredForSelectFire >= dartsToFire) {      
       resetSelectFireVals();             
