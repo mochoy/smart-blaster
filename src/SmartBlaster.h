@@ -115,6 +115,7 @@ class SmartBlaster {
     uint32_t getChrono();
     uint16_t getFlywheelPWM();
     uint16_t getPusherPWM();
+    uint8_t getFireMode();
 
 
 };

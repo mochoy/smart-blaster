@@ -101,6 +101,12 @@ uint16_t SmartBlaster::getPusherPWM () {
   }
 }
 
+uint8_t SmartBlaster::getFireMode () {
+  if (_isSelectFire) {
+    return _fireMode;
+  }
+}
+
 
 
 
