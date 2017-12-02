@@ -334,12 +334,6 @@ void SmartBlaster::toggleFireModes () {
   }
 }
 
-void SmartBlaster::resetSelectFireVals () {
-  digitalWrite(_PUSHER_OUT_PIN, LOW);
-  _dartsFiredForSelectFire = 0;
-  _isCheckingForDartsFired = false;
-}
-
 void SmartBlaster::fireBurstAndSingle () {
   if (_isCheckingForDartsFired &&                                        
    (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE)) { 
@@ -370,6 +364,14 @@ void SmartBlaster::checkForDartsFired () {
 uint8_t SmartBlaster::canStopMotor () {
   return (_IS_RAPIDSTRIKE && _swCntBtn.isPressed()) || !(_IS_RAPIDSTRIKE || _swCntBtn.isPressed());
 }
+
+void SmartBlaster::resetSelectFireVals () {
+  digitalWrite(_PUSHER_OUT_PIN, LOW);
+  _dartsFiredForSelectFire = 0;
+  _isCheckingForDartsFired = false;
+  _toPWMSelectFire = false;
+}
+
 
 
 
