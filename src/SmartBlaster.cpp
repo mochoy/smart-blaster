@@ -255,15 +255,18 @@ void SmartBlaster::PWM (uint8_t toPWM) {    //0 = flywheels, 1 = pusher
     const uint8_t PWM_OUT_PIN = isFlywheel ? _FLYWHEEL_OUT_PIN : (_isPusherPWM ? _PUSHER_OUT_PIN : zero);
     const uint32_t MOTOR_ACCEL_TIME = isFlywheel ? _FLYWHEEL_MOTOR_ACCEL_TIME : (_isPusherPWM ? _PUSHER_MOTOR_ACCEL_TIME : (uint32_t)zero); 
 
-    trigBtn.read();
-    if(trigBtn.isPressed() && !hasAccelerated) {           //when trigger first pressed
+    if (!_toPWMSelectFire) {
+      trigBtn.read();
+    }
+
+    if ((_isSelectFire ? _toPWMSelectFire : trigBtn.isPressed()) && !hasAccelerated) {           //when trigger first pressed
       digitalWrite(PWM_OUT_PIN, HIGH);                         //motor at full power
       if (accelStartTime == 0) {
         accelStartTime = millis();
       }
-    } else if (trigBtn.isPressed() && hasAccelerated) {    //if trigger pressed
+    } else if ((_isSelectFire ? _toPWMSelectFire : trigBtn.isPressed()) && hasAccelerated) {    //if trigger pressed
       analogWrite(PWM_OUT_PIN, analogRead(PWM_IN_PIN)/4);    //write PWM depending on pot value
-    } else if (trigBtn.wasReleased()) {                     //when trigger released
+    } else if (_isSelectFire ? !_toPWMSelectFire : trigBtn.wasReleased())  {                     //when trigger released
       digitalWrite(PWM_OUT_PIN, LOW);                          //turn motor off
       hasAccelerated = false;                                  //reset flag to check for acceleration
     }
@@ -290,7 +293,6 @@ void SmartBlaster::selectFire () {
     checkForDartsFired();
 
     _mainTrigBtn.read();
-    Serial.println(_mainTrigBtn.wasPressed());
     if (_mainTrigBtn.wasPressed()) {
       if (_fireMode == SINGLE_FIRE || _fireMode == BURST_FIRE) {
         _isCheckingForDartsFired = true;  
