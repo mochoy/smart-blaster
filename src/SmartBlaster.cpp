@@ -4,6 +4,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Button.h>
+#include <SPI.h>
+#include <Wire.h>
 
 #define SW_CNT_BTN_PIN 2
 #define RELOAD_BTN_PIN 4
@@ -16,9 +18,11 @@
 #define INVERT true
 #define DEBOUNCE 20
 
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_RESET 4
+#define OLED_MOSI   9
+#define OLED_D0    10
+#define OLED_D1    11
+#define OLED_CS    12
+#define OLED_RESET 13
 
 #define IR_MAP_TRIP_VAL 90
 
@@ -35,7 +39,7 @@
 
 
 SmartBlaster::SmartBlaster () :
-  _display(OLED_RESET),
+  _display(OLED_MOSI, OLED_D0, OLED_D1, OLED_RESET, OLED_CS),
   _swCntBtn(SW_CNT_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _reloadBtn(RELOAD_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
   _magSzTogBtn(MAG_SZ_TOG_BTN_PIN, PULLUP, INVERT, DEBOUNCE),
@@ -113,7 +117,7 @@ uint8_t SmartBlaster::getFireMode () {
 
 
 void SmartBlaster::initDisplay () {
-  _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  _display.begin(SSD1306_SWITCHCAPVCC);
   _display.clearDisplay();
 }
 
