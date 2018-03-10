@@ -428,7 +428,7 @@ void SmartBlaster::printVals() {
 
   if (_isChrono) {
     _display.setCursor(7, 55);
-    _display.print(_chronoToPrint);
+    _display.print("138.89 fps");
   }
 
   if (_isFlywheelPWM) {
