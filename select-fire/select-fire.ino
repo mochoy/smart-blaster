@@ -65,6 +65,12 @@ void pusherOn() {
 	digitalWrite(HALF_BRIDGE_HIGH_IN, HIGH);
 }
 
+//executed at beginning of loop only to keep readings reliable
+void readAllBtns() {
+	trigger.read();
+	cycleControlSwitch.read();
+}
+
 void toggleFireModes() {
 	bool hasStateChanged = false;
  
@@ -93,11 +99,6 @@ void toggleFireModes() {
   if (hasStateChanged) {
     // resetDartsFired();                                                    //reset darts fired stuff so it doesn't get messed up later
   }
-}
-
-//executed at beginning of loop only to keep readings reliable
-void readAllBtns() {
-	cycleControlSwitch.read();
 }
 
 //function to see if darts are fired using cycle control switch
