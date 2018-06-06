@@ -50,6 +50,7 @@ void setup() {
 }
 
 void loop () {
+	readAllBtns();
 	toggleFireModes();
 
 }
@@ -94,11 +95,14 @@ void toggleFireModes() {
   }
 }
 
+//executed at beginning of loop only to keep readings reliable
+void readAllBtns() {
+	cycleControlSwitch.read();
+}
+
 //function to see if darts are fired using cycle control switch
 void checkForDartsFired() {
-	cycleControlSwitch.read();
 	if (cycleControlSwitch.wasPressed()) {
 		dartsFired++;
 	}
 }
-
