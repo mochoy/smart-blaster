@@ -45,7 +45,7 @@ void setup() {
 	pinMode(HALF_BRIDGE_LOW_IN, OUTPUT);
 	pinMode(HALF_BRIDGE_HIGH_IN, OUTPUT);
 
-	pusherOff();
+	pusherOff(false);
 
 }
 
@@ -55,9 +55,16 @@ void loop () {
 
 }
 
-void pusherOff() {
-	digitalWrite(HALF_BRIDGE_LOW_IN, HIGH);
-	digitalWrite(HALF_BRIDGE_HIGH_IN, LOW);
+//toCheckCycleControl only turns off motors when cycle control pressed
+void pusherOff(bool toCheckCycleControl) {
+	if (toCheckCycleControl && cycleControlSwitch.isPressed()) {
+		digitalWrite(HALF_BRIDGE_LOW_IN, HIGH);
+		digitalWrite(HALF_BRIDGE_HIGH_IN, LOW);
+	} else if (!toCheckCycleControl) {
+		digitalWrite(HALF_BRIDGE_LOW_IN, HIGH);
+		digitalWrite(HALF_BRIDGE_HIGH_IN, LOW);
+	}
+	
 }
 
 void pusherOn() {
