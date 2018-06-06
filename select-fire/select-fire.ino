@@ -26,6 +26,8 @@
 #define BURST_FIRE 2
 #define FULL_AUTO 3
 
+#define NUM_OF_BURST_FIRE_SHOTS 3
+
 
 //keeping track of fire stuff
 byte fireMode = 0;  
