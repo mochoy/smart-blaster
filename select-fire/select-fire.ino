@@ -118,6 +118,10 @@ void checkForDartsFired() {
 void selectFire() {
 	if (fireMode == SAFETY) {
 		pusherOff(true);
+	} else if (trigger.wasPressed()) {
+		if (fireMode == SINGLE_FIRE || fireMode == BURST_FIRE) {
+			isCheckingForDartsFired = true;
+		} 
 	} 
 }
 
