@@ -34,15 +34,24 @@ bool isCheckingForDartsFired = false;
 
 //butons
 Button trigger (TRIGGER_PIN, PULLUP, INVERT, DEBOUNCE_MS);     
-Button dartCountingSwitch (DART_COUNTER_SWITCH_PIN, PULLUP, INVERT, DEBOUNCE_MS); 
+Button cycleControlSwitch (CYCLE_CONTROL_PIN, PULLUP, INVERT, DEBOUNCE_MS); 
 
 
 void setup() {
+	pinMode(HALF_BRIDGE_LOW_IN, OUTPUT);
+	pinMode(HALF_BRIDGE_HIGH_IN, OUTPUT);
+
+	pusherOff();
 
 }
 
 void loop () {
-
+	trigger.read();
+	if (trigger.isPressed()) {
+		pusherOn();
+	} else {
+		pusherOff();
+	}
 }
 
 void pusherOff() {
