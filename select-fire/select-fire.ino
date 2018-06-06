@@ -12,8 +12,8 @@
 #define JOYSTICK_Y_PIN 4
 
 //joy stick settings
-#define HIGH_JOYSTICK_TRIP 490 
-#define LOW_JOYSTICK_TRIP 360
+#define HIGH_JOYSTICK_TRIP 900 
+#define LOW_JOYSTICK_TRIP 100
 
 //btn settings
 #define PULLUP true 
@@ -74,21 +74,21 @@ void toggleFireModes() {
 	bool hasStateChanged = false;
 
  
-  if (lastFireMode != SAFETY && analogRead(JOYSTICK_X_PIN) > 800) {   //safety
+  if (lastFireMode != SAFETY && analogRead(JOYSTICK_X_PIN) > HIGH_JOYSTICK_TRIP) {   //safety
     lastFireMode = fireMode = SAFETY;
     hasStateChanged = true;
     Serial.println("S");
-  } else if (lastFireMode != SINGLE_FIRE && analogRead(JOYSTICK_X_PIN) < 100) {  //burst
+  } else if (lastFireMode != SINGLE_FIRE && analogRead(JOYSTICK_X_PIN) < LOW_JOYSTICK_TRIP) {  //burst
     lastFireMode = fireMode = SINGLE_FIRE;
     hasStateChanged = true;
         Serial.println("SF");
 
-  } else if (lastFireMode != BURST_FIRE && analogRead(JOYSTICK_Y_PIN) > 900) {  //single shot 
+  } else if (lastFireMode != BURST_FIRE && analogRead(JOYSTICK_Y_PIN) > HIGH_JOYSTICK_TRIP) {  //single shot 
     lastFireMode = fireMode = BURST_FIRE;
     hasStateChanged = true;
         Serial.println("BF");
 
-  } else if (lastFireMode != FULL_AUTO && analogRead(JOYSTICK_Y_PIN) < 100) {  //full auto
+  } else if (lastFireMode != FULL_AUTO && analogRead(JOYSTICK_Y_PIN) < LOW_JOYSTICK_TRIP) {  //full auto
     lastFireMode = fireMode = FULL_AUTO;
     hasStateChanged = true;
 
