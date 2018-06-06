@@ -114,3 +114,10 @@ void checkForDartsFired() {
 		dartsFired++;
 	}
 }
+
+void selectFire() {
+	if (fireMode == SAFETY) {
+		pusherOff(true);
+	} 
+}
+
