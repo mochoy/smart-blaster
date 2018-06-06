@@ -38,9 +38,19 @@ Button dartCountingSwitch (DART_COUNTER_SWITCH_PIN, PULLUP, INVERT, DEBOUNCE_MS)
 
 
 void setup() {
-	
+
 }
 
 void loop () {
 
+}
+
+void pusherOff() {
+	digitalWrite(HALF_BRIDGE_LOW_IN, HIGH);
+	digitalWrite(HALF_BRIDGE_HIGH_IN, LOW);
+}
+
+void pusherOn() {
+	digitalWrite(HALF_BRIDGE_LOW_IN, LOW);
+	digitalWrite(HALF_BRIDGE_HIGH_IN, HIGH);
 }
