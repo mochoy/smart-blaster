@@ -30,9 +30,9 @@
 //keeping track of fire stuff
 byte fireMode = 0;  
 byte lastFireMode = 0;
+
 byte dartsFired = 0;       
 bool isCheckingForDartsFired = false;  
-bool canShootAgain = true;  
 
 //butons
 Button trigger (TRIGGER_PIN, PULLUP, INVERT, DEBOUNCE_MS);     
@@ -51,6 +51,7 @@ void setup() {
 
 void loop () {
 	toggleFireModes();
+
 }
 
 void pusherOff() {
@@ -63,16 +64,8 @@ void pusherOn() {
 	digitalWrite(HALF_BRIDGE_HIGH_IN, HIGH);
 }
 
-void resetDartsFired () {
-  canShootAgain = false;
-  pusherOff();
-  dartsFired = 0;                                                         //darts fired set to 0
-  isCheckingForDartsFired = false;                                        //no longer checking if darts are being fired
-}
-
 void toggleFireModes() {
 	bool hasStateChanged = false;
-
  
   if (lastFireMode != SAFETY && analogRead(JOYSTICK_X_PIN) > HIGH_JOYSTICK_TRIP) {   //safety
     lastFireMode = fireMode = SAFETY;
@@ -97,6 +90,15 @@ void toggleFireModes() {
   }
 
   if (hasStateChanged) {
-    resetDartsFired();                                                    //reset darts fired stuff so it doesn't get messed up later
+    // resetDartsFired();                                                    //reset darts fired stuff so it doesn't get messed up later
   }
 }
+
+//function to see if darts are fired using cycle control switch
+void checkForDartsFired() {
+	cycleControlSwitch.read();
+	if (cycleControlSwitch.wasPressed()) {
+		dartsFired++;
+	}
+}
+
